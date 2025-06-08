@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +10,7 @@ import {
   Users, 
   Award, 
   Mail, 
-  LinkedIn, 
+  Linkedin, 
   Github, 
   Download,
   CheckCircle,
@@ -347,7 +346,7 @@ const Index = () => {
               alex.rodriguez@email.com
             </Button>
             <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3">
-              <LinkedIn className="w-4 h-4 mr-2" />
+              <Linkedin className="w-4 h-4 mr-2" />
               LinkedIn Profile
             </Button>
             <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3">
