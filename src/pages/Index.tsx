@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { 
   Code2, 
   Bug, 
@@ -108,46 +110,73 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -inset-10 opacity-50">
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-3/4 left-1/2 w-1 h-1 bg-purple-400 rounded-full animate-ping"></div>
+          <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
+          <div className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
         
         <div className={`text-center space-y-8 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {/* Profile Picture */}
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <Avatar className="w-32 h-32 border-4 border-gradient-to-r from-blue-400 to-purple-400 shadow-2xl">
+                <AvatarImage 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
+                  alt="Rajesh Doradla"
+                  className="object-cover"
+                />
+                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-2xl font-bold">
+                  RD
+                </AvatarFallback>
+              </Avatar>
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20 animate-pulse"></div>
+            </div>
+          </div>
+
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Alex Rodriguez
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in">
+              Rajesh Doradla
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300">
+            <p className="text-xl md:text-2xl text-gray-300 animate-fade-in">
               Principal QA Engineer
             </p>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in">
               11+ years of experience crafting robust quality assurance strategies, 
               leading automation initiatives, and ensuring exceptional software quality at scale.
             </p>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-4">
-            <Badge variant="outline" className="bg-blue-500/10 border-blue-500 text-blue-300 px-4 py-2">
+          <div className="flex flex-wrap justify-center gap-4 animate-fade-in">
+            <Badge variant="outline" className="bg-blue-500/10 border-blue-500 text-blue-300 px-4 py-2 hover:bg-blue-500/20 transition-all duration-300 hover:scale-105">
               <Bug className="w-4 h-4 mr-2" />
               Quality Assurance
             </Badge>
-            <Badge variant="outline" className="bg-purple-500/10 border-purple-500 text-purple-300 px-4 py-2">
+            <Badge variant="outline" className="bg-purple-500/10 border-purple-500 text-purple-300 px-4 py-2 hover:bg-purple-500/20 transition-all duration-300 hover:scale-105">
               <Code2 className="w-4 h-4 mr-2" />
               Test Automation
             </Badge>
-            <Badge variant="outline" className="bg-pink-500/10 border-pink-500 text-pink-300 px-4 py-2">
+            <Badge variant="outline" className="bg-pink-500/10 border-pink-500 text-pink-300 px-4 py-2 hover:bg-pink-500/20 transition-all duration-300 hover:scale-105">
               <Users className="w-4 h-4 mr-2" />
               Team Leadership
             </Badge>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3">
+            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
               <Download className="w-4 h-4 mr-2" />
               Download Resume
             </Button>
@@ -160,7 +189,7 @@ const Index = () => {
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Professional Journey</h2>
@@ -169,14 +198,14 @@ const Index = () => {
           
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300">
+              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-1">
                 <CardHeader>
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
-                      <CardTitle className="text-white text-xl">{exp.title}</CardTitle>
+                      <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
                       <CardDescription className="text-blue-400 font-medium">{exp.company}</CardDescription>
                     </div>
-                    <Badge variant="outline" className="border-purple-500 text-purple-300 mt-2 md:mt-0">
+                    <Badge variant="outline" className="border-purple-500 text-purple-300 mt-2 md:mt-0 group-hover:border-purple-400 group-hover:text-purple-200 transition-colors duration-300">
                       {exp.period}
                     </Badge>
                   </div>
@@ -185,9 +214,9 @@ const Index = () => {
                   <p className="text-gray-300 mb-4">{exp.description}</p>
                   <div className="space-y-2">
                     {exp.achievements.map((achievement, idx) => (
-                      <div key={idx} className="flex items-start space-x-2">
-                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300 text-sm">{achievement}</span>
+                      <div key={idx} className="flex items-start space-x-2 group/item hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
+                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0 group-hover/item:text-green-300 transition-colors duration-200" />
+                        <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
                       </div>
                     ))}
                   </div>
@@ -199,8 +228,21 @@ const Index = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 px-4 bg-slate-800/30">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 bg-slate-800/30 relative">
+        {/* Add floating tech icons */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 opacity-10 animate-float">
+            <Code2 className="w-16 h-16 text-blue-400" />
+          </div>
+          <div className="absolute top-40 right-20 opacity-10 animate-float-delayed">
+            <Bug className="w-12 h-12 text-purple-400" />
+          </div>
+          <div className="absolute bottom-40 left-20 opacity-10 animate-float">
+            <Shield className="w-14 h-14 text-green-400" />
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Technical Expertise</h2>
             <p className="text-gray-400 text-lg">Mastery across the quality assurance spectrum</p>
@@ -208,9 +250,9 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {['Core', 'Tools', 'Languages', 'DevOps', 'Frameworks'].map((category) => (
-              <Card key={category} className="bg-slate-800/50 border-gray-700">
+              <Card key={category} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-lg hover:shadow-blue-500/10">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">{category}</CardTitle>
+                  <CardTitle className="text-white text-lg group-hover:text-blue-400 transition-colors duration-300">{category}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {skills.filter(skill => skill.category === category).map((skill, index) => (
@@ -219,9 +261,9 @@ const Index = () => {
                         <span className="text-gray-300 text-sm">{skill.name}</span>
                         <span className="text-gray-400 text-sm">{skill.level}%</span>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                         <div 
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000"
+                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 hover:from-blue-400 hover:to-purple-400"
                           style={{ width: `${skill.level}%` }}
                         ></div>
                       </div>
@@ -244,26 +286,26 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group">
+              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-white">{project.title}</CardTitle>
-                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                    <CardTitle className="text-white group-hover:text-blue-400 transition-colors duration-300">{project.title}</CardTitle>
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-all duration-300 group-hover:scale-110" />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-300 mb-4">{project.description}</p>
+                  <p className="text-gray-300 mb-4 group-hover:text-gray-200 transition-colors duration-300">{project.description}</p>
                   <div className="space-y-3">
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech, idx) => (
-                        <Badge key={idx} variant="outline" className="border-gray-600 text-gray-300 text-xs">
+                        <Badge key={idx} variant="outline" className="border-gray-600 text-gray-300 text-xs hover:border-blue-500 hover:text-blue-300 transition-all duration-300">
                           {tech}
                         </Badge>
                       ))}
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Target className="w-4 h-4 text-green-400" />
-                      <span className="text-green-400 font-medium text-sm">{project.impact}</span>
+                      <Target className="w-4 h-4 text-green-400 group-hover:text-green-300 transition-colors duration-300" />
+                      <span className="text-green-400 font-medium text-sm group-hover:text-green-300 transition-colors duration-300">{project.impact}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -282,7 +324,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="bg-slate-800/50 border-gray-700">
+            <Card className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Award className="w-5 h-5 mr-2 text-yellow-400" />
@@ -290,26 +332,26 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                   <Zap className="w-4 h-4 text-blue-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">Reduced testing cycles by 80% through automation</span>
                 </div>
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                   <Users className="w-4 h-4 text-purple-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">Mentored 15+ QA engineers across multiple teams</span>
                 </div>
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                   <Shield className="w-4 h-4 text-green-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">Established QA practices adopted company-wide</span>
                 </div>
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                   <Globe className="w-4 h-4 text-pink-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">Led quality initiatives for global product launches</span>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-slate-800/50 border-gray-700">
+            <Card className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Award className="w-5 h-5 mr-2 text-yellow-400" />
@@ -318,9 +360,9 @@ const Index = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {certifications.map((cert, index) => (
-                  <div key={index} className="flex items-center justify-between">
+                  <div key={index} className="flex items-center justify-between hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                     <span className="text-gray-300 text-sm">{cert.name}</span>
-                    <Badge variant="outline" className="border-blue-500 text-blue-300 text-xs">
+                    <Badge variant="outline" className="border-blue-500 text-blue-300 text-xs hover:border-blue-400 hover:text-blue-200 transition-colors duration-300">
                       {cert.year}
                     </Badge>
                   </div>
@@ -341,15 +383,15 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
               <Mail className="w-4 h-4 mr-2" />
-              alex.rodriguez@email.com
+              rajesh.doradla@email.com
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3">
+            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
               <Linkedin className="w-4 h-4 mr-2" />
               LinkedIn Profile
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3">
+            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
               <Github className="w-4 h-4 mr-2" />
               GitHub Profile
             </Button>
@@ -362,7 +404,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-8 px-4 text-center">
         <p className="text-gray-400">
-          © 2024 Alex Rodriguez. Built with React, TypeScript, and Tailwind CSS.
+          © 2024 Rajesh Doradla. Built with React, TypeScript, and Tailwind CSS.
         </p>
       </footer>
     </div>
