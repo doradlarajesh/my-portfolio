@@ -19,15 +19,61 @@ import {
   Zap,
   Globe,
   ChevronDown,
-  ExternalLink
+  ExternalLink,
+  Menu,
+  X,
+  Home,
+  User,
+  Briefcase,
+  BookOpen,
+  Phone
 } from "lucide-react";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Handle scroll for active section highlighting
+    const handleScroll = () => {
+      const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const menuItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'experience', label: 'Experience', icon: User },
+    { id: 'skills', label: 'Skills', icon: Code2 },
+    { id: 'projects', label: 'Projects', icon: Briefcase },
+    { id: 'achievements', label: 'Achievements', icon: Award },
+    { id: 'contact', label: 'Contact', icon: Phone }
+  ];
 
   const skills = [
     { name: "Test Automation", level: 95, category: "Core" },
@@ -165,6 +211,80 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Navigation Menu */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-700/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                RD
+              </span>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-1">
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`group px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:scale-105 ${
+                        activeSection === item.id
+                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/30'
+                          : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-slate-800 transition-all duration-200"
+              >
+                {isMenuOpen ? (
+                  <X className="block h-6 w-6 transform rotate-180 transition-transform duration-300" />
+                ) : (
+                  <Menu className="block h-6 w-6 transition-transform duration-300" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-900/95 backdrop-blur-lg">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`group w-full flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
+                    activeSection === item.id
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300'
+                      : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -inset-10 opacity-50">
@@ -176,7 +296,7 @@ const Index = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4">
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
         
         <div className={`text-center space-y-8 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -226,11 +346,14 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
+            <Button 
+              variant="outline" 
+              className="border-2 border-gradient-to-r from-blue-500 to-purple-500 bg-transparent text-blue-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+            >
               <Download className="w-4 h-4 mr-2" />
               Download Resume
             </Button>
@@ -243,7 +366,7 @@ const Index = () => {
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 px-4 relative">
+      <section id="experience" className="py-20 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Professional Journey</h2>
@@ -282,7 +405,7 @@ const Index = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 px-4 bg-slate-800/30 relative">
+      <section id="skills" className="py-20 px-4 bg-slate-800/30 relative">
         {/* Add floating tech icons */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 opacity-10 animate-float">
@@ -331,7 +454,7 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 px-4">
+      <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Live Projects & Client Work</h2>
@@ -427,7 +550,7 @@ const Index = () => {
       </section>
 
       {/* Achievements Section */}
-      <section className="py-20 px-4 bg-slate-800/30">
+      <section id="achievements" className="py-20 px-4 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Achievements & Certifications</h2>
@@ -485,7 +608,7 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4">
+      <section id="contact" className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-8">Let's Connect</h2>
           <p className="text-gray-400 text-lg mb-12">
@@ -494,15 +617,21 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
               <Mail className="w-4 h-4 mr-2" />
               rajesh.doradla@email.com
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
+            <Button 
+              variant="outline" 
+              className="border-2 border-gradient-to-r from-blue-500 to-purple-500 bg-transparent text-blue-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+            >
               <Linkedin className="w-4 h-4 mr-2" />
               LinkedIn Profile
             </Button>
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3 transform hover:scale-105 transition-all duration-300">
+            <Button 
+              variant="outline" 
+              className="border-2 border-gradient-to-r from-gray-500 to-gray-400 bg-transparent text-gray-300 hover:bg-gradient-to-r hover:from-gray-600/20 hover:to-gray-500/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+            >
               <Github className="w-4 h-4 mr-2" />
               GitHub Profile
             </Button>
