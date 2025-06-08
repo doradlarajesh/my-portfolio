@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,7 +27,8 @@ import {
   User,
   Briefcase,
   BookOpen,
-  Phone
+  Phone,
+  Calendar
 } from "lucide-react";
 
 const Index = () => {
@@ -75,19 +77,62 @@ const Index = () => {
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
 
-  const skills = [
-    { name: "Test Automation", level: 95, category: "Core" },
-    { name: "Selenium WebDriver", level: 90, category: "Tools" },
-    { name: "Cypress", level: 88, category: "Tools" },
-    { name: "Java", level: 85, category: "Languages" },
-    { name: "Python", level: 82, category: "Languages" },
-    { name: "API Testing", level: 92, category: "Core" },
-    { name: "Performance Testing", level: 80, category: "Core" },
-    { name: "CI/CD", level: 87, category: "DevOps" },
-    { name: "Docker", level: 75, category: "DevOps" },
-    { name: "Kubernetes", level: 70, category: "DevOps" },
-    { name: "TestNG/JUnit", level: 90, category: "Frameworks" },
-    { name: "REST Assured", level: 88, category: "Frameworks" }
+  // Tool logos and skills data
+  const skillCategories = [
+    {
+      name: "Test Automation",
+      tools: [
+        { name: "Selenium", logo: "🌐" },
+        { name: "Cypress", logo: "🔵" },
+        { name: "Playwright", logo: "🎭" },
+        { name: "WebDriver", logo: "🚗" }
+      ]
+    },
+    {
+      name: "Programming Languages",
+      tools: [
+        { name: "Java", logo: "☕" },
+        { name: "Python", logo: "🐍" },
+        { name: "JavaScript", logo: "📜" },
+        { name: "TypeScript", logo: "📘" }
+      ]
+    },
+    {
+      name: "Testing Frameworks",
+      tools: [
+        { name: "TestNG", logo: "🧪" },
+        { name: "JUnit", logo: "✅" },
+        { name: "Jest", logo: "🃏" },
+        { name: "Pytest", logo: "🔬" }
+      ]
+    },
+    {
+      name: "API Testing",
+      tools: [
+        { name: "REST Assured", logo: "🔗" },
+        { name: "Postman", logo: "📮" },
+        { name: "Insomnia", logo: "😴" },
+        { name: "Newman", logo: "👨" }
+      ]
+    },
+    {
+      name: "DevOps & CI/CD",
+      tools: [
+        { name: "Jenkins", logo: "👷" },
+        { name: "Docker", logo: "🐳" },
+        { name: "Kubernetes", logo: "⚙️" },
+        { name: "AWS", logo: "☁️" }
+      ]
+    },
+    {
+      name: "Performance Testing",
+      tools: [
+        { name: "JMeter", logo: "⚡" },
+        { name: "LoadRunner", logo: "🏃" },
+        { name: "K6", logo: "📊" },
+        { name: "Artillery", logo: "🎯" }
+      ]
+    }
   ];
 
   const experiences = [
@@ -95,34 +140,40 @@ const Index = () => {
       title: "Principal QA Engineer",
       company: "TechCorp Solutions",
       period: "2020 - Present",
+      duration: "4+ years",
       description: "Leading QA strategy and automation initiatives for enterprise-scale applications. Built comprehensive test automation frameworks resulting in 80% reduction in manual testing efforts.",
       achievements: [
         "Architected end-to-end test automation framework serving 15+ development teams",
         "Reduced regression testing time from 2 weeks to 2 days",
         "Mentored 8 junior QA engineers and established QA best practices"
-      ]
+      ],
+      color: "from-blue-500 to-purple-500"
     },
     {
       title: "Senior QA Engineer",
       company: "InnovateTech Inc",
       period: "2017 - 2020",
+      duration: "3 years",
       description: "Specialized in API testing and microservices quality assurance. Implemented performance testing strategies for high-traffic applications.",
       achievements: [
         "Designed API testing framework handling 500+ endpoints",
         "Improved application performance by 40% through comprehensive load testing",
         "Led quality assurance for 12 major product releases"
-      ]
+      ],
+      color: "from-purple-500 to-pink-500"
     },
     {
       title: "QA Engineer",
       company: "StartupVenture",
       period: "2013 - 2017",
+      duration: "4 years",
       description: "Full-stack quality assurance for web and mobile applications. Established testing processes from ground up.",
       achievements: [
         "Built first automated testing suite for the company",
         "Reduced production bugs by 65% through systematic testing",
         "Implemented mobile testing strategies for iOS and Android"
-      ]
+      ],
+      color: "from-pink-500 to-red-500"
     }
   ];
 
@@ -252,9 +303,9 @@ const Index = () => {
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-slate-800 transition-all duration-200"
               >
                 {isMenuOpen ? (
-                  <X className="block h-6 w-6 transform rotate-180 transition-transform duration-300" />
+                  <X className="block h-6 w-6" />
                 ) : (
-                  <Menu className="block h-6 w-6 transition-transform duration-300" />
+                  <Menu className="block h-6 w-6" />
                 )}
               </button>
             </div>
@@ -262,27 +313,29 @@ const Index = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-900/95 backdrop-blur-lg">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`group w-full flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
-                    activeSection === item.id
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300'
-                      : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
-                  }`}
-                >
-                  <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
+        {isMenuOpen && (
+          <div className="md:hidden transition-all duration-300 ease-in-out">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-900/95 backdrop-blur-lg">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`group w-full flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
+                      activeSection === item.id
+                        ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300'
+                        : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Animated background particles */}
@@ -350,10 +403,7 @@ const Index = () => {
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
-            <Button 
-              variant="outline" 
-              className="border-2 border-gradient-to-r from-blue-500 to-purple-500 bg-transparent text-blue-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
-            >
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
               <Download className="w-4 h-4 mr-2" />
               Download Resume
             </Button>
@@ -365,7 +415,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Experience Section */}
+      {/* Experience Section - Timeline View */}
       <section id="experience" className="py-20 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -373,40 +423,64 @@ const Index = () => {
             <p className="text-gray-400 text-lg">11+ years of delivering quality excellence</p>
           </div>
           
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-1">
-                <CardHeader>
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
-                      <CardDescription className="text-blue-400 font-medium">{exp.company}</CardDescription>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></div>
+            
+            <div className="space-y-12">
+              {experiences.map((exp, index) => (
+                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  {/* Timeline dot */}
+                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
+                  
+                  {/* Date indicator */}
+                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'right-1/2 mr-8' : 'left-1/2 ml-8'}`}>
+                    <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600">
+                      <Calendar className="w-4 h-4 text-blue-400" />
+                      <span className="text-sm text-gray-300">{exp.period}</span>
                     </div>
-                    <Badge variant="outline" className="border-purple-500 text-purple-300 mt-2 md:mt-0 group-hover:border-purple-400 group-hover:text-purple-200 transition-colors duration-300">
-                      {exp.period}
-                    </Badge>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 mb-4">{exp.description}</p>
-                  <div className="space-y-2">
-                    {exp.achievements.map((achievement, idx) => (
-                      <div key={idx} className="flex items-start space-x-2 group/item hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0 group-hover/item:text-green-300 transition-colors duration-200" />
-                        <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
-                      </div>
-                    ))}
+                  
+                  {/* Content card */}
+                  <div className={`w-full ${index % 2 === 0 ? 'md:w-1/2 md:pr-8' : 'md:w-1/2 md:pl-8'} ml-12 md:ml-0`}>
+                    <Card className={`bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-500 group hover:shadow-2xl transform hover:-translate-y-2 animate-fade-in hover:shadow-purple-500/20`}>
+                      <CardHeader>
+                        <div className="flex flex-col space-y-2">
+                          <div className={`w-12 h-1 bg-gradient-to-r ${exp.color} rounded-full group-hover:w-full transition-all duration-500`}></div>
+                          <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
+                          <CardDescription className="text-blue-400 font-medium">{exp.company}</CardDescription>
+                          <div className="flex items-center space-x-4 md:hidden">
+                            <Badge variant="outline" className="border-purple-500 text-purple-300">
+                              {exp.period}
+                            </Badge>
+                            <Badge variant="outline" className="border-gray-500 text-gray-300">
+                              {exp.duration}
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-300 mb-4 group-hover:text-gray-200 transition-colors duration-300">{exp.description}</p>
+                        <div className="space-y-2">
+                          {exp.achievements.map((achievement, idx) => (
+                            <div key={idx} className="flex items-start space-x-2 group/item hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
+                              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0 group-hover/item:text-green-300 transition-colors duration-200" />
+                              <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* Skills Section - Tool Logos */}
       <section id="skills" className="py-20 px-4 bg-slate-800/30 relative">
-        {/* Add floating tech icons */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 opacity-10 animate-float">
             <Code2 className="w-16 h-16 text-blue-400" />
@@ -426,26 +500,24 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {['Core', 'Tools', 'Languages', 'DevOps', 'Frameworks'].map((category) => (
-              <Card key={category} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-lg hover:shadow-blue-500/10">
+            {skillCategories.map((category, index) => (
+              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg group-hover:text-blue-400 transition-colors duration-300">{category}</CardTitle>
+                  <CardTitle className="text-white text-lg group-hover:text-blue-400 transition-colors duration-300">{category.name}</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {skills.filter(skill => skill.category === category).map((skill, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300 text-sm">{skill.name}</span>
-                        <span className="text-gray-400 text-sm">{skill.level}%</span>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    {category.tools.map((tool, toolIndex) => (
+                      <div key={toolIndex} className="flex flex-col items-center p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 transition-all duration-300 group/tool hover:scale-105">
+                        <div className="text-2xl mb-2 group-hover/tool:scale-110 transition-transform duration-300">
+                          {tool.logo}
+                        </div>
+                        <span className="text-gray-300 text-xs text-center group-hover/tool:text-white transition-colors duration-300">
+                          {tool.name}
+                        </span>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
-                        <div 
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 hover:from-blue-400 hover:to-purple-400"
-                          style={{ width: `${skill.level}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -621,17 +693,11 @@ const Index = () => {
               <Mail className="w-4 h-4 mr-2" />
               rajesh.doradla@email.com
             </Button>
-            <Button 
-              variant="outline" 
-              className="border-2 border-gradient-to-r from-blue-500 to-purple-500 bg-transparent text-blue-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
-            >
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
               <Linkedin className="w-4 h-4 mr-2" />
               LinkedIn Profile
             </Button>
-            <Button 
-              variant="outline" 
-              className="border-2 border-gradient-to-r from-gray-500 to-gray-400 bg-transparent text-gray-300 hover:bg-gradient-to-r hover:from-gray-600/20 hover:to-gray-500/20 hover:text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
-            >
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
               <Github className="w-4 h-4 mr-2" />
               GitHub Profile
             </Button>
