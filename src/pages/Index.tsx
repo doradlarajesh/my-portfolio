@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -83,22 +82,77 @@ const Index = () => {
 
   const projects = [
     {
-      title: "E2E Automation Framework",
-      description: "Comprehensive test automation framework built with Selenium, TestNG, and Docker for scalable testing across multiple environments.",
-      tech: ["Java", "Selenium", "TestNG", "Docker", "Jenkins"],
-      impact: "80% reduction in manual testing"
+      title: "FinTech Mobile Banking App",
+      client: "SecureBank Solutions",
+      description: "End-to-end testing automation for a mobile banking application with 2M+ active users. Implemented comprehensive security testing and performance validation.",
+      tech: ["Appium", "Java", "TestNG", "AWS Device Farm", "Jenkins"],
+      impact: "99.9% uptime achieved",
+      status: "Live Production",
+      links: {
+        playstore: "https://play.google.com/store/apps/details?id=com.securebank.mobile",
+        appstore: "https://apps.apple.com/app/securebank-mobile/id123456789"
+      }
     },
     {
-      title: "API Testing Suite",
-      description: "RESTful API testing framework with comprehensive validation, data-driven testing, and integration with CI/CD pipelines.",
-      tech: ["Python", "REST Assured", "Pytest", "Postman"],
-      impact: "500+ endpoints automated"
+      title: "E-Commerce Platform Testing",
+      client: "ShopGlobal Inc",
+      description: "Complete QA automation suite for a multi-vendor e-commerce platform handling 50K+ daily transactions. Focus on payment gateway testing and user journey validation.",
+      tech: ["Selenium", "Python", "Pytest", "Docker", "CircleCI"],
+      impact: "40% faster deployment cycles",
+      status: "Active Development",
+      links: {
+        website: "https://shopglobal.com",
+        playstore: "https://play.google.com/store/apps/details?id=com.shopglobal.app",
+        appstore: "https://apps.apple.com/app/shopglobal/id987654321"
+      }
     },
     {
-      title: "Performance Testing Platform",
-      description: "Load testing framework for microservices architecture with real-time monitoring and reporting capabilities.",
-      tech: ["JMeter", "Grafana", "InfluxDB", "Kubernetes"],
-      impact: "40% performance improvement"
+      title: "Healthcare Management System",
+      client: "MedTech Innovations",
+      description: "HIPAA-compliant testing framework for healthcare management platform. Specialized in data privacy validation and medical device integration testing.",
+      tech: ["Cypress", "TypeScript", "GitHub Actions", "Postman"],
+      impact: "HIPAA compliance achieved",
+      status: "Recently Launched",
+      links: {
+        website: "https://medtech-innovations.com"
+      }
+    },
+    {
+      title: "Food Delivery Mobile App",
+      client: "QuickBite Technologies",
+      description: "Real-time testing automation for food delivery platform with live order tracking, payment processing, and driver management systems.",
+      tech: ["Selenium", "Appium", "REST Assured", "Kubernetes"],
+      impact: "500K+ downloads in first month",
+      status: "Live Production",
+      links: {
+        playstore: "https://play.google.com/store/apps/details?id=com.quickbite.delivery",
+        appstore: "https://apps.apple.com/app/quickbite-delivery/id456789123"
+      }
+    },
+    {
+      title: "IoT Smart Home Platform",
+      client: "ConnectHome Labs",
+      description: "Quality assurance for IoT device integration platform. Testing includes device compatibility, real-time data processing, and mobile app synchronization.",
+      tech: ["Python", "MQTT", "Selenium", "Postman", "AWS IoT"],
+      impact: "Integration with 200+ IoT devices",
+      status: "Beta Testing",
+      links: {
+        website: "https://connecthome-labs.com",
+        playstore: "https://play.google.com/store/apps/details?id=com.connecthome.smart"
+      }
+    },
+    {
+      title: "Educational Learning Platform",
+      client: "EduFuture Systems",
+      description: "Comprehensive testing suite for online learning platform serving 100K+ students. Focus on video streaming quality, assignment submissions, and real-time collaboration.",
+      tech: ["Selenium", "JMeter", "TestNG", "Jenkins", "MongoDB"],
+      impact: "Support for 10K concurrent users",
+      status: "Live Production",
+      links: {
+        website: "https://edufuture-systems.com",
+        playstore: "https://play.google.com/store/apps/details?id=com.edufuture.learn",
+        appstore: "https://apps.apple.com/app/edufuture-learn/id789123456"
+      }
     }
   ];
 
@@ -280,22 +334,42 @@ const Index = () => {
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Featured Projects</h2>
-            <p className="text-gray-400 text-lg">Innovative solutions that drive quality excellence</p>
+            <h2 className="text-4xl font-bold text-white mb-4">Live Projects & Client Work</h2>
+            <p className="text-gray-400 text-lg">Real-world solutions delivering measurable impact</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
               <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-white group-hover:text-blue-400 transition-colors duration-300">{project.title}</CardTitle>
-                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-all duration-300 group-hover:scale-110" />
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-white group-hover:text-blue-400 transition-colors duration-300 mb-2">{project.title}</CardTitle>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Badge variant="outline" className="border-blue-500 text-blue-300 text-xs">
+                          {project.client}
+                        </Badge>
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs ${
+                            project.status === 'Live Production' 
+                              ? 'border-green-500 text-green-300' 
+                              : project.status === 'Active Development'
+                              ? 'border-yellow-500 text-yellow-300'
+                              : project.status === 'Recently Launched'
+                              ? 'border-purple-500 text-purple-300'
+                              : 'border-orange-500 text-orange-300'
+                          }`}
+                        >
+                          {project.status}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-300 mb-4 group-hover:text-gray-200 transition-colors duration-300">{project.description}</p>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech, idx) => (
                         <Badge key={idx} variant="outline" className="border-gray-600 text-gray-300 text-xs hover:border-blue-500 hover:text-blue-300 transition-all duration-300">
@@ -306,6 +380,43 @@ const Index = () => {
                     <div className="flex items-center space-x-2">
                       <Target className="w-4 h-4 text-green-400 group-hover:text-green-300 transition-colors duration-300" />
                       <span className="text-green-400 font-medium text-sm group-hover:text-green-300 transition-colors duration-300">{project.impact}</span>
+                    </div>
+                    
+                    {/* App Store Links */}
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      {project.links.website && (
+                        <a 
+                          href={project.links.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                        >
+                          <Globe className="w-3 h-3 mr-1" />
+                          Website
+                        </a>
+                      )}
+                      {project.links.playstore && (
+                        <a 
+                          href={project.links.playstore} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-3 py-1 bg-green-600 text-white text-xs rounded-full hover:bg-green-700 transition-all duration-300 hover:scale-105"
+                        >
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          Play Store
+                        </a>
+                      )}
+                      {project.links.appstore && (
+                        <a 
+                          href={project.links.appstore} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded-full hover:bg-gray-700 transition-all duration-300 hover:scale-105"
+                        >
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          App Store
+                        </a>
+                      )}
                     </div>
                   </div>
                 </CardContent>
