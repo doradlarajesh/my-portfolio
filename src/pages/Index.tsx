@@ -722,7 +722,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-8 px-4 text-center">
         <p className="text-gray-400">
-          © 2024 Rajesh Doradla. Built with React, TypeScript, and Tailwind CSS.
+          © 2025 Rajesh Doradla. Built with React, TypeScript, and Tailwind CSS.
         </p>
       </footer>
     </div>
