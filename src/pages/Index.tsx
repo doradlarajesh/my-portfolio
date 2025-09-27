@@ -396,7 +396,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('mailto:doradlarajesh@gmail.com')}
+              onClick={() => scrollToSection('contact')}
             >
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
