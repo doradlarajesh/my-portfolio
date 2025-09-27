@@ -82,19 +82,19 @@ const Index = () => {
     {
       name: "Test Automation",
       tools: [
+        { name: "iOS XCUITest", logo: "📱" },
+        { name: "Appium", logo: "📲" },
         { name: "Selenium", logo: "🌐" },
-        { name: "Cypress", logo: "🔵" },
-        { name: "Playwright", logo: "🎭" },
-        { name: "WebDriver", logo: "🚗" }
+        { name: "Playwright", logo: "🎭" }
       ]
     },
     {
       name: "Programming Languages",
       tools: [
         { name: "Java", logo: "☕" },
-        { name: "Python", logo: "🐍" },
         { name: "JavaScript", logo: "📜" },
-        { name: "TypeScript", logo: "📘" }
+        { name: "Swift", logo: "🔷" },
+        { name: "Python", logo: "🐍" }
       ]
     },
     {
@@ -118,19 +118,10 @@ const Index = () => {
     {
       name: "DevOps & CI/CD",
       tools: [
+        { name: "GitHub Actions", logo: "🔄" },
+        { name: "Fastlane", logo: "🚀" },
         { name: "Jenkins", logo: "👷" },
-        { name: "Docker", logo: "🐳" },
-        { name: "Kubernetes", logo: "⚙️" },
-        { name: "AWS", logo: "☁️" }
-      ]
-    },
-    {
-      name: "Performance Testing",
-      tools: [
-        { name: "JMeter", logo: "⚡" },
-        { name: "LoadRunner", logo: "🏃" },
-        { name: "K6", logo: "📊" },
-        { name: "Artillery", logo: "🎯" }
+        { name: "Docker", logo: "🐳" }
       ]
     }
   ];
@@ -138,40 +129,40 @@ const Index = () => {
   const experiences = [
     {
       title: "Principal QA Engineer",
-      company: "TechCorp Solutions",
-      period: "2020 - Present",
-      duration: "4+ years",
-      description: "Leading QA strategy and automation initiatives for enterprise-scale applications. Built comprehensive test automation frameworks resulting in 80% reduction in manual testing efforts.",
+      company: "Backbase",
+      period: "Jul 2021 - Present",
+      duration: "3+ years",
+      description: "Leading Quality department of BDO Online and BDO Pay (largest Philippines Bank) with 6M+ active users. Spearheaded QA team growth from 2 to 73 members while implementing AI tools in STLC processes.",
       achievements: [
-        "Architected end-to-end test automation framework serving 15+ development teams",
-        "Reduced regression testing time from 2 weeks to 2 days",
-        "Mentored 8 junior QA engineers and established QA best practices"
+        "Led Quality department overseeing iOS, Android and Web app components with 6M+ active users",
+        "Drove strategic adoption of AI tools (GEMINI, COPILOT) in STLC from test case generation to PR review",
+        "Designed automation frameworks (XCUITest, Espresso, Playwright) reducing 87% regression effort"
       ],
       color: "from-blue-500 to-purple-500"
     },
     {
       title: "Senior QA Engineer",
-      company: "InnovateTech Inc",
-      period: "2017 - 2020",
-      duration: "3 years",
-      description: "Specialized in API testing and microservices quality assurance. Implemented performance testing strategies for high-traffic applications.",
+      company: "SS&C EZE Software Group",
+      period: "Oct 2016 - Jun 2021",
+      duration: "4+ years",
+      description: "Developed automation frameworks for Algorithmic Trading OMS with FIX protocol validations. Implemented CI/CD pipelines resulting in 55% reduction in release cycle time.",
       achievements: [
-        "Designed API testing framework handling 500+ endpoints",
-        "Improved application performance by 40% through comprehensive load testing",
-        "Led quality assurance for 12 major product releases"
+        "Developed automation frameworks using TestComplete, Selenium for complex Algorithmic Trading OMS",
+        "Achieved 60% reduction in manual testing effort through comprehensive test strategies",
+        "Implemented CI/CD pipelines with Jenkins, GitHub Actions reducing release cycle time by 55%"
       ],
       color: "from-purple-500 to-pink-500"
     },
     {
       title: "QA Engineer",
-      company: "StartupVenture",
-      period: "2013 - 2017",
-      duration: "4 years",
-      description: "Full-stack quality assurance for web and mobile applications. Established testing processes from ground up.",
+      company: "Prolifics Corporation Ltd",
+      period: "Apr 2014 - Sep 2016",
+      duration: "2+ years",
+      description: "Designed test scenarios and developed automated functional test suites for US Retailer Pottery Barn. Served as POC for triages and war rooms facilitating cross-team communication.",
       achievements: [
-        "Built first automated testing suite for the company",
-        "Reduced production bugs by 65% through systematic testing",
-        "Implemented mobile testing strategies for iOS and Android"
+        "Analyzed requirements and designed test scenarios from requirement documents for US Retailer",
+        "Developed automated functional test suite using Selenium WebDriver and Cucumber",
+        "Served as POC for triages and war rooms driving defect resolution and root cause analysis"
       ],
       color: "from-pink-500 to-red-500"
     }
@@ -254,10 +245,10 @@ const Index = () => {
   ];
 
   const certifications = [
-    { name: "ISTQB Advanced Test Automation Engineer", year: "2023" },
-    { name: "AWS Certified DevOps Engineer", year: "2022" },
-    { name: "Certified Kubernetes Administrator", year: "2021" },
-    { name: "Selenium WebDriver Certification", year: "2020" }
+    { name: "ISTQB® Certified CTFL", year: "2023" },
+    { name: "GitHub Actions Certification", year: "2022" },
+    { name: "iOS XCUITest Advanced", year: "2021" },
+    { name: "Selenium WebDriver Expert", year: "2020" }
   ];
 
   return (
@@ -399,7 +390,10 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
+              onClick={() => window.open('mailto:doradlarajesh@gmail.com')}
+            >
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
@@ -689,15 +683,24 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
+              onClick={() => window.open('mailto:doradlarajesh@gmail.com')}
+            >
               <Mail className="w-4 h-4 mr-2" />
-              rajesh.doradla@email.com
+              doradlarajesh@gmail.com
             </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
+              onClick={() => window.open('https://www.linkedin.com/in/rajesh-doradla/', '_blank')}
+            >
               <Linkedin className="w-4 h-4 mr-2" />
               LinkedIn Profile
             </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
+              onClick={() => window.open('https://github.com/doradlarajesh', '_blank')}
+            >
               <Github className="w-4 h-4 mr-2" />
               GitHub Profile
             </Button>
