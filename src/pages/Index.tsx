@@ -171,76 +171,41 @@ const Index = () => {
 
   const projects = [
     {
-      title: "FinTech Mobile Banking App",
-      client: "SecureBank Solutions",
-      description: "End-to-end testing automation for a mobile banking application with 2M+ active users. Implemented comprehensive security testing and performance validation.",
-      tech: ["Appium", "Java", "TestNG", "AWS Device Farm", "Jenkins"],
+      title: "BDO Pay Mobile App",
+      client: "BDO Unibank - Phillipines ",
+      description: "End-to-end testing automation for a mobile banking application with 2M+ active users. Implemented functional and automation test strategies.",
+      tech: ["XCUITest", "Espresso", "SauceLabs", "Git Hub Actions"],
       impact: "99.9% uptime achieved",
       status: "Live Production",
       links: {
-        playstore: "https://play.google.com/store/apps/details?id=com.securebank.mobile",
-        appstore: "https://apps.apple.com/app/securebank-mobile/id123456789"
+        playstore: "https://play.google.com/store/apps/details?id=ph.com.bdo.pay&hl=en",
+        appstore: "https://apps.apple.com/us/app/bdo-pay/id6450918577"
       }
     },
     {
-      title: "E-Commerce Platform Testing",
-      client: "ShopGlobal Inc",
-      description: "Complete QA automation suite for a multi-vendor e-commerce platform handling 50K+ daily transactions. Focus on payment gateway testing and user journey validation.",
-      tech: ["Selenium", "Python", "Pytest", "Docker", "CircleCI"],
+      title: "BDO Online Web & Mobile App",
+      client: "BDO Unibank - Phillipines ",
+      description: "E2E Quality framework set-up. Lead the QA team in Functional and Automation effort. Set up CICD pipelines.",
+      tech: ["Playwright", "XCUITest", "Espresso", "SauceLabs", "Git Hub Actions"],
       impact: "40% faster deployment cycles",
-      status: "Active Development",
+      status: "Live Production",
       links: {
-        website: "https://shopglobal.com",
-        playstore: "https://play.google.com/store/apps/details?id=com.shopglobal.app",
-        appstore: "https://apps.apple.com/app/shopglobal/id987654321"
+        website: "https://www.onlinebanking.bdo.com.ph/en-US/",
+        playstore: "https://play.google.com/store/apps/details?id=ph.com.bdo.retail&hl=en",
+        appstore: "https://apps.apple.com/us/app/bdo-online/id1551584630"
       }
     },
     {
-      title: "Healthcare Management System",
-      client: "MedTech Innovations",
+      title: "EZE OMS Web and Mobile App",
+      client: "SS&C EZE Software",
       description: "HIPAA-compliant testing framework for healthcare management platform. Specialized in data privacy validation and medical device integration testing.",
-      tech: ["Cypress", "TypeScript", "GitHub Actions", "Postman"],
+      tech: ["Playwright", "Appium", "Test Complete", "Jenkins"],
       impact: "HIPAA compliance achieved",
       status: "Recently Launched",
       links: {
-        website: "https://medtech-innovations.com"
-      }
-    },
-    {
-      title: "Food Delivery Mobile App",
-      client: "QuickBite Technologies",
-      description: "Real-time testing automation for food delivery platform with live order tracking, payment processing, and driver management systems.",
-      tech: ["Selenium", "Appium", "REST Assured", "Kubernetes"],
-      impact: "500K+ downloads in first month",
-      status: "Live Production",
-      links: {
-        playstore: "https://play.google.com/store/apps/details?id=com.quickbite.delivery",
-        appstore: "https://apps.apple.com/app/quickbite-delivery/id456789123"
-      }
-    },
-    {
-      title: "IoT Smart Home Platform",
-      client: "ConnectHome Labs",
-      description: "Quality assurance for IoT device integration platform. Testing includes device compatibility, real-time data processing, and mobile app synchronization.",
-      tech: ["Python", "MQTT", "Selenium", "Postman", "AWS IoT"],
-      impact: "Integration with 200+ IoT devices",
-      status: "Beta Testing",
-      links: {
-        website: "https://connecthome-labs.com",
-        playstore: "https://play.google.com/store/apps/details?id=com.connecthome.smart"
-      }
-    },
-    {
-      title: "Educational Learning Platform",
-      client: "EduFuture Systems",
-      description: "Comprehensive testing suite for online learning platform serving 100K+ students. Focus on video streaming quality, assignment submissions, and real-time collaboration.",
-      tech: ["Selenium", "JMeter", "TestNG", "Jenkins", "MongoDB"],
-      impact: "Support for 10K concurrent users",
-      status: "Live Production",
-      links: {
-        website: "https://edufuture-systems.com",
-        playstore: "https://play.google.com/store/apps/details?id=com.edufuture.learn",
-        appstore: "https://apps.apple.com/app/edufuture-learn/id789123456"
+        website: "https://www.ezesoftcloud.com/ims/#/login",
+        playstore: "https://play.google.com/store/apps/details?id=com.ezesoft.mobile&hl=en",
+        appstore: "https://apps.apple.com/in/app/eze-for-iphone/id1528044898"
       }
     }
   ];
