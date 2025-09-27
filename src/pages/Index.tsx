@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import profilePhoto from "@/assets/profile-photo.png";
 import { 
   Code2, 
   Bug, 
@@ -350,9 +351,9 @@ const Index = () => {
           {/* Profile Picture */}
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <Avatar className="w-32 h-32 border-4 border-gradient-to-r from-blue-400 to-purple-400 shadow-2xl">
+              <Avatar className="w-40 h-40 border-4 border-gradient-to-r from-blue-400 to-purple-400 shadow-2xl">
                 <AvatarImage 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
+                  src={profilePhoto} 
                   alt="Rajesh Doradla"
                   className="object-cover"
                 />
@@ -402,7 +403,7 @@ const Index = () => {
             </Button>
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('https://drive.google.com/uc?export=download&id=1_oe5oUWi9nIDz1xrHgrBqBt0XFXQwQQR', '_blank')}
+              onClick={() => window.open('https://drive.google.com/file/d/1_oe5oUWi9nIDz1xrHgrBqBt0XFXQwQQR/view', '_blank')}
             >
               <Download className="w-4 h-4 mr-2" />
               Download Resume
@@ -676,6 +677,115 @@ const Index = () => {
                     </Badge>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Published Articles Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+              Published Articles
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Sharing knowledge and insights from my journey in Quality Engineering and Test Automation
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Medium
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                  Postman GitHub Actions Integration
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
+                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub Actions</Badge>
+                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Newman</Badge>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                  onClick={() => window.open('https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Read Article
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Medium
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                  Understanding Webhooks & Slack Integration
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Comprehensive guide on webhooks and how to create Slack webhook integrations for real-time notifications and automation.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Webhooks</Badge>
+                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">Slack</Badge>
+                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Integration</Badge>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                  onClick={() => window.open('https://medium.com/@doradlarajesh/what-is-webhook-how-to-create-slack-webhook-36c692bbec3b', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Read Article
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Medium
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                  Postman GitHub Integration for Collection Backup
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
+                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub</Badge>
+                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Backup</Badge>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                  onClick={() => window.open('https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Read Article
+                </Button>
               </CardContent>
             </Card>
           </div>
