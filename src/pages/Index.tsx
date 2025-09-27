@@ -259,9 +259,12 @@ const Index = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <button 
+                onClick={() => scrollToSection('home')}
+                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-pointer"
+              >
                 RD
-              </span>
+              </button>
             </div>
 
             {/* Desktop Menu */}
@@ -397,16 +400,22 @@ const Index = () => {
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
+              onClick={() => window.open('https://drive.google.com/uc?export=download&id=1_oe5oUWi9nIDz1xrHgrBqBt0XFXQwQQR', '_blank')}
+            >
               <Download className="w-4 h-4 mr-2" />
               Download Resume
             </Button>
           </div>
         </div>
         
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-6 h-6 text-gray-400" />
-        </div>
+        <button 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:text-white transition-colors duration-300 cursor-pointer group"
+          onClick={() => scrollToSection('experience')}
+        >
+          <ChevronDown className="w-6 h-6 text-gray-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+        </button>
       </section>
 
       {/* Experience Section - Timeline View */}
