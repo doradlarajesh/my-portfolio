@@ -273,17 +273,15 @@ const typeTimer = setInterval(() => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-lg shadow-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <button 
-              onClick={() => scrollToSection('home')}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-all duration-500 cursor-pointer animate-pulse hover:animate-none hover:rotate-12 group"
-            >
-              <span className="inline-block group-hover:rotate-180 transition-transform duration-700">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <button 
+                onClick={() => scrollToSection('home')}
+                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-pointer"
+              >
                 RD
-              </span>
-            </button>
-          </div>
+              </button>
+            </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:block">
