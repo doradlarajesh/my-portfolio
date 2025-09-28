@@ -29,16 +29,34 @@ import {
   Briefcase,
   BookOpen,
   Phone,
-  Calendar
+  Calendar,
+  Activity,
+  Monitor,
+  FileCheck,
+  BarChart3
 } from "lucide-react";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Typing animation
+    const fullName = "Rajesh Doradla";
+    let currentIndex = 0;
+    
+    const typeTimer = setInterval(() => {
+      if (currentIndex <= fullName.length) {
+        setTypedText(fullName.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typeTimer);
+      }
+    }, 150);
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
@@ -58,7 +76,10 @@ const Index = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(typeTimer);
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -139,7 +160,8 @@ const Index = () => {
         "Drove strategic adoption of AI tools (GEMINI, COPILOT) in STLC from test case generation to PR review",
         "Designed automation frameworks (XCUITest, Espresso, Playwright) reducing 87% regression effort"
       ],
-      color: "from-blue-500 to-purple-500"
+      color: "from-blue-500 to-purple-500",
+      website: "https://www.backbase.com/"
     },
     {
       title: "Senior QA Engineer",
@@ -152,7 +174,8 @@ const Index = () => {
         "Achieved 60% reduction in manual testing effort through comprehensive test strategies",
         "Implemented CI/CD pipelines with Jenkins, GitHub Actions reducing release cycle time by 55%"
       ],
-      color: "from-purple-500 to-pink-500"
+      color: "from-purple-500 to-pink-500",
+      website: "https://www.ezesoft.com/"
     },
     {
       title: "QA Engineer",
@@ -165,7 +188,8 @@ const Index = () => {
         "Developed automated functional test suite using Selenium WebDriver and Cucumber",
         "Served as POC for triages and war rooms driving defect resolution and root cause analysis"
       ],
-      color: "from-pink-500 to-red-500"
+      color: "from-pink-500 to-red-500",
+      website: "https://prolifics.com/usa/"
     }
   ];
 
@@ -298,13 +322,33 @@ const Index = () => {
         )}
       </nav>
 
-      {/* Animated background particles */}
+      {/* Animated background particles and QA animations */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-10 opacity-50">
+        <div className="absolute -inset-10 opacity-30">
           <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
           <div className="absolute top-3/4 left-1/2 w-1 h-1 bg-purple-400 rounded-full animate-ping"></div>
           <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
           <div className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+          
+          {/* QA Automation themed floating icons */}
+          <div className="absolute top-20 left-10 opacity-20 animate-float">
+            <Bug className="w-8 h-8 text-red-400 animate-pulse" />
+          </div>
+          <div className="absolute top-32 right-20 opacity-20 animate-float" style={{animationDelay: '1s'}}>
+            <Code2 className="w-6 h-6 text-green-400 animate-spin" style={{animationDuration: '8s'}} />
+          </div>
+          <div className="absolute bottom-40 left-20 opacity-20 animate-float" style={{animationDelay: '2s'}}>
+            <Activity className="w-7 h-7 text-yellow-400 animate-pulse" />
+          </div>
+          <div className="absolute top-1/3 right-1/3 opacity-20 animate-float" style={{animationDelay: '1.5s'}}>
+            <Monitor className="w-5 h-5 text-blue-400 animate-bounce" />
+          </div>
+          <div className="absolute bottom-1/3 right-1/4 opacity-20 animate-float" style={{animationDelay: '0.5s'}}>
+            <FileCheck className="w-6 h-6 text-purple-400 animate-pulse" />
+          </div>
+          <div className="absolute top-2/3 left-1/3 opacity-20 animate-float" style={{animationDelay: '2.5s'}}>
+            <BarChart3 className="w-8 h-8 text-pink-400 animate-bounce" style={{animationDelay: '3s'}} />
+          </div>
         </div>
       </div>
 
@@ -331,8 +375,9 @@ const Index = () => {
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in">
-              Rajesh Doradla
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in min-h-[1.2em] flex items-center justify-center">
+              {typedText}
+              <span className="animate-pulse ml-1 text-blue-400">|</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 animate-fade-in">
               Principal QA Engineer
@@ -412,12 +457,15 @@ const Index = () => {
                   
                   {/* Content card */}
                   <div className={`w-full ${index % 2 === 0 ? 'md:w-1/2 md:pr-8' : 'md:w-1/2 md:pl-8'} ml-12 md:ml-0`}>
-                    <Card className={`bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-500 group hover:shadow-2xl transform hover:-translate-y-2 animate-fade-in hover:shadow-purple-500/20`}>
+                    <Card 
+                      className={`bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-500 group hover:shadow-2xl transform hover:-translate-y-2 animate-fade-in hover:shadow-purple-500/20 cursor-pointer`}
+                      onClick={() => window.open(exp.website, '_blank')}
+                    >
                       <CardHeader>
                         <div className="flex flex-col space-y-2">
-                          <div className={`w-12 h-1 bg-gradient-to-r ${exp.color} rounded-full group-hover:w-full transition-all duration-500`}></div>
+                          <div className={`w-12 h-1 bg-gradient-to-r ${exp.color} rounded-full group-hover:w-24 transition-all duration-500`}></div>
                           <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
-                          <CardDescription className="text-blue-400 font-medium">{exp.company}</CardDescription>
+                          <CardDescription className="text-blue-400 font-medium group-hover:text-blue-300 transition-colors duration-300">{exp.company}</CardDescription>
                           <div className="flex items-center space-x-4 md:hidden">
                             <Badge variant="outline" className="border-purple-500 text-purple-300">
                               {exp.period}
@@ -437,6 +485,10 @@ const Index = () => {
                               <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
                             </div>
                           ))}
+                        </div>
+                        <div className="mt-4 flex items-center text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          Click to visit company website
                         </div>
                       </CardContent>
                     </Card>
@@ -553,7 +605,7 @@ const Index = () => {
                           href={project.links.website} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg font-medium"
                         >
                           <Globe className="w-3 h-3 mr-1" />
                           Website
@@ -564,7 +616,7 @@ const Index = () => {
                           href={project.links.playstore} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1 bg-green-600 text-white text-xs rounded-full hover:bg-green-700 transition-all duration-300 hover:scale-105"
+                          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white text-xs rounded-full hover:from-green-700 hover:to-green-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium"
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
                           Play Store
@@ -575,7 +627,7 @@ const Index = () => {
                           href={project.links.appstore} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded-full hover:bg-gray-700 transition-all duration-300 hover:scale-105"
+                          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white text-xs rounded-full hover:from-gray-800 hover:to-gray-900 transition-all duration-300 hover:scale-105 shadow-lg font-medium"
                         >
                           <ExternalLink className="w-3 h-3 mr-1" />
                           App Store
