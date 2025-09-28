@@ -45,34 +45,43 @@ const Index = () => {
   useEffect(() => {
     setIsVisible(true);
     
-    // Continuous typing animation
-    const fullName = "Rajesh Doradla";
-    let currentIndex = 0;
-    let isDeleting = false;
+// Continuous typing animation
+
+const fullName = "Rajesh Doradla";
+let currentIndex = 0;
+let isDeleting = false;
+
+const typeTimer = setInterval(() => {
+
+  if (!isDeleting) {
+    if (currentIndex < fullName.length) { // Changed to < length for better logic
+      currentIndex++;
+      setTypedText(fullName.slice(0, currentIndex));
+    } else {
+      // Pause before starting to delete
+      setTimeout(() => {
+        isDeleting = true;
+      }, 2000);
+    }
+
+  } else {
+    // FIX APPLIED HERE: The deletion logic must run, and only AFTER 
+    // the last character is deleted (currentIndex is 0), should the pause begin.
     
-    const typeTimer = setInterval(() => {
-      if (!isDeleting) {
-        if (currentIndex <= fullName.length) {
-          setTypedText(fullName.slice(0, currentIndex));
-          currentIndex++;
-        } else {
-          // Pause before starting to delete
-          setTimeout(() => {
-            isDeleting = true;
-          }, 2000);
-        }
-      } else {
-        if (currentIndex > 0) {
-          setTypedText(fullName.slice(0, currentIndex));
-          currentIndex--;
-        } else {
-          // Pause before starting to type again
-          setTimeout(() => {
-            isDeleting = false;
-          }, 1000);
-        }
-      }
-    }, isDeleting ? 100 : 150);
+    if (currentIndex > 0) {
+      currentIndex--;
+    } 
+    
+    setTypedText(fullName.slice(0, currentIndex)); // Moved this out of the 'if'
+
+    if (currentIndex === 0) { // Check for currentIndex 0 AFTER the text has been set to ""
+      // Pause before starting to type again
+      setTimeout(() => {
+        isDeleting = false;
+      }, 1000);
+    }
+  }
+}, isDeleting ? 100 : 150);
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
