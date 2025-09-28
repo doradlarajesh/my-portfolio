@@ -45,22 +45,38 @@ const Index = () => {
   useEffect(() => {
     setIsVisible(true);
     
-    // Typing animation
+    // Continuous typing animation
     const fullName = "Rajesh Doradla";
     let currentIndex = 0;
+    let isDeleting = false;
     
     const typeTimer = setInterval(() => {
-      if (currentIndex <= fullName.length) {
-        setTypedText(fullName.slice(0, currentIndex));
-        currentIndex++;
+      if (!isDeleting) {
+        if (currentIndex <= fullName.length) {
+          setTypedText(fullName.slice(0, currentIndex));
+          currentIndex++;
+        } else {
+          // Pause before starting to delete
+          setTimeout(() => {
+            isDeleting = true;
+          }, 2000);
+        }
       } else {
-        clearInterval(typeTimer);
+        if (currentIndex > 0) {
+          setTypedText(fullName.slice(0, currentIndex));
+          currentIndex--;
+        } else {
+          // Pause before starting to type again
+          setTimeout(() => {
+            isDeleting = false;
+          }, 1000);
+        }
       }
-    }, 150);
+    }, isDeleting ? 100 : 150);
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
-      const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'contact'];
+      const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -96,6 +112,7 @@ const Index = () => {
     { id: 'skills', label: 'Skills', icon: Code2 },
     { id: 'projects', label: 'Projects', icon: Briefcase },
     { id: 'achievements', label: 'Achievements', icon: Award },
+    { id: 'articles', label: 'Articles', icon: BookOpen },
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
 
@@ -244,7 +261,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* Navigation Menu */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-700/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-lg border-b border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -448,7 +465,7 @@ const Index = () => {
                   <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
                   
                   {/* Date indicator */}
-                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'right-1/2 mr-8' : 'left-1/2 ml-8'}`}>
+                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'right-1/2 mr-8 text-right' : 'left-1/2 ml-8 text-left'}`}>
                     <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600">
                       <Calendar className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-gray-300">{exp.period}</span>
@@ -701,7 +718,7 @@ const Index = () => {
       </section>
 
       {/* Published Articles Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
+      <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
