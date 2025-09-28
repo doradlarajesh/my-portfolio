@@ -270,18 +270,20 @@ const typeTimer = setInterval(() => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* Navigation Menu */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-lg border-b border-slate-800/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-lg shadow-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-pointer"
-              >
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <button 
+              onClick={() => scrollToSection('home')}
+              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-all duration-500 cursor-pointer animate-pulse hover:animate-none hover:rotate-12 group"
+            >
+              <span className="inline-block group-hover:rotate-180 transition-transform duration-700">
                 RD
-              </button>
-            </div>
+              </span>
+            </button>
+          </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:block">
@@ -294,8 +296,8 @@ const typeTimer = setInterval(() => {
                       onClick={() => scrollToSection(item.id)}
                       className={`group px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:scale-105 ${
                         activeSection === item.id
-                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/30'
-                          : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
+                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/50 shadow-md shadow-blue-500/20'
+                          : 'text-gray-300 hover:text-white hover:bg-slate-800/60 border border-transparent hover:border-slate-700/50'
                       }`}
                     >
                       <Icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
@@ -464,8 +466,11 @@ const typeTimer = setInterval(() => {
           </div>
           
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></div>
+            {/* Timeline line with scroll effect */}
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-300 to-purple-300 animate-pulse opacity-50"></div>
+              <div className="absolute w-full h-8 bg-gradient-to-b from-white to-transparent animate-bounce opacity-30" style={{animationDuration: '3s'}}></div>
+            </div>
             
             <div className="space-y-12">
               {experiences.map((exp, index) => (
@@ -473,9 +478,9 @@ const typeTimer = setInterval(() => {
                   {/* Timeline dot */}
                   <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
                   
-                  {/* Date indicator */}
-                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'right-1/2 mr-8 text-right' : 'left-1/2 ml-8 text-left'}`}>
-                    <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600">
+                  {/* Date indicator - all right aligned */}
+                  <div className={`hidden md:block absolute top-0 right-1/2 mr-8 text-right`}>
+                    <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600 hover:border-blue-500/50 transition-all duration-300 hover:bg-slate-800/90">
                       <Calendar className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-gray-300">{exp.period}</span>
                     </div>
