@@ -243,7 +243,7 @@ const typeTimer = setInterval(() => {
       company: "Backbase",
       period: "Jul 2021 - Present",
       duration: "3+ years",
-      description: "Leading Quality department of BDO Online and BDO Pay (largest Philippines Bank) with 6M+ active users. Spearheaded QA team growth from 2 to 73 members while implementing AI tools in STLC processes.",
+      description: "Led Quality department of BDO Online and BDO Pay (largest Philippines Bank) with 6M+ active users. Spearheaded QA team growth from 2 to 73 members while implementing AI tools in STLC processes.",
       achievements: [
         "Led Quality department overseeing iOS, Android and Web app components with 6M+ active users",
         "Drove strategic adoption of AI tools (GEMINI, COPILOT) in STLC from test case generation to PR review",
@@ -271,10 +271,11 @@ const typeTimer = setInterval(() => {
       company: "Prolifics Corporation Ltd",
       period: "Apr 2014 - Sep 2016",
       duration: "2+ years",
-      description: "Designed test scenarios and developed automated functional test suites for US Retailer Pottery Barn. Served as POC for triages and war rooms facilitating cross-team communication.",
+      description: "Designed test scenarios and developed automated functional test suites for US Retailer William Sonoma & Pottery Barn. Started many initiatives and served as POC for triages and war rooms facilitating cross-team communication.",
       achievements: [
-        "Analyzed requirements and designed test scenarios from requirement documents for US Retailer",
         "Developed automated functional test suite using Selenium WebDriver and Cucumber",
+        "Analyzed requirements and designed test scenarios from requirement and low level and high level design documents for US Retailer",
+        "Worked closely with development team/On-shore team on the design and implementation of enhancements based on the tuning recommendations.",
         "Served as POC for triages and war rooms driving defect resolution and root cause analysis"
       ],
       color: "from-pink-500 to-red-500",
