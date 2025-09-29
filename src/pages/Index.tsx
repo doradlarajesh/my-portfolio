@@ -287,8 +287,7 @@ const typeTimer = setInterval(() => {
             <div className="flex-shrink-0">
               <button 
                 onClick={() => scrollToSection('home')}
-                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer"
-              >
+                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer transform hover:scale-110 transition-transform duration-300">
                 RD
               </button>
             </div>
