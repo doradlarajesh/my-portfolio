@@ -86,15 +86,25 @@ const typeTimer = setInterval(() => {
     // Handle scroll for active section highlighting
     const handleScroll = () => {
       const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 150; // Increased offset for better detection
 
-      for (const section of sections) {
+      // Check sections in reverse order to handle overlap better
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          // For the last section (contact), use a different detection logic
+          if (section === 'contact') {
+            // If we're near the bottom of the page or in the contact section
+            if (scrollPosition >= offsetTop - 100 || 
+                (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
+              setActiveSection(section);
+              return;
+            }
+          } else if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
-            break;
+            return;
           }
         }
       }
@@ -277,7 +287,7 @@ const typeTimer = setInterval(() => {
             <div className="flex-shrink-0">
               <button 
                 onClick={() => scrollToSection('home')}
-                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-pointer"
+                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-pulse hover:animate-none hover:rotate-12 transition-all duration-500 cursor-pointer transform hover:scale-110"
               >
                 RD
               </button>
@@ -476,8 +486,8 @@ const typeTimer = setInterval(() => {
                   {/* Timeline dot */}
                   <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
                   
-                  {/* Date indicator - all right aligned */}
-                  <div className={`hidden md:block absolute top-0 right-1/2 mr-8 text-right`}>
+                  {/* Date indicator - positioned opposite to content */}
+                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'left-1/2 ml-8 text-left' : 'right-1/2 mr-8 text-right'}`}>
                     <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600 hover:border-blue-500/50 transition-all duration-300 hover:bg-slate-800/90">
                       <Calendar className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-gray-300">{exp.period}</span>
