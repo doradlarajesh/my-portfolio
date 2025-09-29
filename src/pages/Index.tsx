@@ -357,39 +357,64 @@ const typeTimer = setInterval(() => {
         )}
       </nav>
 
-      {/* Animated background particles and QA animations */}
+      {/* Epic Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-10 opacity-30">
+        {/* Animated gradient waves */}
+        <div className="absolute inset-0 bg-gradient-waves opacity-30"></div>
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute -inset-10">
+          <div className="absolute top-20 left-20 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full animate-float blur-sm"></div>
+          <div className="absolute top-40 right-32 w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg rotate-45 animate-float-delayed blur-sm"></div>
+          <div className="absolute bottom-32 left-32 w-24 h-24 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full animate-float blur-sm" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-64 right-20 w-12 h-12 bg-gradient-to-br from-pink-500/20 to-red-500/20 rounded-lg rotate-12 animate-float-delayed blur-sm" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 right-40 w-18 h-18 bg-gradient-to-br from-green-500/20 to-cyan-500/20 rounded-full animate-float blur-sm" style={{animationDelay: '0.5s'}}></div>
+        </div>
+        
+        {/* Subtle particle system */}
+        <div className="absolute inset-0 opacity-40">
           <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
           <div className="absolute top-3/4 left-1/2 w-1 h-1 bg-purple-400 rounded-full animate-ping"></div>
           <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
           <div className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
-          
-          {/* QA Automation themed floating icons */}
-          <div className="absolute top-20 left-10 opacity-20 animate-float">
-            <Bug className="w-8 h-8 text-red-400 animate-pulse" />
+          <div className="absolute top-1/3 left-2/3 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/2 right-1/3 w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{animationDelay: '1.5s'}}></div>
+        </div>
+        
+        {/* Professional QA themed floating icons */}
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-20 left-16 animate-float">
+            <Bug className="w-12 h-12 text-red-400" />
           </div>
-          <div className="absolute top-32 right-20 opacity-20 animate-float" style={{animationDelay: '1s'}}>
-            <Code2 className="w-6 h-6 text-green-400 animate-spin" style={{animationDuration: '8s'}} />
+          <div className="absolute top-32 right-24 animate-float-delayed" style={{animationDelay: '1s'}}>
+            <Code2 className="w-10 h-10 text-green-400" />
           </div>
-          <div className="absolute bottom-40 left-20 opacity-20 animate-float" style={{animationDelay: '2s'}}>
-            <Activity className="w-7 h-7 text-yellow-400 animate-pulse" />
+          <div className="absolute bottom-40 left-24 animate-float" style={{animationDelay: '2s'}}>
+            <Activity className="w-11 h-11 text-yellow-400" />
           </div>
-          <div className="absolute top-1/3 right-1/3 opacity-20 animate-float" style={{animationDelay: '1.5s'}}>
-            <Monitor className="w-5 h-5 text-blue-400 animate-bounce" />
+          <div className="absolute top-1/3 right-1/3 animate-float-delayed" style={{animationDelay: '1.5s'}}>
+            <Monitor className="w-9 h-9 text-blue-400" />
           </div>
-          <div className="absolute bottom-1/3 right-1/4 opacity-20 animate-float" style={{animationDelay: '0.5s'}}>
-            <FileCheck className="w-6 h-6 text-purple-400 animate-pulse" />
+          <div className="absolute bottom-1/3 right-1/4 animate-float" style={{animationDelay: '0.5s'}}>
+            <FileCheck className="w-10 h-10 text-purple-400" />
           </div>
-          <div className="absolute top-2/3 left-1/3 opacity-20 animate-float" style={{animationDelay: '2.5s'}}>
-            <BarChart3 className="w-8 h-8 text-pink-400 animate-bounce" style={{animationDelay: '3s'}} />
+          <div className="absolute top-2/3 left-1/3 animate-float-delayed" style={{animationDelay: '2.5s'}}>
+            <BarChart3 className="w-12 h-12 text-pink-400" />
+          </div>
+          <div className="absolute top-1/2 left-1/6 animate-float" style={{animationDelay: '3s'}}>
+            <Shield className="w-10 h-10 text-cyan-400" />
+          </div>
+          <div className="absolute bottom-1/4 right-1/6 animate-float-delayed" style={{animationDelay: '0.8s'}}>
+            <Target className="w-11 h-11 text-orange-400" />
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16 overflow-hidden">
+        {/* Dynamic mesh gradient background */}
+        <div className="absolute inset-0 bg-gradient-mesh opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-10"></div>
         
         <div className={`text-center space-y-8 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {/* Profile Picture */}
