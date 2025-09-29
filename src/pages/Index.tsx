@@ -41,9 +41,28 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [typedText, setTypedText] = useState("");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Initialize particles
+    const initialParticles = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2
+    }));
+    setParticles(initialParticles);
+
+    // Mouse tracking
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
     
 // Continuous typing animation
 
@@ -82,6 +101,40 @@ const typeTimer = setInterval(() => {
     }
   }
 }, isDeleting ? 100 : 150);
+
+    // Particle animation
+    const animateParticles = () => {
+      setParticles(prev => prev.map(particle => {
+        let newX = particle.x + particle.vx;
+        let newY = particle.y + particle.vy;
+        let newVx = particle.vx;
+        let newVy = particle.vy;
+
+        // Bounce off edges
+        if (newX <= 0 || newX >= window.innerWidth) newVx = -newVx;
+        if (newY <= 0 || newY >= window.innerHeight) newVy = -newVy;
+
+        // Attraction to mouse
+        const dx = mousePosition.x - newX;
+        const dy = mousePosition.y - newY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 200) {
+          newVx += dx * 0.0001;
+          newVy += dy * 0.0001;
+        }
+
+        return {
+          ...particle,
+          x: Math.max(0, Math.min(window.innerWidth, newX)),
+          y: Math.max(0, Math.min(window.innerHeight, newY)),
+          vx: Math.max(-3, Math.min(3, newVx)),
+          vy: Math.max(-3, Math.min(3, newVy))
+        };
+      }));
+    };
+
+    const particleInterval = setInterval(animateParticles, 50);
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
@@ -357,39 +410,132 @@ const typeTimer = setInterval(() => {
         )}
       </nav>
 
-      {/* Animated background particles and QA animations */}
+      {/* EPIC Interactive Background System */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-10 opacity-30">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-3/4 left-1/2 w-1 h-1 bg-purple-400 rounded-full animate-ping"></div>
-          <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
-          <div className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+        {/* Interactive Particle System */}
+        <div className="absolute inset-0">
+          {particles.map((particle) => (
+            <div
+              key={particle.id}
+              className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60"
+              style={{
+                left: particle.x,
+                top: particle.y,
+                boxShadow: `0 0 20px hsl(${220 + Math.sin(Date.now() * 0.001 + particle.id) * 60} 70% 60% / 0.5)`
+              }}
+            />
+          ))}
           
-          {/* QA Automation themed floating icons */}
-          <div className="absolute top-20 left-10 opacity-20 animate-float">
-            <Bug className="w-8 h-8 text-red-400 animate-pulse" />
+          {/* Connection lines between particles */}
+          <svg className="absolute inset-0 w-full h-full opacity-30">
+            {particles.map((particle, i) => 
+              particles.slice(i + 1).map((otherParticle, j) => {
+                const distance = Math.sqrt(
+                  Math.pow(particle.x - otherParticle.x, 2) + 
+                  Math.pow(particle.y - otherParticle.y, 2)
+                );
+                if (distance < 150) {
+                  return (
+                    <line
+                      key={`${i}-${j}`}
+                      x1={particle.x}
+                      y1={particle.y}
+                      x2={otherParticle.x}
+                      y2={otherParticle.y}
+                      stroke="url(#particleGradient)"
+                      strokeWidth="1"
+                      opacity={Math.max(0, 1 - distance / 150)}
+                    />
+                  );
+                }
+                return null;
+              })
+            )}
+            <defs>
+              <linearGradient id="particleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(220 70% 60%)" />
+                <stop offset="100%" stopColor="hsl(280 70% 60%)" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        {/* Mouse Cursor Glow Effect */}
+        <div 
+          className="absolute w-96 h-96 pointer-events-none"
+          style={{
+            left: mousePosition.x - 192,
+            top: mousePosition.y - 192,
+            background: `radial-gradient(circle, hsl(220 70% 60% / 0.1) 0%, transparent 70%)`,
+            filter: 'blur(20px)'
+          }}
+        />
+
+        {/* Animated Matrix-style Code Rain */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="animate-matrix-rain text-green-400 font-mono text-xs leading-4">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute animate-fall opacity-70"
+                style={{
+                  left: `${i * 5}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${15 + Math.random() * 10}s`
+                }}
+              >
+                {['describe("QA Test"', 'expect(bug).toBe(null)', 'await page.click()', 'assert.equal()', 'cy.get(".button")', 'test.skip()', 'beforeEach()', 'it("should pass")'][Math.floor(Math.random() * 8)]}
+              </div>
+            ))}
           </div>
-          <div className="absolute top-32 right-20 opacity-20 animate-float" style={{animationDelay: '1s'}}>
-            <Code2 className="w-6 h-6 text-green-400 animate-spin" style={{animationDuration: '8s'}} />
+        </div>
+
+        {/* Dynamic Geometric Morphing Shapes */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-24 h-24 animate-morph-1 opacity-20">
+            <div className="w-full h-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 animate-spin-slow rounded-full"></div>
           </div>
-          <div className="absolute bottom-40 left-20 opacity-20 animate-float" style={{animationDelay: '2s'}}>
-            <Activity className="w-7 h-7 text-yellow-400 animate-pulse" />
+          <div className="absolute top-40 right-32 w-20 h-20 animate-morph-2 opacity-20">
+            <div className="w-full h-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 animate-pulse rounded-lg rotate-45"></div>
           </div>
-          <div className="absolute top-1/3 right-1/3 opacity-20 animate-float" style={{animationDelay: '1.5s'}}>
-            <Monitor className="w-5 h-5 text-blue-400 animate-bounce" />
+          <div className="absolute bottom-32 left-32 w-28 h-28 animate-morph-3 opacity-20">
+            <div className="w-full h-full bg-gradient-to-br from-cyan-500/30 to-blue-500/30 animate-bounce rounded-full"></div>
           </div>
-          <div className="absolute bottom-1/3 right-1/4 opacity-20 animate-float" style={{animationDelay: '0.5s'}}>
-            <FileCheck className="w-6 h-6 text-purple-400 animate-pulse" />
+        </div>
+
+        {/* Glitch Effect Overlay */}
+        <div className="absolute inset-0 animate-glitch opacity-5 mix-blend-screen">
+          <div className="w-full h-full bg-gradient-to-r from-red-500 via-transparent to-blue-500"></div>
+        </div>
+
+        {/* Professional QA Icons with Enhanced Animation */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-16 animate-orbit-1">
+            <Bug className="w-14 h-14 text-red-400 animate-pulse" />
           </div>
-          <div className="absolute top-2/3 left-1/3 opacity-20 animate-float" style={{animationDelay: '2.5s'}}>
-            <BarChart3 className="w-8 h-8 text-pink-400 animate-bounce" style={{animationDelay: '3s'}} />
+          <div className="absolute top-32 right-24 animate-orbit-2">
+            <Code2 className="w-12 h-12 text-green-400 animate-spin-slow" />
+          </div>
+          <div className="absolute bottom-40 left-24 animate-orbit-3">
+            <Activity className="w-13 h-13 text-yellow-400 animate-bounce" />
+          </div>
+          <div className="absolute top-1/3 right-1/3 animate-orbit-4">
+            <Monitor className="w-11 h-11 text-blue-400 animate-pulse" />
+          </div>
+          <div className="absolute bottom-1/3 right-1/4 animate-orbit-5">
+            <FileCheck className="w-12 h-12 text-purple-400 animate-spin-slow" />
+          </div>
+          <div className="absolute top-2/3 left-1/3 animate-orbit-6">
+            <BarChart3 className="w-14 h-14 text-pink-400 animate-bounce" />
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16 overflow-hidden">
+        {/* Dynamic mesh gradient background */}
+        <div className="absolute inset-0 bg-gradient-mesh opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-10"></div>
         
         <div className={`text-center space-y-8 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {/* Profile Picture */}
@@ -410,9 +556,12 @@ const typeTimer = setInterval(() => {
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in min-h-[1.2em] flex items-center justify-center">
-              {typedText}
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in min-h-[1.2em] flex items-center justify-center relative">
+              <span className="animate-text-glow">{typedText}</span>
               <span className="animate-pulse ml-1 text-blue-400">|</span>
+              <div className="absolute inset-0 animate-glitch-text opacity-20 pointer-events-none">
+                {typedText}
+              </div>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 animate-fade-in">
               Principal QA Engineer
