@@ -102,7 +102,7 @@
   }
 }
 
-/* Custom animations */
+/* EPIC Custom Animations */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
@@ -145,12 +145,258 @@
   }
 }
 
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes glitch {
+  0%, 100% {
+    transform: translate(0);
+  }
+  10% {
+    transform: translate(-2px, 2px);
+  }
+  20% {
+    transform: translate(-1px, -1px);
+  }
+  30% {
+    transform: translate(1px, 2px);
+  }
+  40% {
+    transform: translate(-1px, -1px);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+  }
+  60% {
+    transform: translate(-1px, -1px);
+  }
+  70% {
+    transform: translate(1px, 2px);
+  }
+  80% {
+    transform: translate(-1px, -1px);
+  }
+  90% {
+    transform: translate(1px, 2px);
+  }
+}
+
+@keyframes glitch-text {
+  0%, 100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(-1px, -1px);
+    filter: hue-rotate(180deg);
+  }
+  60% {
+    transform: translate(-1px, -1px);
+    filter: hue-rotate(270deg);
+  }
+  80% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes text-glow {
+  0%, 100% {
+    text-shadow: 0 0 20px hsl(220 70% 60% / 0.5), 0 0 40px hsl(220 70% 60% / 0.3);
+  }
+  50% {
+    text-shadow: 0 0 30px hsl(280 70% 60% / 0.8), 0 0 60px hsl(280 70% 60% / 0.4);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes morph-1 {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: rotate(180deg) scale(1.1);
+  }
+}
+
+@keyframes morph-2 {
+  0%, 100% {
+    border-radius: 40% 60% 60% 40% / 60% 30% 60% 40%;
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 70% 30% 50% 50% / 30% 50% 70% 50%;
+    transform: rotate(120deg) scale(0.9);
+  }
+  66% {
+    border-radius: 50% 50% 30% 70% / 50% 70% 50% 30%;
+    transform: rotate(240deg) scale(1.1);
+  }
+}
+
+@keyframes morph-3 {
+  0%, 100% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    border-radius: 60% 40% 60% 40% / 70% 30% 70% 30%;
+    transform: rotate(90deg) scale(1.2);
+  }
+  50% {
+    border-radius: 40% 60% 40% 60% / 30% 70% 30% 70%;
+    transform: rotate(180deg) scale(0.8);
+  }
+  75% {
+    border-radius: 70% 30% 70% 30% / 40% 60% 40% 60%;
+    transform: rotate(270deg) scale(1.1);
+  }
+}
+
+@keyframes orbit-1 {
+  0% {
+    transform: rotate(0deg) translateX(30px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(30px) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-2 {
+  0% {
+    transform: rotate(0deg) translateX(25px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg) translateX(25px) rotate(360deg);
+  }
+}
+
+@keyframes orbit-3 {
+  0% {
+    transform: rotate(0deg) translateX(35px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(35px) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-4 {
+  0% {
+    transform: rotate(0deg) translateX(20px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg) translateX(20px) rotate(360deg);
+  }
+}
+
+@keyframes orbit-5 {
+  0% {
+    transform: rotate(0deg) translateX(28px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(28px) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-6 {
+  0% {
+    transform: rotate(0deg) translateX(32px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg) translateX(32px) rotate(360deg);
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
 .animate-float-delayed {
   animation: float-delayed 8s ease-in-out infinite;
+}
+
+.animate-fall {
+  animation: fall linear infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.3s infinite;
+}
+
+.animate-glitch-text {
+  animation: glitch-text 2s infinite;
+}
+
+.animate-text-glow {
+  animation: text-glow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+.animate-morph-1 {
+  animation: morph-1 8s ease-in-out infinite;
+}
+
+.animate-morph-2 {
+  animation: morph-2 12s ease-in-out infinite;
+}
+
+.animate-morph-3 {
+  animation: morph-3 10s ease-in-out infinite;
+}
+
+.animate-orbit-1 {
+  animation: orbit-1 15s linear infinite;
+}
+
+.animate-orbit-2 {
+  animation: orbit-2 18s linear infinite;
+}
+
+.animate-orbit-3 {
+  animation: orbit-3 12s linear infinite;
+}
+
+.animate-orbit-4 {
+  animation: orbit-4 20s linear infinite;
+}
+
+.animate-orbit-5 {
+  animation: orbit-5 14s linear infinite;
+}
+
+.animate-orbit-6 {
+  animation: orbit-6 16s linear infinite;
 }
 
 .bg-gradient-waves {
