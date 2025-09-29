@@ -859,8 +859,8 @@ const typeTimer = setInterval(() => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Globe className="w-4 h-4 text-pink-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Established offshore QA teams from scratch.</span>
+                  <Globe className="w-4 h-4 text-green-400 mt-0.5" />
+                  <span className="text-gray-300 text-sm">Built and scaled offshore QA teams from ground</span>
                 </div>
                 <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
                   <Zap className="w-4 h-4 text-blue-400 mt-0.5" />
