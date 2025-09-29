@@ -1,4 +1,4 @@
-# RAJESH'S PORTFOLIO
+# RAJESH'S PORTFOLIO.
 
 **Use your preferred IDE**
 
