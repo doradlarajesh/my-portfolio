@@ -287,8 +287,8 @@ const typeTimer = setInterval(() => {
     {
       title: "BDO Pay Mobile App",
       client: "BDO Unibank - Phillipines ",
-      description: "End-to-end testing automation for a mobile banking application with 2M+ active users. Implemented functional and automation test strategies.",
-      tech: ["XCUITest", "Espresso", "SauceLabs", "Git Hub Actions"],
+      description: "Retail Banking money paying application which can be used to P2P, P2M and lending facility. End-to-end testing automation for a mobile banking application with 2M+ active users. Implemented functional and automation test strategies.",
+      tech: ["XCUITest", "Playwright", "Espresso", "SauceLabs", "Git Hub Actions", "Grafana"],
       impact: "99.9% uptime achieved",
       status: "Live Production",
       links: {
@@ -299,8 +299,8 @@ const typeTimer = setInterval(() => {
     {
       title: "BDO Online Web & Mobile App",
       client: "BDO Unibank - Phillipines ",
-      description: "E2E Quality framework set-up. Lead the QA team in Functional and Automation effort. Set up CICD pipelines.",
-      tech: ["Playwright", "XCUITest", "Espresso", "SauceLabs", "Git Hub Actions"],
+      description: "Retail Banking app used for every banking need. E2E Quality framework set-up. Lead the QA team in Functional and Automation effort. Set up CICD pipelines.",
+      tech: ["Playwright", "XCUITest", "Espresso", "SauceLabs", "Git Hub Actions", "Datadog"],
       impact: "40% faster deployment cycles",
       status: "Live Production",
       links: {
@@ -312,23 +312,34 @@ const typeTimer = setInterval(() => {
     {
       title: "EZE OMS Web and Mobile App",
       client: "SS&C EZE Software",
-      description: "HIPAA-compliant testing framework for healthcare management platform. Specialized in data privacy validation and medical device integration testing.",
+      description: "Algorithmic Trading order management system specifically designed for Hedge Funds.",
       tech: ["Playwright", "Appium", "Test Complete", "Jenkins"],
-      impact: "HIPAA compliance achieved",
-      status: "Recently Launched",
+      impact: "100% Regression Suite for Desktop, Web, Mobile automation making apps ready for CICD",
+      status: "Live Production",
       links: {
         website: "https://www.ezesoftcloud.com/ims/#/login",
         playstore: "https://play.google.com/store/apps/details?id=com.ezesoft.mobile&hl=en",
         appstore: "https://apps.apple.com/in/app/eze-for-iphone/id1528044898"
       }
+    },
+    {
+      title: "William Sonoma and Pottery Barn Ecommerce Web Apps",
+      client: "William Sonoma Inc",
+      description: "Developed multiple internal applications for WS, one of the largest retailer in US",
+      tech: ["Selenium", "Cucumber", "Jenkins"],
+      impact: "Below 5% Defect Escape Rate to Prod",
+      status: "Live Production",
+      links: {
+        website: "https://www.williams-sonoma.com/"
+      }
     }
   ];
 
   const certifications = [
-    { name: "ISTQB® Certified CTFL", year: "2023" },
-    { name: "GitHub Actions Certification", year: "2022" },
-    { name: "iOS XCUITest Advanced", year: "2021" },
-    { name: "Selenium WebDriver Expert", year: "2020" }
+    { name: "Prompt Engineering Professional Certification", year: "2025" },
+    { name: "ISTQB® Certified CTFL", year: "2016" },
+    { name: "Charted Financial Analyst - CFA (foundations)", year: "2018" },
+    { name: "Postman API Tester", year: "2023" }
   ];
 
   return (
