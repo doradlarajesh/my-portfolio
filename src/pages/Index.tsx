@@ -45,20 +45,9 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [typedText, setTypedText] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
 
   useEffect(() => {
     setIsVisible(true);
-    
-    // Initialize particles
-    const initialParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2
-    }));
-    setParticles(initialParticles);
 
     // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
@@ -104,40 +93,6 @@ const typeTimer = setInterval(() => {
     }
   }
 }, isDeleting ? 100 : 150);
-
-    // Particle animation
-    const animateParticles = () => {
-      setParticles(prev => prev.map(particle => {
-        let newX = particle.x + particle.vx;
-        let newY = particle.y + particle.vy;
-        let newVx = particle.vx;
-        let newVy = particle.vy;
-
-        // Bounce off edges
-        if (newX <= 0 || newX >= window.innerWidth) newVx = -newVx;
-        if (newY <= 0 || newY >= window.innerHeight) newVy = -newVy;
-
-        // Attraction to mouse
-        const dx = mousePosition.x - newX;
-        const dy = mousePosition.y - newY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 200) {
-          newVx += dx * 0.0001;
-          newVy += dy * 0.0001;
-        }
-
-        return {
-          ...particle,
-          x: Math.max(0, Math.min(window.innerWidth, newX)),
-          y: Math.max(0, Math.min(window.innerHeight, newY)),
-          vx: Math.max(-3, Math.min(3, newVx)),
-          vy: Math.max(-3, Math.min(3, newVy))
-        };
-      }));
-    };
-
-    const particleInterval = setInterval(animateParticles, 50);
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
@@ -425,55 +380,8 @@ const typeTimer = setInterval(() => {
         )}
       </nav>
 
-      {/* EPIC Interactive Background System */}
+      {/* Professional Background System */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Interactive Particle System */}
-        <div className="absolute inset-0">
-          {particles.map((particle) => (
-            <div
-              key={particle.id}
-              className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60"
-              style={{
-                left: particle.x,
-                top: particle.y,
-                boxShadow: `0 0 20px hsl(${220 + Math.sin(Date.now() * 0.001 + particle.id) * 60} 70% 60% / 0.5)`
-              }}
-            />
-          ))}
-          
-          {/* Connection lines between particles */}
-          <svg className="absolute inset-0 w-full h-full opacity-30">
-            {particles.map((particle, i) => 
-              particles.slice(i + 1).map((otherParticle, j) => {
-                const distance = Math.sqrt(
-                  Math.pow(particle.x - otherParticle.x, 2) + 
-                  Math.pow(particle.y - otherParticle.y, 2)
-                );
-                if (distance < 150) {
-                  return (
-                    <line
-                      key={`${i}-${j}`}
-                      x1={particle.x}
-                      y1={particle.y}
-                      x2={otherParticle.x}
-                      y2={otherParticle.y}
-                      stroke="url(#particleGradient)"
-                      strokeWidth="1"
-                      opacity={Math.max(0, 1 - distance / 150)}
-                    />
-                  );
-                }
-                return null;
-              })
-            )}
-            <defs>
-              <linearGradient id="particleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(220 70% 60%)" />
-                <stop offset="100%" stopColor="hsl(280 70% 60%)" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
 
         {/* Mouse Cursor Glow Effect */}
         <div 
