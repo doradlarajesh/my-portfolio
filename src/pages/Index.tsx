@@ -6,6 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import profilePhoto from "@/assets/profile-photo.png";
+import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
+import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
+import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
 import { 
   Code2, 
   Bug, 
@@ -916,7 +919,14 @@ const typeTimer = setInterval(() => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articlePostmanGithubActions} 
+                  alt="Postman GitHub Actions Integration"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
@@ -947,7 +957,14 @@ const typeTimer = setInterval(() => {
               </CardContent>
             </Card>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articleSlackWebhook} 
+                  alt="Understanding Webhooks & Slack Integration"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
@@ -978,7 +995,14 @@ const typeTimer = setInterval(() => {
               </CardContent>
             </Card>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articlePostmanBackup} 
+                  alt="Postman GitHub Integration for Collection Backup"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
