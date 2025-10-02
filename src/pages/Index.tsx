@@ -6,6 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import profilePhoto from "@/assets/profile-photo.png";
+import articleBddAi from "@/assets/article-bdd-ai.png";
+import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
+import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
+import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
 import { 
   Code2, 
   Bug, 
@@ -916,7 +920,52 @@ const typeTimer = setInterval(() => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articleBddAi} 
+                  alt="Resurrection of BDD by AI"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Medium
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                  Resurrection of BDD by AI
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Discover how AI is reviving close dead BDD from Obsolete to Essential in Test Automation
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">BDD</Badge>
+                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">AI</Badge>
+                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Test Automation</Badge>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                  onClick={() => window.open('https://medium.com/@doradlarajesh/resurrection-of-bdd-by-ai-f2c7fe1a7538', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Read Article
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articlePostmanGithubActions}
+                  alt="Postman GitHub Actions Integration"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
@@ -947,7 +996,14 @@ const typeTimer = setInterval(() => {
               </CardContent>
             </Card>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articleSlackWebhook} 
+                  alt="Understanding Webhooks & Slack Integration"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
@@ -978,7 +1034,14 @@ const typeTimer = setInterval(() => {
               </CardContent>
             </Card>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm">
+            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={articlePostmanBackup} 
+                  alt="Postman GitHub Integration for Collection Backup"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                   <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
