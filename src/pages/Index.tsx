@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
@@ -1079,7 +1080,7 @@ const typeTimer = setInterval(() => {
 
       {/* Testimonials Section */}
       <section id="testimonials" className="py-20 px-4 bg-slate-800/30">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
               Testimonials
@@ -1089,65 +1090,74 @@ const typeTimer = setInterval(() => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
-                <Quote className="w-16 h-16 text-blue-400" />
-              </div>
-              
-              <CardContent className="pt-8 pb-6 relative z-10">
-                <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
-                  "Rajesh is one of the best professional & a gem of a person to work with. I have Managed him over 3+ years during this period he has built the skill in Fintech domain and built Automation Framework for complex and dynamic Algorithmic Trading. His project management & out of box thinking was clearly visible in creating Automation suite using Test complete. He has evolved to be the SME for the team and used his skills in mentoring and guiding the team on complex implementations.
-                  <br /><br />
-                  He is very detailed oriented and does deep analysis, he brings high level of quality to the table with innovative mindset. Moreover, he is calm as cucumber and believes in the principle of 'let the work speak'. There is no doubt in saying that he is great package to have in any organization and I am sure he will climb many more ladders and add a great amount of value wherever he is."
-                </p>
-                
-                <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
-                  <Avatar className="h-12 w-12 ring-2 ring-blue-500/30">
-                    <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white font-semibold">
-                      SS
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-white font-semibold">Shanishetty Srinivas</p>
-                    <p className="text-gray-400 text-sm">Director at SS&C EZE Software</p>
-                    <Badge variant="outline" className="mt-1 text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">
-                      <Linkedin className="w-3 h-3 mr-1" />
-                      LinkedIn
-                    </Badge>
+          <Carousel className="w-full max-w-4xl mx-auto">
+            <CarouselContent>
+              <CarouselItem>
+                <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm relative overflow-hidden group">
+                  <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
+                    <Quote className="w-16 h-16 text-blue-400" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                  
+                  <CardContent className="pt-8 pb-6 relative z-10">
+                    <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
+                      "Rajesh is one of the best professional & a gem of a person to work with. I have Managed him over 3+ years during this period he has built the skill in Fintech domain and built Automation Framework for complex and dynamic Algorithmic Trading. His project management & out of box thinking was clearly visible in creating Automation suite using Test complete. He has evolved to be the SME for the team and used his skills in mentoring and guiding the team on complex implementations.
+                      <br /><br />
+                      He is very detailed oriented and does deep analysis, he brings high level of quality to the table with innovative mindset. Moreover, he is calm as cucumber and believes in the principle of 'let the work speak'. There is no doubt in saying that he is great package to have in any organization and I am sure he will climb many more ladders and add a great amount of value wherever he is."
+                    </p>
+                    
+                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
+                      <Avatar className="h-12 w-12 ring-2 ring-blue-500/30">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white font-semibold">
+                          SS
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-white font-semibold">Shanishetty Srinivas</p>
+                        <p className="text-gray-400 text-sm">Director at SS&C EZE Software</p>
+                        <Badge variant="outline" className="mt-1 text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">
+                          <Linkedin className="w-3 h-3 mr-1" />
+                          LinkedIn
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
 
-            <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
-                <Quote className="w-16 h-16 text-purple-400" />
-              </div>
-              
-              <CardContent className="pt-8 pb-6 relative z-10">
-                <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
-                  "Rajesh worked on one of my teams working for a luxury retail client. His business acumen, knowledge, commitment on the projects that he worked on were impeccable, and he became an irreplaceable player soon. He became a subject matter expert on the Direct to Consumer business and was a stellar performer. Would love to work with him any day."
-                </p>
-                
-                <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
-                  <Avatar className="h-12 w-12 ring-2 ring-purple-500/30">
-                    <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-semibold">
-                      PI
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-white font-semibold">Prashant Ivaturi</p>
-                    <p className="text-gray-400 text-sm">AI Product Leader at Oracle</p>
-                    <Badge variant="outline" className="mt-1 text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">
-                      <Linkedin className="w-3 h-3 mr-1" />
-                      LinkedIn
-                    </Badge>
+              <CarouselItem>
+                <Card className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm relative overflow-hidden group">
+                  <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-30 transition-opacity duration-300">
+                    <Quote className="w-16 h-16 text-purple-400" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                  
+                  <CardContent className="pt-8 pb-6 relative z-10">
+                    <p className="text-gray-300 text-lg leading-relaxed mb-6 italic">
+                      "Rajesh worked on one of my teams working for a luxury retail client. His business acumen, knowledge, commitment on the projects that he worked on were impeccable, and he became an irreplaceable player soon. He became a subject matter expert on the Direct to Consumer business and was a stellar performer. Would love to work with him any day."
+                    </p>
+                    
+                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50">
+                      <Avatar className="h-12 w-12 ring-2 ring-purple-500/30">
+                        <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-semibold">
+                          PI
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-white font-semibold">Prashant Ivaturi</p>
+                        <p className="text-gray-400 text-sm">AI Product Leader at Oracle</p>
+                        <Badge variant="outline" className="mt-1 text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">
+                          <Linkedin className="w-3 h-3 mr-1" />
+                          LinkedIn
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            </CarouselContent>
+            
+            <CarouselPrevious className="left-0 -translate-x-12 bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-white" />
+            <CarouselNext className="right-0 translate-x-12 bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-white" />
+          </Carousel>
         </div>
       </section>
 
