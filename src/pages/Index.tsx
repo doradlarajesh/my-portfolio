@@ -1113,13 +1113,13 @@ const typeTimer = setInterval(() => {
             onMouseLeave={() => setIsAutoPlaying(true)}
           >
             {/* Testimonial Cards with Animated Transitions */}
-            <div className="relative min-h-[400px] perspective-1000">
+            <div className="relative perspective-1000 mb-12">
               {/* First Testimonial */}
               <div
-                className={`absolute inset-0 transition-all duration-700 ease-in-out transform ${
+                className={`transition-all duration-700 ease-in-out transform ${
                   currentTestimonial === 0
-                    ? 'opacity-100 scale-100 rotate-0 z-10'
-                    : 'opacity-0 scale-95 -rotate-2 z-0 pointer-events-none'
+                    ? 'opacity-100 scale-100 rotate-0 relative z-10'
+                    : 'opacity-0 scale-95 -rotate-2 absolute inset-0 z-0 pointer-events-none'
                 }`}
               >
                 <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50 hover:border-blue-500/50 transition-all duration-500 backdrop-blur-xl shadow-2xl hover:shadow-blue-500/20 relative overflow-hidden group">
@@ -1174,10 +1174,10 @@ const typeTimer = setInterval(() => {
 
               {/* Second Testimonial */}
               <div
-                className={`absolute inset-0 transition-all duration-700 ease-in-out transform ${
+                className={`transition-all duration-700 ease-in-out transform ${
                   currentTestimonial === 1
-                    ? 'opacity-100 scale-100 rotate-0 z-10'
-                    : 'opacity-0 scale-95 rotate-2 z-0 pointer-events-none'
+                    ? 'opacity-100 scale-100 rotate-0 relative z-10'
+                    : 'opacity-0 scale-95 rotate-2 absolute inset-0 z-0 pointer-events-none'
                 }`}
               >
                 <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-xl shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden group">
@@ -1230,7 +1230,7 @@ const typeTimer = setInterval(() => {
             </div>
 
             {/* Custom Navigation Controls */}
-            <div className="flex items-center justify-center gap-8 mt-12">
+            <div className="flex items-center justify-center gap-8">
               {/* Previous Button */}
               <button
                 onClick={() => {
