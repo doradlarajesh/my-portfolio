@@ -39,7 +39,8 @@ import {
   Monitor,
   FileCheck,
   BarChart3,
-  Quote
+  Quote,
+  Building2
 } from "lucide-react";
 
 const Index = () => {
@@ -671,19 +672,12 @@ const typeTimer = setInterval(() => {
           </div>
           
           <div className="relative">
-            {/* Enhanced 3D Timeline Spine */}
-            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
-              {/* Base gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/50 via-purple-500/50 to-pink-500/50"></div>
-              {/* Animated glow */}
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-400 via-purple-400 to-pink-400 animate-pulse opacity-40"></div>
-              {/* Traveling light effect */}
-              <div className="absolute w-full h-32 bg-gradient-to-b from-white via-blue-300 to-transparent opacity-60 animate-bounce blur-sm" style={{animationDuration: '4s'}}></div>
-              {/* Secondary traveling light */}
-              <div className="absolute w-full h-20 bg-gradient-to-b from-transparent via-purple-300 to-transparent opacity-40 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
+            {/* Professional Timeline Spine */}
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-transparent"></div>
             </div>
             
-            <div className="space-y-20">
+            <div className="space-y-16">
               {experiences.map((exp, index) => (
                 <div 
                   key={index} 
@@ -694,138 +688,84 @@ const typeTimer = setInterval(() => {
                     opacity: 0
                   }}
                 >
-                  {/* Animated Timeline Node */}
+                  {/* Timeline Node */}
                   <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
                     <div className="relative">
-                      {/* Pulsing outer ring */}
-                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 group-hover:opacity-60 transition-all duration-500 animate-ping" style={{animationDuration: '3s'}}></div>
-                      </div>
-                      {/* Middle ring */}
-                      <div className="absolute inset-0 w-8 h-8 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 rounded-full bg-gradient-to-r from-blue-500/40 to-purple-500/40 group-hover:scale-125 transition-transform duration-500"></div>
-                      {/* Core node with icon */}
-                      <div className="relative w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-4 border-slate-900 shadow-lg shadow-blue-500/50 group-hover:shadow-purple-500/50 group-hover:scale-110 transition-all duration-500 flex items-center justify-center">
-                        <Briefcase className="w-3 h-3 text-white animate-pulse" />
-                      </div>
-                      {/* Connecting line to card */}
-                      <div className={`absolute top-1/2 transform -translate-y-1/2 h-0.5 w-8 bg-gradient-to-r ${index % 2 === 0 ? 'from-blue-500/50 to-transparent -right-8' : 'from-transparent to-blue-500/50 -left-8'} opacity-50 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 border-slate-900 shadow-lg group-hover:scale-125 transition-all duration-300"></div>
                     </div>
                   </div>
                   
-                  {/* Date Badge with Enhanced Styling */}
-                  <div className={`hidden md:block absolute top-0 transform ${index % 2 === 0 ? 'left-1/2 ml-20' : 'right-1/2 mr-20'} z-10`}>
-                    <div className="relative group/badge">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-lg opacity-0 group-hover/badge:opacity-40 transition-opacity duration-500"></div>
-                      <div className="relative flex items-center space-x-3 bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl px-5 py-3 rounded-2xl border border-blue-500/30 group-hover/badge:border-purple-500/50 transition-all duration-500 shadow-lg">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 shadow-lg">
-                          <Calendar className="w-5 h-5 text-white" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-white">{exp.period}</span>
-                          <span className="text-xs text-gray-400">{exp.duration}</span>
-                        </div>
+                  {/* Date Badge */}
+                  <div className={`hidden md:block absolute top-0 transform ${index % 2 === 0 ? 'left-1/2 ml-16' : 'right-1/2 mr-16'} z-10`}>
+                    <div className="relative">
+                      <div className="flex items-center space-x-2 bg-slate-800/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-blue-500/20">
+                        <Calendar className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm font-semibold text-white">{exp.period}</span>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Enhanced 3D Content Card */}
-                  <div className={`w-full ${index % 2 === 0 ? 'md:w-[calc(50%-5rem)] md:mr-auto' : 'md:w-[calc(50%-5rem)] md:ml-auto'} ml-20 md:ml-0`}>
-                    <Card 
-                      className="relative bg-gradient-to-br from-slate-800/60 to-slate-900/60 border-slate-700/50 backdrop-blur-xl transition-all duration-700 group/card cursor-pointer overflow-hidden"
-                      onClick={() => window.open(exp.website, '_blank')}
-                      style={{
-                        transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
-                        transition: 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)'
-                      }}
-                      onMouseEnter={(e) => {
-                        const card = e.currentTarget;
-                        card.style.transform = index % 2 === 0 
-                          ? 'perspective(1000px) rotateX(-2deg) rotateY(5deg) translateZ(20px)'
-                          : 'perspective(1000px) rotateX(-2deg) rotateY(-5deg) translateZ(20px)';
-                      }}
-                      onMouseLeave={(e) => {
-                        const card = e.currentTarget;
-                        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-                      }}
-                    >
-                      {/* Animated gradient border */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 blur-xl"></div>
+                  {/* Content Card */}
+                  <div className={`w-full ${index % 2 === 0 ? 'md:w-[calc(50%-4rem)] md:mr-auto' : 'md:w-[calc(50%-4rem)] md:ml-auto'} ml-16 md:ml-0`}>
+                    <Card className="relative bg-slate-800/50 border-slate-700/50 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group/card overflow-hidden">
+                      {/* Subtle top accent */}
+                      <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${exp.color} opacity-60 group-hover/card:opacity-100 transition-opacity duration-300`}></div>
                       
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 overflow-hidden">
-                        <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 group-hover/card:animate-shimmer"></div>
-                      </div>
-
-                      <div className="relative border border-slate-700/50 group-hover/card:border-purple-500/50 rounded-lg transition-colors duration-700">
-                        <CardHeader className="relative z-10">
-                          <div className="flex flex-col space-y-4">
-                            {/* Animated accent bar */}
-                            <div className="relative h-1.5 w-full bg-slate-700/30 rounded-full overflow-hidden">
-                              <div className={`absolute inset-y-0 left-0 w-0 bg-gradient-to-r ${exp.color} rounded-full group-hover/card:w-full transition-all duration-1000 ease-out`}></div>
-                            </div>
-                            
-                            {/* Company Logo Placeholder & Title */}
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <CardTitle className="text-2xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent group-hover/card:from-blue-400 group-hover/card:to-purple-400 transition-all duration-500">
-                                  {exp.title}
-                                </CardTitle>
-                                <CardDescription className="text-lg font-semibold text-blue-400 group-hover/card:text-purple-400 transition-colors duration-500 flex items-center">
-                                  {exp.company}
-                                  <ExternalLink className="w-4 h-4 ml-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
-                                </CardDescription>
-                              </div>
-                              {/* Floating badge for mobile */}
-                              <div className="md:hidden flex flex-col items-end space-y-2">
-                                <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10">
-                                  {exp.period}
-                                </Badge>
-                                <Badge variant="outline" className="border-gray-500/50 text-gray-300 bg-gray-500/10">
-                                  {exp.duration}
-                                </Badge>
-                              </div>
-                            </div>
+                      <CardHeader className="relative z-10">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <CardTitle className="text-xl font-bold text-white mb-2 group-hover/card:text-blue-400 transition-colors duration-300">
+                              {exp.title}
+                            </CardTitle>
+                            <CardDescription className="text-base font-medium text-blue-300 flex items-center gap-2">
+                              <Building2 className="w-4 h-4" />
+                              {exp.company}
+                            </CardDescription>
                           </div>
-                        </CardHeader>
+                          <div className="md:hidden">
+                            <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10">
+                              {exp.period}
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      
+                      <CardContent className="relative z-10 space-y-4">
+                        <p className="text-gray-300 leading-relaxed text-sm">
+                          {exp.description}
+                        </p>
                         
-                        <CardContent className="relative z-10 space-y-4">
-                          <p className="text-gray-300 leading-relaxed group-hover/card:text-white transition-colors duration-500">
-                            {exp.description}
-                          </p>
-                          
-                          {/* Achievements with animated icons */}
-                          <div className="space-y-3 pt-2">
-                            {exp.achievements.map((achievement, idx) => (
-                              <div 
-                                key={idx} 
-                                className="flex items-start space-x-3 p-3 rounded-lg bg-slate-700/20 hover:bg-slate-700/40 border border-transparent hover:border-green-500/30 transition-all duration-300 group/achievement"
-                                style={{
-                                  animation: 'fade-in 0.5s ease-out forwards',
-                                  animationDelay: `${0.8 + idx * 0.1}s`,
-                                  opacity: 0
-                                }}
-                              >
-                                <div className="relative">
-                                  <CheckCircle className="w-5 h-5 text-green-400 group-hover/achievement:text-green-300 transition-colors duration-300" />
-                                  <div className="absolute inset-0 bg-green-400/20 rounded-full blur-md opacity-0 group-hover/achievement:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                                <span className="text-gray-300 text-sm leading-relaxed group-hover/achievement:text-white transition-colors duration-300">
-                                  {achievement}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                          
-                          {/* Visit website CTA */}
-                          <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 group-hover/card:border-purple-500/30 transition-colors duration-500">
-                            <div className="flex items-center text-sm text-gray-400 group-hover/card:text-blue-300 transition-colors duration-500">
-                              <Globe className="w-4 h-4 mr-2 group-hover/card:animate-pulse" />
-                              <span className="font-medium">Visit Company Website</span>
+                        {/* Achievements */}
+                        <div className="space-y-2 pt-2">
+                          <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Key Achievements</h4>
+                          {exp.achievements.map((achievement, idx) => (
+                            <div 
+                              key={idx} 
+                              className="flex items-start space-x-2 text-sm text-gray-300"
+                            >
+                              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                              <span className="leading-relaxed">{achievement}</span>
                             </div>
-                            <ChevronDown className="w-5 h-5 text-gray-500 group-hover/card:text-purple-400 transform group-hover/card:translate-x-1 transition-all duration-500 rotate-[-90deg]" />
-                          </div>
-                        </CardContent>
-                      </div>
+                          ))}
+                        </div>
+                        
+                        {/* Visit website button */}
+                        <div className="pt-4">
+                          <Button 
+                            variant="outline"
+                            size="sm"
+                            className="w-full bg-slate-700/30 border-slate-600 hover:bg-blue-600/20 hover:border-blue-500 text-white transition-all duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(exp.website, '_blank');
+                            }}
+                          >
+                            <Globe className="w-4 h-4 mr-2" />
+                            Visit Company Website
+                            <ExternalLink className="w-3 h-3 ml-2" />
+                          </Button>
+                        </div>
+                      </CardContent>
                     </Card>
                   </div>
                 </div>
