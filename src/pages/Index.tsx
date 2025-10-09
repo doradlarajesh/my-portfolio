@@ -643,71 +643,189 @@ const typeTimer = setInterval(() => {
         </button>
       </section>
 
-      {/* Experience Section - Timeline View */}
-      <section id="experience" className="py-20 px-4 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Professional Journey</h2>
-            <p className="text-gray-400 text-lg">11+ years of delivering quality excellence</p>
+      {/* Experience Section - Enhanced 3D Timeline */}
+      <section id="experience" className="py-20 px-4 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
+              <div className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm px-6 py-2 rounded-full border border-blue-500/30">
+                <Briefcase className="w-5 h-5 text-blue-400 animate-pulse" />
+                <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
+              </div>
+            </div>
+            <h2 className="text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Professional Journey
+              </span>
+            </h2>
+            <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+              11+ years of delivering quality excellence across global enterprises
+            </p>
           </div>
           
           <div className="relative">
-            {/* Timeline line with scroll effect */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-300 to-purple-300 animate-pulse opacity-50"></div>
-              <div className="absolute w-full h-8 bg-gradient-to-b from-white to-transparent animate-bounce opacity-30" style={{animationDuration: '3s'}}></div>
+            {/* Enhanced 3D Timeline Spine */}
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
+              {/* Base gradient */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/50 via-purple-500/50 to-pink-500/50"></div>
+              {/* Animated glow */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-400 via-purple-400 to-pink-400 animate-pulse opacity-40"></div>
+              {/* Traveling light effect */}
+              <div className="absolute w-full h-32 bg-gradient-to-b from-white via-blue-300 to-transparent opacity-60 animate-bounce blur-sm" style={{animationDuration: '4s'}}></div>
+              {/* Secondary traveling light */}
+              <div className="absolute w-full h-20 bg-gradient-to-b from-transparent via-purple-300 to-transparent opacity-40 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
             </div>
             
-            <div className="space-y-12">
+            <div className="space-y-20">
               {experiences.map((exp, index) => (
-                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
-                  
-                  {/* Date indicator - positioned opposite to content */}
-                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'left-1/2 ml-8 text-left' : 'right-1/2 mr-8 text-right'}`}>
-                    <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600 hover:border-blue-500/50 transition-all duration-300 hover:bg-slate-800/90">
-                      <Calendar className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm text-gray-300">{exp.period}</span>
+                <div 
+                  key={index} 
+                  className={`relative group ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                  style={{
+                    animation: 'fade-in 0.8s ease-out forwards',
+                    animationDelay: `${index * 0.2}s`,
+                    opacity: 0
+                  }}
+                >
+                  {/* Animated Timeline Node */}
+                  <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
+                    <div className="relative">
+                      {/* Pulsing outer ring */}
+                      <div className="absolute inset-0 w-12 h-12 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 group-hover:opacity-60 transition-all duration-500 animate-ping" style={{animationDuration: '3s'}}></div>
+                      </div>
+                      {/* Middle ring */}
+                      <div className="absolute inset-0 w-8 h-8 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 rounded-full bg-gradient-to-r from-blue-500/40 to-purple-500/40 group-hover:scale-125 transition-transform duration-500"></div>
+                      {/* Core node with icon */}
+                      <div className="relative w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-4 border-slate-900 shadow-lg shadow-blue-500/50 group-hover:shadow-purple-500/50 group-hover:scale-110 transition-all duration-500 flex items-center justify-center">
+                        <Briefcase className="w-3 h-3 text-white animate-pulse" />
+                      </div>
+                      {/* Connecting line to card */}
+                      <div className={`absolute top-1/2 transform -translate-y-1/2 h-0.5 w-8 bg-gradient-to-r ${index % 2 === 0 ? 'from-blue-500/50 to-transparent -right-8' : 'from-transparent to-blue-500/50 -left-8'} opacity-50 group-hover:opacity-100 transition-opacity duration-500`}></div>
                     </div>
                   </div>
                   
-                  {/* Content card */}
-                  <div className={`w-full ${index % 2 === 0 ? 'md:w-1/2 md:pr-8' : 'md:w-1/2 md:pl-8'} ml-12 md:ml-0`}>
+                  {/* Date Badge with Enhanced Styling */}
+                  <div className={`hidden md:block absolute top-0 transform ${index % 2 === 0 ? 'left-1/2 ml-20' : 'right-1/2 mr-20'} z-10`}>
+                    <div className="relative group/badge">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-lg opacity-0 group-hover/badge:opacity-40 transition-opacity duration-500"></div>
+                      <div className="relative flex items-center space-x-3 bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl px-5 py-3 rounded-2xl border border-blue-500/30 group-hover/badge:border-purple-500/50 transition-all duration-500 shadow-lg">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 shadow-lg">
+                          <Calendar className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-white">{exp.period}</span>
+                          <span className="text-xs text-gray-400">{exp.duration}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Enhanced 3D Content Card */}
+                  <div className={`w-full ${index % 2 === 0 ? 'md:w-[calc(50%-5rem)] md:mr-auto' : 'md:w-[calc(50%-5rem)] md:ml-auto'} ml-20 md:ml-0`}>
                     <Card 
-                      className={`bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-500 group hover:shadow-2xl transform hover:-translate-y-2 animate-fade-in hover:shadow-purple-500/20 cursor-pointer`}
+                      className="relative bg-gradient-to-br from-slate-800/60 to-slate-900/60 border-slate-700/50 backdrop-blur-xl transition-all duration-700 group/card cursor-pointer overflow-hidden"
                       onClick={() => window.open(exp.website, '_blank')}
+                      style={{
+                        transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
+                        transition: 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)'
+                      }}
+                      onMouseEnter={(e) => {
+                        const card = e.currentTarget;
+                        card.style.transform = index % 2 === 0 
+                          ? 'perspective(1000px) rotateX(-2deg) rotateY(5deg) translateZ(20px)'
+                          : 'perspective(1000px) rotateX(-2deg) rotateY(-5deg) translateZ(20px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        const card = e.currentTarget;
+                        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                      }}
                     >
-                      <CardHeader>
-                        <div className="flex flex-col space-y-2">
-                          <div className={`w-12 h-1 bg-gradient-to-r ${exp.color} rounded-full group-hover:w-24 transition-all duration-500`}></div>
-                          <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
-                          <CardDescription className="text-blue-400 font-medium group-hover:text-blue-300 transition-colors duration-300">{exp.company}</CardDescription>
-                          <div className="flex items-center space-x-4 md:hidden">
-                            <Badge variant="outline" className="border-purple-500 text-purple-300">
-                              {exp.period}
-                            </Badge>
-                            <Badge variant="outline" className="border-gray-500 text-gray-300">
-                              {exp.duration}
-                            </Badge>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-300 mb-4 group-hover:text-gray-200 transition-colors duration-300">{exp.description}</p>
-                        <div className="space-y-2">
-                          {exp.achievements.map((achievement, idx) => (
-                            <div key={idx} className="flex items-start space-x-2 group/item hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0 group-hover/item:text-green-300 transition-colors duration-200" />
-                              <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
+                      {/* Animated gradient border */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 blur-xl"></div>
+                      
+                      {/* Shimmer effect */}
+                      <div className="absolute inset-0 overflow-hidden">
+                        <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 group-hover/card:animate-shimmer"></div>
+                      </div>
+
+                      <div className="relative border border-slate-700/50 group-hover/card:border-purple-500/50 rounded-lg transition-colors duration-700">
+                        <CardHeader className="relative z-10">
+                          <div className="flex flex-col space-y-4">
+                            {/* Animated accent bar */}
+                            <div className="relative h-1.5 w-full bg-slate-700/30 rounded-full overflow-hidden">
+                              <div className={`absolute inset-y-0 left-0 w-0 bg-gradient-to-r ${exp.color} rounded-full group-hover/card:w-full transition-all duration-1000 ease-out`}></div>
                             </div>
-                          ))}
-                        </div>
-                        <div className="mt-4 flex items-center text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                          <ExternalLink className="w-3 h-3 mr-1" />
-                          Click to visit company website
-                        </div>
-                      </CardContent>
+                            
+                            {/* Company Logo Placeholder & Title */}
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <CardTitle className="text-2xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent group-hover/card:from-blue-400 group-hover/card:to-purple-400 transition-all duration-500">
+                                  {exp.title}
+                                </CardTitle>
+                                <CardDescription className="text-lg font-semibold text-blue-400 group-hover/card:text-purple-400 transition-colors duration-500 flex items-center">
+                                  {exp.company}
+                                  <ExternalLink className="w-4 h-4 ml-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                                </CardDescription>
+                              </div>
+                              {/* Floating badge for mobile */}
+                              <div className="md:hidden flex flex-col items-end space-y-2">
+                                <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10">
+                                  {exp.period}
+                                </Badge>
+                                <Badge variant="outline" className="border-gray-500/50 text-gray-300 bg-gray-500/10">
+                                  {exp.duration}
+                                </Badge>
+                              </div>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        
+                        <CardContent className="relative z-10 space-y-4">
+                          <p className="text-gray-300 leading-relaxed group-hover/card:text-white transition-colors duration-500">
+                            {exp.description}
+                          </p>
+                          
+                          {/* Achievements with animated icons */}
+                          <div className="space-y-3 pt-2">
+                            {exp.achievements.map((achievement, idx) => (
+                              <div 
+                                key={idx} 
+                                className="flex items-start space-x-3 p-3 rounded-lg bg-slate-700/20 hover:bg-slate-700/40 border border-transparent hover:border-green-500/30 transition-all duration-300 group/achievement"
+                                style={{
+                                  animation: 'fade-in 0.5s ease-out forwards',
+                                  animationDelay: `${0.8 + idx * 0.1}s`,
+                                  opacity: 0
+                                }}
+                              >
+                                <div className="relative">
+                                  <CheckCircle className="w-5 h-5 text-green-400 group-hover/achievement:text-green-300 transition-colors duration-300" />
+                                  <div className="absolute inset-0 bg-green-400/20 rounded-full blur-md opacity-0 group-hover/achievement:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                                <span className="text-gray-300 text-sm leading-relaxed group-hover/achievement:text-white transition-colors duration-300">
+                                  {achievement}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          {/* Visit website CTA */}
+                          <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 group-hover/card:border-purple-500/30 transition-colors duration-500">
+                            <div className="flex items-center text-sm text-gray-400 group-hover/card:text-blue-300 transition-colors duration-500">
+                              <Globe className="w-4 h-4 mr-2 group-hover/card:animate-pulse" />
+                              <span className="font-medium">Visit Company Website</span>
+                            </div>
+                            <ChevronDown className="w-5 h-5 text-gray-500 group-hover/card:text-purple-400 transform group-hover/card:translate-x-1 transition-all duration-500 rotate-[-90deg]" />
+                          </div>
+                        </CardContent>
+                      </div>
                     </Card>
                   </div>
                 </div>
