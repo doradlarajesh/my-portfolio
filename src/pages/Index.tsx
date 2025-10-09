@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
@@ -37,7 +38,8 @@ import {
   Activity,
   Monitor,
   FileCheck,
-  BarChart3
+  BarChart3,
+  Quote
 } from "lucide-react";
 
 const Index = () => {
@@ -47,6 +49,8 @@ const Index = () => {
   const [typedText, setTypedText] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
     setIsVisible(true);
@@ -142,7 +146,7 @@ const typeTimer = setInterval(() => {
     
     // Handle scroll for active section highlighting
     const handleScroll = () => {
-      const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'contact'];
+      const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'testimonials', 'contact'];
       const scrollPosition = window.scrollY + 150; // Increased offset for better detection
 
       // Check sections in reverse order to handle overlap better
@@ -168,11 +172,20 @@ const typeTimer = setInterval(() => {
     };
 
     window.addEventListener('scroll', handleScroll);
+    
+    // Auto-play testimonials
+    const testimonialTimer = setInterval(() => {
+      if (isAutoPlaying) {
+        setCurrentTestimonial((prev) => (prev + 1) % 2); // 2 testimonials
+      }
+    }, 5000); // Change every 5 seconds
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(typeTimer);
+      clearInterval(testimonialTimer);
     };
-  }, []);
+  }, [isAutoPlaying]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -189,6 +202,7 @@ const typeTimer = setInterval(() => {
     { id: 'projects', label: 'Projects', icon: Briefcase },
     { id: 'achievements', label: 'Achievements', icon: Award },
     { id: 'articles', label: 'Articles', icon: BookOpen },
+    { id: 'testimonials', label: 'Testimonials', icon: Quote },
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
 
@@ -1071,6 +1085,222 @@ const typeTimer = setInterval(() => {
                 </Button>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-20 px-4 bg-slate-800/30 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6 animate-fade-in">
+              Testimonials
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in">
+              What colleagues and leaders say about working with me
+            </p>
+          </div>
+
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+          >
+            {/* Testimonial Cards with Animated Transitions */}
+            <div className="relative perspective-1000 mb-12">
+              {/* First Testimonial */}
+              <div
+                className={`transition-all duration-700 ease-in-out transform ${
+                  currentTestimonial === 0
+                    ? 'opacity-100 scale-100 rotate-0 relative z-10'
+                    : 'opacity-0 scale-95 -rotate-2 absolute inset-0 z-0 pointer-events-none'
+                }`}
+              >
+                <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50 hover:border-blue-500/50 transition-all duration-500 backdrop-blur-xl shadow-2xl hover:shadow-blue-500/20 relative overflow-hidden group">
+                  {/* Animated Quote Icon */}
+                  <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-110">
+                    <Quote className="w-20 h-20 text-blue-400" />
+                  </div>
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <CardContent className="pt-12 pb-8 px-8 relative z-10">
+                    <div className="mb-8">
+                      <div className="flex gap-1 mb-6">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="text-yellow-400 text-2xl animate-fade-in"
+                            style={{ animationDelay: `${i * 100}ms` }}
+                          >
+                            ★
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed italic relative">
+                        <span className="absolute -left-4 -top-2 text-4xl text-blue-400 opacity-50">"</span>
+                        Rajesh is one of the best professional & a gem of a person to work with. I have Managed him over 3+ years during this period he has built the skill in Fintech domain and built Automation Framework for complex and dynamic Algorithmic Trading. His project management & out of box thinking was clearly visible in creating Automation suite using Test complete. He has evolved to be the SME for the team and used his skills in mentoring and guiding the team on complex implementations.
+                        <br /><br />
+                        He is very detailed oriented and does deep analysis, he brings high level of quality to the table with innovative mindset. Moreover, he is calm as cucumber and believes in the principle of 'let the work speak'. There is no doubt in saying that he is great package to have in any organization and I am sure he will climb many more ladders and add a great amount of value wherever he is.
+                        <span className="absolute -right-4 -bottom-2 text-4xl text-blue-400 opacity-50">"</span>
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 pt-6 border-t border-slate-700/50">
+                      <Avatar className="h-16 w-16 ring-4 ring-blue-500/30 transition-all duration-300 group-hover:ring-blue-400/50 group-hover:scale-110">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white font-bold text-xl">
+                          SS
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <p className="text-white font-bold text-lg">Shanishetty Srinivas</p>
+                        <p className="text-gray-400">Director at SS&C EZE Software</p>
+                        <Badge variant="outline" className="mt-2 text-xs bg-blue-500/10 border-blue-500/30 text-blue-300 hover:bg-blue-500/20 transition-colors">
+                          <Linkedin className="w-3 h-3 mr-1" />
+                          LinkedIn
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Second Testimonial */}
+              <div
+                className={`transition-all duration-700 ease-in-out transform ${
+                  currentTestimonial === 1
+                    ? 'opacity-100 scale-100 rotate-0 relative z-10'
+                    : 'opacity-0 scale-95 rotate-2 absolute inset-0 z-0 pointer-events-none'
+                }`}
+              >
+                <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-xl shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden group">
+                  {/* Animated Quote Icon */}
+                  <div className="absolute top-6 left-6 opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-110">
+                    <Quote className="w-20 h-20 text-purple-400" />
+                  </div>
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <CardContent className="pt-12 pb-8 px-8 relative z-10">
+                    <div className="mb-8">
+                      <div className="flex gap-1 mb-6">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="text-yellow-400 text-2xl animate-fade-in"
+                            style={{ animationDelay: `${i * 100}ms` }}
+                          >
+                            ★
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-gray-300 text-lg leading-relaxed italic relative">
+                        <span className="absolute -left-4 -top-2 text-4xl text-purple-400 opacity-50">"</span>
+                        Rajesh worked on one of my teams working for a luxury retail client. His business acumen, knowledge, commitment on the projects that he worked on were impeccable, and he became an irreplaceable player soon. He became a subject matter expert on the Direct to Consumer business and was a stellar performer. Would love to work with him any day.
+                        <span className="absolute -right-4 -bottom-2 text-4xl text-purple-400 opacity-50">"</span>
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 pt-6 border-t border-slate-700/50">
+                      <Avatar className="h-16 w-16 ring-4 ring-purple-500/30 transition-all duration-300 group-hover:ring-purple-400/50 group-hover:scale-110">
+                        <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold text-xl">
+                          PI
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <p className="text-white font-bold text-lg">Prashant Ivaturi</p>
+                        <p className="text-gray-400">AI Product Leader at Oracle</p>
+                        <Badge variant="outline" className="mt-2 text-xs bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-colors">
+                          <Linkedin className="w-3 h-3 mr-1" />
+                          LinkedIn
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Custom Navigation Controls */}
+            <div className="flex items-center justify-center gap-8">
+              {/* Previous Button */}
+              <button
+                onClick={() => {
+                  setCurrentTestimonial((prev) => (prev - 1 + 2) % 2);
+                  setIsAutoPlaying(false);
+                }}
+                className="group bg-slate-800/80 hover:bg-slate-700 border-2 border-slate-700 hover:border-blue-500 text-white p-4 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/50"
+                aria-label="Previous testimonial"
+              >
+                <ChevronDown className="w-6 h-6 rotate-90 group-hover:scale-110 transition-transform" />
+              </button>
+
+              {/* Progress Indicators */}
+              <div className="flex gap-3">
+                {[0, 1].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCurrentTestimonial(index);
+                      setIsAutoPlaying(false);
+                    }}
+                    className="group relative"
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  >
+                    <div
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        currentTestimonial === index
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-125'
+                          : 'bg-slate-600 hover:bg-slate-500'
+                      }`}
+                    />
+                    {currentTestimonial === index && isAutoPlaying && (
+                      <div className="absolute inset-0 rounded-full border-2 border-blue-400 animate-ping" />
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => {
+                  setCurrentTestimonial((prev) => (prev + 1) % 2);
+                  setIsAutoPlaying(false);
+                }}
+                className="group bg-slate-800/80 hover:bg-slate-700 border-2 border-slate-700 hover:border-purple-500 text-white p-4 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/50"
+                aria-label="Next testimonial"
+              >
+                <ChevronDown className="w-6 h-6 -rotate-90 group-hover:scale-110 transition-transform" />
+              </button>
+            </div>
+
+            {/* Auto-play Indicator */}
+            <div className="text-center mt-6">
+              <button
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 mx-auto"
+              >
+                {isAutoPlaying ? (
+                  <>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    Auto-playing (hover to pause)
+                  </>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full" />
+                    Paused
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </section>
