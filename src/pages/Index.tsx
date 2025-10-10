@@ -52,6 +52,7 @@ const Index = () => {
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [timelineProgress, setTimelineProgress] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
@@ -145,7 +146,7 @@ const typeTimer = setInterval(() => {
 
     const particleInterval = setInterval(animateParticles, 50);
     
-    // Handle scroll for active section highlighting
+    // Handle scroll for active section highlighting and timeline progress
     const handleScroll = () => {
       const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'testimonials', 'contact'];
       const scrollPosition = window.scrollY + 150; // Increased offset for better detection
@@ -169,6 +170,17 @@ const typeTimer = setInterval(() => {
             return;
           }
         }
+      }
+
+      // Calculate timeline progress for animated effects
+      const experienceSection = document.getElementById('experience');
+      if (experienceSection) {
+        const rect = experienceSection.getBoundingClientRect();
+        const sectionHeight = experienceSection.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const scrolled = viewportHeight - rect.top;
+        const progress = Math.min(Math.max(scrolled / sectionHeight, 0), 1);
+        setTimelineProgress(progress);
       }
     };
 
@@ -672,28 +684,72 @@ const typeTimer = setInterval(() => {
           </div>
           
           <div className="relative">
-            {/* Professional Timeline Spine */}
-            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5">
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-transparent"></div>
+            {/* Enhanced Timeline Spine with Traveling Light */}
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
+              {/* Base gradient spine */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/40 via-purple-500/40 to-pink-500/20"></div>
+              
+              {/* Animated progress overlay */}
+              <div 
+                className="absolute top-0 left-0 right-0 bg-gradient-to-b from-blue-400 via-purple-400 to-transparent transition-all duration-700 ease-out"
+                style={{ height: `${timelineProgress * 100}%` }}
+              ></div>
+              
+              {/* Traveling light effect */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div 
+                  className="absolute w-full h-32 bg-gradient-to-b from-transparent via-white to-transparent opacity-60 blur-sm animate-travel-light"
+                  style={{ 
+                    top: '-128px',
+                    animation: 'travel-light 3s ease-in-out infinite'
+                  }}
+                ></div>
+              </div>
+              
+              {/* Glowing core */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-300/20 via-purple-300/20 to-transparent blur-md"></div>
             </div>
             
             <div className="space-y-16">
-              {experiences.map((exp, index) => (
-                <div 
-                  key={index} 
-                  className={`relative group ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                  style={{
-                    animation: 'fade-in 0.8s ease-out forwards',
-                    animationDelay: `${index * 0.2}s`,
-                    opacity: 0
-                  }}
-                >
-                  {/* Timeline Node */}
-                  <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
-                    <div className="relative">
-                      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 border-slate-900 shadow-lg group-hover:scale-125 transition-all duration-300"></div>
+              {experiences.map((exp, index) => {
+                const nodeProgress = (index + 1) / experiences.length;
+                const isActive = timelineProgress >= nodeProgress - 0.1;
+                
+                return (
+                  <div 
+                    key={index} 
+                    className={`relative group ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                    style={{
+                      animation: 'fade-in 0.8s ease-out forwards',
+                      animationDelay: `${index * 0.2}s`,
+                      opacity: 0
+                    }}
+                  >
+                    {/* Enhanced Timeline Node with Pulsing Rings */}
+                    <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="relative">
+                        {/* Pulsing rings - activated by scroll */}
+                        {isActive && (
+                          <>
+                            <div className="absolute inset-0 -m-3 rounded-full bg-blue-500/30 animate-ping"></div>
+                            <div className="absolute inset-0 -m-2 rounded-full bg-purple-500/20 animate-pulse"></div>
+                          </>
+                        )}
+                        
+                        {/* Core node */}
+                        <div className={`w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 border-3 border-slate-900 shadow-lg transition-all duration-500 ${
+                          isActive ? 'scale-125 shadow-blue-500/50' : 'scale-100'
+                        } group-hover:scale-150 group-hover:shadow-purple-500/50`}>
+                          {/* Inner glow */}
+                          <div className="absolute inset-0 rounded-full bg-white/30 blur-sm"></div>
+                        </div>
+                        
+                        {/* Orbital ring */}
+                        {isActive && (
+                          <div className="absolute inset-0 -m-4 rounded-full border-2 border-blue-400/40 animate-spin-slow"></div>
+                        )}
+                      </div>
                     </div>
-                  </div>
                   
                   {/* Date Badge */}
                   <div className={`hidden md:block absolute top-0 transform ${index % 2 === 0 ? 'left-1/2 ml-16' : 'right-1/2 mr-16'} z-10`}>
@@ -752,9 +808,8 @@ const typeTimer = setInterval(() => {
                         {/* Visit website button */}
                         <div className="pt-4">
                           <Button 
-                            variant="outline"
                             size="sm"
-                            className="w-full bg-slate-700/30 border-slate-600 hover:bg-blue-600/20 hover:border-blue-500 text-white transition-all duration-300"
+                            className="w-full bg-gradient-to-r from-slate-700 to-slate-600 hover:from-blue-600 hover:to-purple-600 border border-slate-500 hover:border-blue-400 text-white hover:text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02]"
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(exp.website, '_blank');
@@ -768,8 +823,9 @@ const typeTimer = setInterval(() => {
                       </CardContent>
                     </Card>
                   </div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
