@@ -376,27 +376,27 @@
 }
 
 .animate-orbit-1 {
-  animation: orbit-1 15s linear infinite;
+  animation: orbit-1 45s linear infinite;
 }
 
 .animate-orbit-2 {
-  animation: orbit-2 18s linear infinite;
+  animation: orbit-2 50s linear infinite;
 }
 
 .animate-orbit-3 {
-  animation: orbit-3 12s linear infinite;
+  animation: orbit-3 40s linear infinite;
 }
 
 .animate-orbit-4 {
-  animation: orbit-4 20s linear infinite;
+  animation: orbit-4 55s linear infinite;
 }
 
 .animate-orbit-5 {
-  animation: orbit-5 14s linear infinite;
+  animation: orbit-5 42s linear infinite;
 }
 
 .animate-orbit-6 {
-  animation: orbit-6 16s linear infinite;
+  animation: orbit-6 48s linear infinite;
 }
 
 .bg-gradient-waves {
