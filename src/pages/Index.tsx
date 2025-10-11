@@ -1,6 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -53,6 +54,8 @@ const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [timelineProgress, setTimelineProgress] = useState(0);
+  const emailToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const emailCopyCountRef = useRef(0);
 
   useEffect(() => {
     setIsVisible(true);
@@ -1431,7 +1434,33 @@ const typeTimer = setInterval(() => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('mailto:doradlarajesh@gmail.com')}
+              onClick={() => {
+                const email = 'doradlarajesh@gmail.com';
+                navigator.clipboard.writeText(email).then(() => {
+                  // Clear existing timeout if any
+                  if (emailToastTimeoutRef.current) {
+                    clearTimeout(emailToastTimeoutRef.current);
+                  }
+                  
+                  // Increment counter
+                  emailCopyCountRef.current += 1;
+                  
+                  // Calculate duration (3 seconds per click)
+                  const duration = emailCopyCountRef.current * 3000;
+                  
+                  // Show toast
+                  toast({
+                    title: "Email copied",
+                    description: `${email} copied to clipboard`,
+                  });
+                  
+                  // Set timeout to reset counter
+                  emailToastTimeoutRef.current = setTimeout(() => {
+                    emailCopyCountRef.current = 0;
+                    emailToastTimeoutRef.current = null;
+                  }, duration);
+                });
+              }}
             >
               <Mail className="w-4 h-4 mr-2" />
               doradlarajesh@gmail.com
