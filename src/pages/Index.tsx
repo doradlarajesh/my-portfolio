@@ -56,10 +56,6 @@ const Index = () => {
   const [timelineProgress, setTimelineProgress] = useState(0);
   const emailToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const emailCopyCountRef = useRef(0);
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
-  const [titleFade, setTitleFade] = useState(true);
-  
-  const titles = ["Principal QA Engineer", "Lead QA Engineer", "AI Evaluation Specialist"];
 
   useEffect(() => {
     setIsVisible(true);
@@ -153,15 +149,6 @@ const typeTimer = setInterval(() => {
 
     const particleInterval = setInterval(animateParticles, 50);
 
-    // Title rotation effect
-    const titleRotationInterval = setInterval(() => {
-      setTitleFade(false);
-      setTimeout(() => {
-        setCurrentTitleIndex((prev) => (prev + 1) % 3);
-        setTitleFade(true);
-      }, 300);
-    }, 2500);
-
     // Handle scroll for active section highlighting and timeline progress
     const handleScroll = () => {
       const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'testimonials', 'contact'];
@@ -214,7 +201,6 @@ const typeTimer = setInterval(() => {
       clearInterval(typeTimer);
       clearInterval(testimonialTimer);
       clearInterval(particleInterval);
-      clearInterval(titleRotationInterval);
     };
   }, [isAutoPlaying]);
 
@@ -612,7 +598,7 @@ const typeTimer = setInterval(() => {
                   RD
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20 animate-pulse"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20"></div>
             </div>
           </div>
 
@@ -624,15 +610,9 @@ const typeTimer = setInterval(() => {
                 {typedText}
               </div>
             </h1>
-            <div className="h-8 md:h-10 overflow-hidden">
-              <p 
-                className={`text-xl md:text-2xl text-gray-300 transition-all duration-300 ${
-                  titleFade ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-                }`}
-              >
-                {titles[currentTitleIndex]}
-              </p>
-            </div>
+            <p className="text-xl md:text-2xl text-gray-300 animate-fade-in">
+              Principal QA Engineer
+            </p>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in">
               11+ years of experience crafting robust quality assurance strategies, 
               leading automation initiatives, and ensuring exceptional software quality at scale.
