@@ -1129,7 +1129,7 @@ const typeTimer = setInterval(() => {
                       <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
                         {article.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-400">
+                      <CardDescription className="text-gray-400 h-16 line-clamp-3 overflow-hidden">
                         {article.description}
                       </CardDescription>
                     </CardHeader>
@@ -1190,7 +1190,7 @@ const typeTimer = setInterval(() => {
                       <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
                         {article.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-400">
+                      <CardDescription className="text-gray-400 h-16 line-clamp-3 overflow-hidden">
                         {article.description}
                       </CardDescription>
                     </CardHeader>
