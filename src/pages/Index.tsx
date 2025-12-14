@@ -1126,7 +1126,7 @@ const typeTimer = setInterval(() => {
                           Medium
                         </Badge>
                       </div>
-                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300 h-14 line-clamp-2 overflow-hidden">
                         {article.title}
                       </CardTitle>
                       <CardDescription className="text-gray-400 h-16 line-clamp-3 overflow-hidden">
@@ -1187,7 +1187,7 @@ const typeTimer = setInterval(() => {
                           Medium
                         </Badge>
                       </div>
-                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300 h-14 line-clamp-2 overflow-hidden">
                         {article.title}
                       </CardTitle>
                       <CardDescription className="text-gray-400 h-16 line-clamp-3 overflow-hidden">
