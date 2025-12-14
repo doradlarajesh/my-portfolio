@@ -69,7 +69,7 @@ const Index = () => {
       tags: ["AI", "BDD", "Automation"]
     },
     {
-      id: 2,
+      id: 4,
       title: "Postman GitHub Actions Integration",
       description: "Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.",
       image: articlePostmanGithubActions,
@@ -85,7 +85,7 @@ const Index = () => {
       tags: ["Webhooks", "Slack", "Integration"]
     },
     {
-      id: 4,
+      id: 5,
       title: "Postman GitHub Integration for Collection Backup",
       description: "Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.",
       image: articlePostmanBackup,
@@ -93,7 +93,7 @@ const Index = () => {
       tags: ["Postman", "GitHub", "Backup"]
     },
     {
-      id: 5,
+      id: 2,
       title: "Advanced Synchronization with iOS XCUITest",
       description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
       image: articleBddAi,
