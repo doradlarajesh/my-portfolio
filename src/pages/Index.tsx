@@ -91,6 +91,14 @@ const Index = () => {
       image: articlePostmanBackup,
       url: "https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c",
       tags: ["Postman", "GitHub", "Backup"]
+    },
+    {
+      id: 5,
+      title: "Advanced Synchronization with iOS XCUITest",
+      description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
+      image: articleBddAi,
+      url: "https://doradlarajesh.medium.com/advanced-synchronization-with-ios-xcuitest-94075ab53f48",
+      tags: ["iOS", "XCUITest", "Swift"]
     }
   ];
 
