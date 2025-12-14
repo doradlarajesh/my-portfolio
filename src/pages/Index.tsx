@@ -69,12 +69,12 @@ const Index = () => {
       tags: ["AI", "BDD", "Automation"]
     },
     {
-      id: 4,
-      title: "Postman GitHub Actions Integration",
-      description: "Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.",
-      image: articlePostmanGithubActions,
-      url: "https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79",
-      tags: ["Postman", "GitHub Actions", "Newman"]
+      id: 2,
+      title: "Advanced Synchronization with iOS XCUITest",
+      description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
+      image: articleBddAi,
+      url: "https://doradlarajesh.medium.com/advanced-synchronization-with-ios-xcuitest-94075ab53f48",
+      tags: ["iOS", "XCUITest", "Swift"]
     },
     {
       id: 3,
@@ -85,20 +85,20 @@ const Index = () => {
       tags: ["Webhooks", "Slack", "Integration"]
     },
     {
+      id: 4,
+      title: "Postman GitHub Actions Integration",
+      description: "Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.",
+      image: articlePostmanGithubActions,
+      url: "https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79",
+      tags: ["Postman", "GitHub Actions", "Newman"]
+    },
+    {
       id: 5,
       title: "Postman GitHub Integration for Collection Backup",
       description: "Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.",
       image: articlePostmanBackup,
       url: "https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c",
       tags: ["Postman", "GitHub", "Backup"]
-    },
-    {
-      id: 2,
-      title: "Advanced Synchronization with iOS XCUITest",
-      description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
-      image: articleBddAi,
-      url: "https://doradlarajesh.medium.com/advanced-synchronization-with-ios-xcuitest-94075ab53f48",
-      tags: ["iOS", "XCUITest", "Swift"]
     }
   ];
 
