@@ -62,10 +62,10 @@ const Index = () => {
   const articles = [
     {
       id: 1,
-      title: "BDD with AI - Revolutionizing Test Automation",
+      title: "Resurrection of BDD by AI",
       description: "Exploring how AI is transforming Behavior Driven Development with intelligent test generation, natural language processing, and automated scenario creation.",
       image: articleBddAi,
-      url: "https://medium.com/@doradlarajesh/beyond-the-buzzwords-a-qa-perspective-on-effective-ai-integration-0e4c2a1bb84d",
+      url: "https://doradlarajesh.medium.com/resurrection-of-bdd-by-ai-f2c7fe1a7538",
       tags: ["AI", "BDD", "Automation"]
     },
     {
