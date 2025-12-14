@@ -53,9 +53,46 @@ const Index = () => {
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isArticlesAutoPlaying, setIsArticlesAutoPlaying] = useState(true);
+  const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const emailToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const emailCopyCountRef = useRef(0);
+
+  const articles = [
+    {
+      id: 1,
+      title: "BDD with AI - Revolutionizing Test Automation",
+      description: "Exploring how AI is transforming Behavior Driven Development with intelligent test generation, natural language processing, and automated scenario creation.",
+      image: articleBddAi,
+      url: "https://medium.com/@doradlarajesh/beyond-the-buzzwords-a-qa-perspective-on-effective-ai-integration-0e4c2a1bb84d",
+      tags: ["AI", "BDD", "Automation"]
+    },
+    {
+      id: 2,
+      title: "Postman GitHub Actions Integration",
+      description: "Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.",
+      image: articlePostmanGithubActions,
+      url: "https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79",
+      tags: ["Postman", "GitHub Actions", "Newman"]
+    },
+    {
+      id: 3,
+      title: "Understanding Webhooks & Slack Integration",
+      description: "Comprehensive guide on webhooks and how to create Slack webhook integrations for real-time notifications and automation.",
+      image: articleSlackWebhook,
+      url: "https://medium.com/@doradlarajesh/what-is-webhook-how-to-create-slack-webhook-36c692bbec3b",
+      tags: ["Webhooks", "Slack", "Integration"]
+    },
+    {
+      id: 4,
+      title: "Postman GitHub Integration for Collection Backup",
+      description: "Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.",
+      image: articlePostmanBackup,
+      url: "https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c",
+      tags: ["Postman", "GitHub", "Backup"]
+    }
+  ];
 
   useEffect(() => {
     setIsVisible(true);
@@ -195,14 +232,22 @@ const typeTimer = setInterval(() => {
         setCurrentTestimonial((prev) => (prev + 1) % 2); // 2 testimonials
       }
     }, 5000); // Change every 5 seconds
+
+    // Auto-play articles carousel
+    const articlesTimer = setInterval(() => {
+      if (isArticlesAutoPlaying) {
+        setCurrentArticleIndex((prev) => (prev + 1) % 2); // 2 pages (0-2, 3)
+      }
+    }, 4000); // Change every 4 seconds
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(typeTimer);
       clearInterval(testimonialTimer);
       clearInterval(particleInterval);
+      clearInterval(articlesTimer);
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isArticlesAutoPlaying]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -1051,158 +1096,177 @@ const typeTimer = setInterval(() => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articleBddAi} 
-                  alt="Resurrection of BDD by AI"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsArticlesAutoPlaying(false)}
+            onMouseLeave={() => setIsArticlesAutoPlaying(true)}
+          >
+            {/* Page 1: First 3 articles */}
+            <div
+              className={`transition-all duration-700 ease-in-out ${
+                currentArticleIndex === 0
+                  ? 'opacity-100 translate-x-0'
+                  : 'opacity-0 -translate-x-full absolute inset-0 pointer-events-none'
+              }`}
+            >
+              <div className="grid md:grid-cols-3 gap-8">
+                {articles.slice(0, 3).map((article) => (
+                  <Card key={article.id} className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                          <BookOpen className="w-3 h-3 mr-1" />
+                          Medium
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                        {article.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-400">
+                        {article.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {article.tags.map((tag, i) => (
+                          <Badge 
+                            key={i} 
+                            variant="outline" 
+                            className={`text-xs ${
+                              i === 0 ? 'bg-blue-500/10 border-blue-500/30 text-blue-300' :
+                              i === 1 ? 'bg-purple-500/10 border-purple-500/30 text-purple-300' :
+                              'bg-green-500/10 border-green-500/30 text-green-300'
+                            }`}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                        onClick={() => window.open(article.url, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Read Article
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Resurrection of BDD by AI
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Discover how AI is reviving close dead BDD from Obsolete to Essential in Test Automation
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">BDD</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">AI</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Test Automation</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/resurrection-of-bdd-by-ai-f2c7fe1a7538', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            </div>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articlePostmanGithubActions}
-                  alt="Postman GitHub Actions Integration"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+            {/* Page 2: Remaining articles */}
+            <div
+              className={`transition-all duration-700 ease-in-out ${
+                currentArticleIndex === 1
+                  ? 'opacity-100 translate-x-0'
+                  : 'opacity-0 translate-x-full absolute inset-0 pointer-events-none'
+              }`}
+            >
+              <div className="grid md:grid-cols-3 gap-8">
+                {articles.slice(3).map((article) => (
+                  <Card key={article.id} className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                          <BookOpen className="w-3 h-3 mr-1" />
+                          Medium
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
+                        {article.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-400">
+                        {article.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {article.tags.map((tag, i) => (
+                          <Badge 
+                            key={i} 
+                            variant="outline" 
+                            className={`text-xs ${
+                              i === 0 ? 'bg-blue-500/10 border-blue-500/30 text-blue-300' :
+                              i === 1 ? 'bg-purple-500/10 border-purple-500/30 text-purple-300' :
+                              'bg-green-500/10 border-green-500/30 text-green-300'
+                            }`}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                        onClick={() => window.open(article.url, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Read Article
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Postman GitHub Actions Integration
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub Actions</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Newman</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            </div>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articleSlackWebhook} 
-                  alt="Understanding Webhooks & Slack Integration"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Understanding Webhooks & Slack Integration
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Comprehensive guide on webhooks and how to create Slack webhook integrations for real-time notifications and automation.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Webhooks</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">Slack</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Integration</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/what-is-webhook-how-to-create-slack-webhook-36c692bbec3b', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentArticleIndex(0)}
+                disabled={currentArticleIndex === 0}
+                className="h-10 w-10 rounded-full border-slate-600 bg-slate-800/50 hover:bg-slate-700 text-gray-300 hover:text-white disabled:opacity-50 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </Button>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articlePostmanBackup} 
-                  alt="Postman GitHub Integration for Collection Backup"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+              {/* Dot Indicators */}
+              <div className="flex gap-2">
+                {[0, 1].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentArticleIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentArticleIndex === index
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-125'
+                        : 'bg-slate-600 hover:bg-slate-500'
+                    }`}
+                  />
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Postman GitHub Integration for Collection Backup
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Backup</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentArticleIndex(1)}
+                disabled={currentArticleIndex === 1}
+                className="h-10 w-10 rounded-full border-slate-600 bg-slate-800/50 hover:bg-slate-700 text-gray-300 hover:text-white disabled:opacity-50 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </Button>
+            </div>
+
+            {/* Auto-play indicator */}
+            <div className="flex justify-center mt-4">
+              <span className={`text-xs ${isArticlesAutoPlaying ? 'text-green-400' : 'text-gray-500'} transition-colors duration-300`}>
+                {isArticlesAutoPlaying ? '● Auto-playing' : '○ Paused'}
+              </span>
+            </div>
           </div>
         </div>
       </section>
