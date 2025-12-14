@@ -9,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
+import xcuiTestSync from "@/assets/xcuitestSync.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
@@ -72,7 +73,7 @@ const Index = () => {
       id: 2,
       title: "Advanced Synchronization with iOS XCUITest",
       description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
-      image: articleBddAi,
+      image: xcuiTestSync,
       url: "https://doradlarajesh.medium.com/advanced-synchronization-with-ios-xcuitest-94075ab53f48",
       tags: ["iOS", "XCUITest", "Swift"]
     },
