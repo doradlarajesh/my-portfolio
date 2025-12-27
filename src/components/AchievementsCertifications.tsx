@@ -170,7 +170,9 @@ const AchievementsCertifications = () => {
               <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
                 <ExternalLink className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-semibold text-white">Certifications</h3>
+              <h3 className="text-2xl font-semibold text-white">
+                Certifications <span className="text-sm font-normal text-gray-400">(Click to view certificate)</span>
+              </h3>
             </div>
 
             <div className="grid gap-4">
@@ -208,15 +210,6 @@ const AchievementsCertifications = () => {
                         </Badge>
                       </div>
                       
-                      {/* Dashed line separator */}
-                      <div className="mt-4 border-t border-dashed border-white/20 pt-3 flex items-center justify-between">
-                        <span className="text-xs text-gray-500 uppercase tracking-wider">Click to view certificate</span>
-                        <div className="flex gap-1">
-                          {[...Array(3)].map((_, i) => (
-                            <div key={i} className={`w-2 h-2 rounded-full bg-gradient-to-r ${cert.gradient} opacity-60`} />
-                          ))}
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </motion.div>
