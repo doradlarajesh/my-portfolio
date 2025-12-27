@@ -732,12 +732,10 @@ const typeTimer = setInterval(() => {
                 <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
               </div>
             </div>
-            <h2 className="text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Professional Journey
-              </span>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+              Professional Journey
             </h2>
-            <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               11+ years of delivering quality excellence across global enterprises
             </p>
           </div>
@@ -906,8 +904,8 @@ const typeTimer = setInterval(() => {
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Technical Expertise</h2>
-            <p className="text-gray-400 text-lg">Mastery across the quality assurance spectrum</p>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Technical Expertise</h2>
+            <p className="text-xl text-gray-300">Mastery across the quality assurance spectrum</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -940,8 +938,8 @@ const typeTimer = setInterval(() => {
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Live Projects & Client Work</h2>
-            <p className="text-gray-400 text-lg">Real-world solutions delivering measurable impact</p>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Live Projects & Client Work</h2>
+            <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
