@@ -1,6 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
+import xcuiTestSync from "@/assets/xcuitestSync.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
@@ -39,7 +41,8 @@ import {
   Monitor,
   FileCheck,
   BarChart3,
-  Quote
+  Quote,
+  Building2
 } from "lucide-react";
 
 const Index = () => {
@@ -51,6 +54,54 @@ const Index = () => {
   const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isArticlesAutoPlaying, setIsArticlesAutoPlaying] = useState(true);
+  const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
+  const [timelineProgress, setTimelineProgress] = useState(0);
+  const emailToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const emailCopyCountRef = useRef(0);
+
+  const articles = [
+    {
+      id: 1,
+      title: "Resurrection of BDD by AI",
+      description: "Exploring how AI is transforming Behavior Driven Development with intelligent test generation, natural language processing, and automated scenario creation.",
+      image: articleBddAi,
+      url: "https://doradlarajesh.medium.com/resurrection-of-bdd-by-ai-f2c7fe1a7538",
+      tags: ["AI", "BDD", "Automation"]
+    },
+    {
+      id: 2,
+      title: "Advanced Synchronization with iOS XCUITest",
+      description: "Deep dive into handling complex synchronization scenarios in iOS UI testing, including custom waitForExistence strategies, XCTestExpectations, and race condition handling for reliable automation.",
+      image: xcuiTestSync,
+      url: "https://doradlarajesh.medium.com/advanced-synchronization-with-ios-xcuitest-94075ab53f48",
+      tags: ["iOS", "XCUITest", "Swift"]
+    },
+    {
+      id: 3,
+      title: "Understanding Webhooks & Slack Integration",
+      description: "Comprehensive guide on webhooks and how to create Slack webhook integrations for real-time notifications and automation.",
+      image: articleSlackWebhook,
+      url: "https://medium.com/@doradlarajesh/what-is-webhook-how-to-create-slack-webhook-36c692bbec3b",
+      tags: ["Webhooks", "Slack", "Integration"]
+    },
+    {
+      id: 4,
+      title: "Postman GitHub Actions Integration",
+      description: "Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.",
+      image: articlePostmanGithubActions,
+      url: "https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79",
+      tags: ["Postman", "GitHub Actions", "Newman"]
+    },
+    {
+      id: 5,
+      title: "Postman GitHub Integration for Collection Backup",
+      description: "Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.",
+      image: articlePostmanBackup,
+      url: "https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c",
+      tags: ["Postman", "GitHub", "Backup"]
+    }
+  ];
 
   useEffect(() => {
     setIsVisible(true);
@@ -143,8 +194,8 @@ const typeTimer = setInterval(() => {
     };
 
     const particleInterval = setInterval(animateParticles, 50);
-    
-    // Handle scroll for active section highlighting
+
+    // Handle scroll for active section highlighting and timeline progress
     const handleScroll = () => {
       const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'testimonials', 'contact'];
       const scrollPosition = window.scrollY + 150; // Increased offset for better detection
@@ -169,6 +220,17 @@ const typeTimer = setInterval(() => {
           }
         }
       }
+
+      // Calculate timeline progress for animated effects
+      const experienceSection = document.getElementById('experience');
+      if (experienceSection) {
+        const rect = experienceSection.getBoundingClientRect();
+        const sectionHeight = experienceSection.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const scrolled = viewportHeight - rect.top;
+        const progress = Math.min(Math.max(scrolled / sectionHeight, 0), 1);
+        setTimelineProgress(progress);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -179,13 +241,22 @@ const typeTimer = setInterval(() => {
         setCurrentTestimonial((prev) => (prev + 1) % 2); // 2 testimonials
       }
     }, 5000); // Change every 5 seconds
+
+    // Auto-play articles carousel
+    const articlesTimer = setInterval(() => {
+      if (isArticlesAutoPlaying) {
+        setCurrentArticleIndex((prev) => (prev + 1) % 2); // 2 pages (0-2, 3)
+      }
+    }, 4000); // Change every 4 seconds
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(typeTimer);
       clearInterval(testimonialTimer);
+      clearInterval(particleInterval);
+      clearInterval(articlesTimer);
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isArticlesAutoPlaying]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -581,7 +652,7 @@ const typeTimer = setInterval(() => {
                   RD
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20 animate-pulse"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20"></div>
             </div>
           </div>
 
@@ -643,75 +714,176 @@ const typeTimer = setInterval(() => {
         </button>
       </section>
 
-      {/* Experience Section - Timeline View */}
-      <section id="experience" className="py-20 px-4 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Professional Journey</h2>
-            <p className="text-gray-400 text-lg">11+ years of delivering quality excellence</p>
+      {/* Experience Section - Enhanced 3D Timeline */}
+      <section id="experience" className="py-20 px-4 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
+              <div className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm px-6 py-2 rounded-full border border-blue-500/30">
+                <Briefcase className="w-5 h-5 text-blue-400 animate-pulse" />
+                <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
+              </div>
+            </div>
+            <h2 className="text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Professional Journey
+              </span>
+            </h2>
+            <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+              11+ years of delivering quality excellence across global enterprises
+            </p>
           </div>
           
           <div className="relative">
-            {/* Timeline line with scroll effect */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-300 to-purple-300 animate-pulse opacity-50"></div>
-              <div className="absolute w-full h-8 bg-gradient-to-b from-white to-transparent animate-bounce opacity-30" style={{animationDuration: '3s'}}></div>
+            {/* Enhanced Timeline Spine with Traveling Light */}
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
+              {/* Base gradient spine */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/40 via-purple-500/40 to-pink-500/20"></div>
+              
+              {/* Animated progress overlay */}
+              <div 
+                className="absolute top-0 left-0 right-0 bg-gradient-to-b from-blue-400 via-purple-400 to-transparent transition-all duration-700 ease-out"
+                style={{ height: `${timelineProgress * 100}%` }}
+              ></div>
+              
+              {/* Traveling light effect */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div 
+                  className="absolute w-full h-32 bg-gradient-to-b from-transparent via-white to-transparent opacity-60 blur-sm animate-travel-light"
+                  style={{ 
+                    top: '-128px',
+                    animation: 'travel-light 3s ease-in-out infinite'
+                  }}
+                ></div>
+              </div>
+              
+              {/* Glowing core */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-300/20 via-purple-300/20 to-transparent blur-md"></div>
             </div>
             
-            <div className="space-y-12">
-              {experiences.map((exp, index) => (
-                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-slate-900 z-10 animate-pulse"></div>
+            <div className="space-y-16">
+              {experiences.map((exp, index) => {
+                const nodeProgress = (index + 1) / experiences.length;
+                const isActive = timelineProgress >= nodeProgress - 0.1;
+                
+                return (
+                  <div 
+                    key={index} 
+                    className={`relative group ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                    style={{
+                      animation: 'fade-in 0.8s ease-out forwards',
+                      animationDelay: `${index * 0.2}s`,
+                      opacity: 0
+                    }}
+                  >
+                    {/* Enhanced Timeline Node with Pulsing Rings */}
+                    <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="relative">
+                        {/* Pulsing rings - activated by scroll */}
+                        {isActive && (
+                          <>
+                            <div className="absolute inset-0 -m-3 rounded-full bg-blue-500/30 animate-ping"></div>
+                            <div className="absolute inset-0 -m-2 rounded-full bg-purple-500/20 animate-pulse"></div>
+                          </>
+                        )}
+                        
+                        {/* Core node */}
+                        <div className={`w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 border-3 border-slate-900 shadow-lg transition-all duration-500 ${
+                          isActive ? 'scale-125 shadow-blue-500/50' : 'scale-100'
+                        } group-hover:scale-150 group-hover:shadow-purple-500/50`}>
+                          {/* Inner glow */}
+                          <div className="absolute inset-0 rounded-full bg-white/30 blur-sm"></div>
+                        </div>
+                        
+                        {/* Orbital ring */}
+                        {isActive && (
+                          <div className="absolute inset-0 -m-4 rounded-full border-2 border-blue-400/40 animate-spin-slow"></div>
+                        )}
+                      </div>
+                    </div>
                   
-                  {/* Date indicator - positioned opposite to content */}
-                  <div className={`hidden md:block absolute top-0 ${index % 2 === 0 ? 'left-1/2 ml-8 text-left' : 'right-1/2 mr-8 text-right'}`}>
-                    <div className="flex items-center space-x-2 bg-slate-800/70 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600 hover:border-blue-500/50 transition-all duration-300 hover:bg-slate-800/90">
-                      <Calendar className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm text-gray-300">{exp.period}</span>
+                  {/* Date Badge */}
+                  <div className={`hidden md:block absolute top-0 transform ${index % 2 === 0 ? 'left-1/2 ml-16' : 'right-1/2 mr-16'} z-10`}>
+                    <div className="relative">
+                      <div className="flex items-center space-x-2 bg-slate-800/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-blue-500/20">
+                        <Calendar className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm font-semibold text-white">{exp.period}</span>
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Content card */}
-                  <div className={`w-full ${index % 2 === 0 ? 'md:w-1/2 md:pr-8' : 'md:w-1/2 md:pl-8'} ml-12 md:ml-0`}>
-                    <Card 
-                      className={`bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-500 group hover:shadow-2xl transform hover:-translate-y-2 animate-fade-in hover:shadow-purple-500/20 cursor-pointer`}
-                      onClick={() => window.open(exp.website, '_blank')}
-                    >
-                      <CardHeader>
-                        <div className="flex flex-col space-y-2">
-                          <div className={`w-12 h-1 bg-gradient-to-r ${exp.color} rounded-full group-hover:w-24 transition-all duration-500`}></div>
-                          <CardTitle className="text-white text-xl group-hover:text-blue-400 transition-colors duration-300">{exp.title}</CardTitle>
-                          <CardDescription className="text-blue-400 font-medium group-hover:text-blue-300 transition-colors duration-300">{exp.company}</CardDescription>
-                          <div className="flex items-center space-x-4 md:hidden">
-                            <Badge variant="outline" className="border-purple-500 text-purple-300">
+                  {/* Content Card */}
+                  <div className={`w-full ${index % 2 === 0 ? 'md:w-[calc(50%-4rem)] md:mr-auto' : 'md:w-[calc(50%-4rem)] md:ml-auto'} ml-16 md:ml-0`}>
+                    <Card className="relative bg-slate-800/50 border-slate-700/50 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group/card overflow-hidden">
+                      {/* Subtle top accent */}
+                      <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${exp.color} opacity-60 group-hover/card:opacity-100 transition-opacity duration-300`}></div>
+                      
+                      <CardHeader className="relative z-10">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <CardTitle className="text-xl font-bold text-white mb-2 group-hover/card:text-blue-400 transition-colors duration-300">
+                              {exp.title}
+                            </CardTitle>
+                            <CardDescription className="text-base font-medium text-blue-300 flex items-center gap-2">
+                              <Building2 className="w-4 h-4" />
+                              {exp.company}
+                            </CardDescription>
+                          </div>
+                          <div className="md:hidden">
+                            <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10">
                               {exp.period}
-                            </Badge>
-                            <Badge variant="outline" className="border-gray-500 text-gray-300">
-                              {exp.duration}
                             </Badge>
                           </div>
                         </div>
                       </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-300 mb-4 group-hover:text-gray-200 transition-colors duration-300">{exp.description}</p>
-                        <div className="space-y-2">
+                      
+                      <CardContent className="relative z-10 space-y-4">
+                        <p className="text-gray-300 leading-relaxed text-sm">
+                          {exp.description}
+                        </p>
+                        
+                        {/* Achievements */}
+                        <div className="space-y-2 pt-2">
+                          <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Key Achievements</h4>
                           {exp.achievements.map((achievement, idx) => (
-                            <div key={idx} className="flex items-start space-x-2 group/item hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0 group-hover/item:text-green-300 transition-colors duration-200" />
-                              <span className="text-gray-300 text-sm group-hover/item:text-gray-200 transition-colors duration-200">{achievement}</span>
+                            <div 
+                              key={idx} 
+                              className="flex items-start space-x-2 text-sm text-gray-300"
+                            >
+                              <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                              <span className="leading-relaxed">{achievement}</span>
                             </div>
                           ))}
                         </div>
-                        <div className="mt-4 flex items-center text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                          <ExternalLink className="w-3 h-3 mr-1" />
-                          Click to visit company website
+                        
+                        {/* Visit website button */}
+                        <div className="pt-4">
+                          <Button 
+                            size="sm"
+                            className="w-full bg-gradient-to-r from-slate-700 to-slate-600 hover:from-blue-600 hover:to-purple-600 border border-slate-500 hover:border-blue-400 text-white hover:text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02]"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(exp.website, '_blank');
+                            }}
+                          >
+                            <Globe className="w-4 h-4 mr-2" />
+                            Visit Company Website
+                            <ExternalLink className="w-3 h-3 ml-2" />
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
                   </div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -933,158 +1105,177 @@ const typeTimer = setInterval(() => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articleBddAi} 
-                  alt="Resurrection of BDD by AI"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsArticlesAutoPlaying(false)}
+            onMouseLeave={() => setIsArticlesAutoPlaying(true)}
+          >
+            {/* Page 1: First 3 articles */}
+            <div
+              className={`transition-all duration-700 ease-in-out ${
+                currentArticleIndex === 0
+                  ? 'opacity-100 translate-x-0'
+                  : 'opacity-0 -translate-x-full absolute inset-0 pointer-events-none'
+              }`}
+            >
+              <div className="grid md:grid-cols-3 gap-8">
+                {articles.slice(0, 3).map((article) => (
+                  <Card key={article.id} className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                          <BookOpen className="w-3 h-3 mr-1" />
+                          Medium
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300 h-14 line-clamp-2 overflow-hidden">
+                        {article.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-400 h-28 line-clamp-5 overflow-hidden">
+                        {article.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {article.tags.map((tag, i) => (
+                          <Badge 
+                            key={i} 
+                            variant="outline" 
+                            className={`text-xs ${
+                              i === 0 ? 'bg-blue-500/10 border-blue-500/30 text-blue-300' :
+                              i === 1 ? 'bg-purple-500/10 border-purple-500/30 text-purple-300' :
+                              'bg-green-500/10 border-green-500/30 text-green-300'
+                            }`}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                        onClick={() => window.open(article.url, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Read Article
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Resurrection of BDD by AI
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Discover how AI is reviving close dead BDD from Obsolete to Essential in Test Automation
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">BDD</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">AI</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Test Automation</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/resurrection-of-bdd-by-ai-f2c7fe1a7538', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            </div>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articlePostmanGithubActions}
-                  alt="Postman GitHub Actions Integration"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+            {/* Page 2: Remaining articles */}
+            <div
+              className={`transition-all duration-700 ease-in-out ${
+                currentArticleIndex === 1
+                  ? 'opacity-100 translate-x-0'
+                  : 'opacity-0 translate-x-full absolute inset-0 pointer-events-none'
+              }`}
+            >
+              <div className="grid md:grid-cols-3 gap-8">
+                {articles.slice(3).map((article) => (
+                  <Card key={article.id} className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                          <BookOpen className="w-3 h-3 mr-1" />
+                          Medium
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300 h-14 line-clamp-2 overflow-hidden">
+                        {article.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-400 h-28 line-clamp-5 overflow-hidden">
+                        {article.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {article.tags.map((tag, i) => (
+                          <Badge 
+                            key={i} 
+                            variant="outline" 
+                            className={`text-xs ${
+                              i === 0 ? 'bg-blue-500/10 border-blue-500/30 text-blue-300' :
+                              i === 1 ? 'bg-purple-500/10 border-purple-500/30 text-purple-300' :
+                              'bg-green-500/10 border-green-500/30 text-green-300'
+                            }`}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
+                        onClick={() => window.open(article.url, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Read Article
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Postman GitHub Actions Integration
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Complete guide on integrating Postman with GitHub Actions using Newman, HTML Allure reporting, and Slack notifications for deployment using Pages.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub Actions</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Newman</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://doradlarajesh.medium.com/postman-github-actions-integration-with-newman-html-allure-slack-reporting-deploy-using-pages-fbcf33bdec79', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            </div>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articleSlackWebhook} 
-                  alt="Understanding Webhooks & Slack Integration"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Understanding Webhooks & Slack Integration
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Comprehensive guide on webhooks and how to create Slack webhook integrations for real-time notifications and automation.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Webhooks</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">Slack</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Integration</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/what-is-webhook-how-to-create-slack-webhook-36c692bbec3b', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentArticleIndex(0)}
+                disabled={currentArticleIndex === 0}
+                className="h-10 w-10 rounded-full border-slate-600 bg-slate-800/50 hover:bg-slate-700 text-gray-300 hover:text-white disabled:opacity-50 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </Button>
 
-            <Card className="group bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl backdrop-blur-sm overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={articlePostmanBackup} 
-                  alt="Postman GitHub Integration for Collection Backup"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+              {/* Dot Indicators */}
+              <div className="flex gap-2">
+                {[0, 1].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentArticleIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentArticleIndex === index
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-125'
+                        : 'bg-slate-600 hover:bg-slate-500'
+                    }`}
+                  />
+                ))}
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Medium
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors duration-300">
-                  Postman GitHub Integration for Collection Backup
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Step-by-step tutorial on integrating Postman with GitHub for automated collection backup and version control management.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 border-blue-500/30 text-blue-300">Postman</Badge>
-                  <Badge variant="outline" className="text-xs bg-purple-500/10 border-purple-500/30 text-purple-300">GitHub</Badge>
-                  <Badge variant="outline" className="text-xs bg-green-500/10 border-green-500/30 text-green-300">Backup</Badge>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform hover:scale-105 transition-all duration-300"
-                  onClick={() => window.open('https://medium.com/@doradlarajesh/postman-github-integration-for-backing-up-collection-7b98f1c8030c', '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Read Article
-                </Button>
-              </CardContent>
-            </Card>
+
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentArticleIndex(1)}
+                disabled={currentArticleIndex === 1}
+                className="h-10 w-10 rounded-full border-slate-600 bg-slate-800/50 hover:bg-slate-700 text-gray-300 hover:text-white disabled:opacity-50 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </Button>
+            </div>
+
+            {/* Auto-play indicator */}
+            <div className="flex justify-center mt-4">
+              <span className={`text-xs ${isArticlesAutoPlaying ? 'text-green-400' : 'text-gray-500'} transition-colors duration-300`}>
+                {isArticlesAutoPlaying ? '● Auto-playing' : '○ Paused'}
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -1317,7 +1508,33 @@ const typeTimer = setInterval(() => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('mailto:doradlarajesh@gmail.com')}
+              onClick={() => {
+                const email = 'doradlarajesh@gmail.com';
+                navigator.clipboard.writeText(email).then(() => {
+                  // Clear existing timeout if any
+                  if (emailToastTimeoutRef.current) {
+                    clearTimeout(emailToastTimeoutRef.current);
+                  }
+                  
+                  // Increment counter
+                  emailCopyCountRef.current += 1;
+                  
+                  // Calculate duration (3 seconds per click)
+                  const duration = emailCopyCountRef.current * 3000;
+                  
+                  // Show toast
+                  toast({
+                    title: "Email copied",
+                    description: `${email} copied to clipboard`,
+                  });
+                  
+                  // Set timeout to reset counter
+                  emailToastTimeoutRef.current = setTimeout(() => {
+                    emailCopyCountRef.current = 0;
+                    emailToastTimeoutRef.current = null;
+                  }, duration);
+                });
+              }}
             >
               <Mail className="w-4 h-4 mr-2" />
               doradlarajesh@gmail.com
