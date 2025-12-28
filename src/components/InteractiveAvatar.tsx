@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 
-const InteractiveAvatar = () => {
+interface InteractiveAvatarProps {
+  className?: string;
+}
+
+const InteractiveAvatar = ({ className = "" }: InteractiveAvatarProps) => {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
-  const [isBlinking, setIsBlinking] = useState(false);
   const avatarRef = useRef<SVGSVGElement>(null);
 
-  // 1. MOUSE TRACKING
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!avatarRef.current) return;
+      
       const rect = avatarRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -16,169 +19,256 @@ const InteractiveAvatar = () => {
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
       
-      // Limit eye movement
-      const angle = Math.atan2(deltaY, deltaX);
-      const maxDist = 6;
-      const dist = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 40, maxDist);
+      // Calculate angle and limit eye movement
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const maxDistance = 8; // Maximum eye movement
+      const normalizedDistance = Math.min(distance / 300, 1);
       
-      setEyePosition({
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist
-      });
+      const angle = Math.atan2(deltaY, deltaX);
+      const eyeX = Math.cos(angle) * maxDistance * normalizedDistance;
+      const eyeY = Math.sin(angle) * maxDistance * normalizedDistance;
+      
+      setEyePosition({ x: eyeX, y: eyeY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 2. BLINK ANIMATION
-  useEffect(() => {
-    const blinkLoop = () => {
-      const nextBlink = Math.random() * 4000 + 2000;
-      setTimeout(() => {
-        setIsBlinking(true);
-        setTimeout(() => {
-          setIsBlinking(false);
-          blinkLoop();
-        }, 150);
-      }, nextBlink);
-    };
-    blinkLoop();
-    return () => {};
-  }, []);
-
   return (
-    <div className="flex items-center justify-center py-12">
+    <div className={`relative ${className}`}>
+      {/* Background blob shape */}
+      <svg
+        viewBox="0 0 300 300"
+        className="absolute w-full h-full -z-10"
+        style={{ transform: 'scale(1.3)' }}
+      >
+        <defs>
+          <linearGradient id="blobGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.3" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M150,20 C220,20 280,80 280,150 C280,220 220,280 150,280 C80,280 20,220 20,150 C20,80 80,20 150,20"
+          fill="url(#blobGradient)"
+          className="animate-pulse"
+        >
+          <animate
+            attributeName="d"
+            dur="8s"
+            repeatCount="indefinite"
+            values="
+              M150,20 C220,20 280,80 280,150 C280,220 220,280 150,280 C80,280 20,220 20,150 C20,80 80,20 150,20;
+              M150,30 C210,25 275,90 270,150 C265,210 210,275 150,270 C90,265 25,210 30,150 C35,90 90,30 150,30;
+              M150,20 C220,20 280,80 280,150 C280,220 220,280 150,280 C80,280 20,220 20,150 C20,80 80,20 150,20
+            "
+          />
+        </path>
+      </svg>
+
+      {/* Main Avatar SVG */}
       <svg
         ref={avatarRef}
         viewBox="0 0 200 240"
-        className="w-72 h-72 drop-shadow-2xl"
-        style={{ overflow: 'visible' }}
+        className="w-full h-full"
+        style={{ maxWidth: '280px' }}
       >
         <defs>
-          {/* SKIN: 3D Radial Gradient for volume */}
-          <radialGradient id="skin3D" cx="40%" cy="40%" r="60%">
-            <stop offset="0%" stopColor="#ffdbcc" />
-            <stop offset="40%" stopColor="#eeb69c" />
-            <stop offset="100%" stopColor="#d2987d" />
-          </radialGradient>
-
-          {/* HAIR: Deep rich gradient */}
-          <linearGradient id="hair3D" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#3d2c29" />
-            <stop offset="50%" stopColor="#2a1d1a" />
-            <stop offset="100%" stopColor="#1a0f0d" />
-          </linearGradient>
-
-          {/* HOODIE: Fabric texture feel */}
-          <linearGradient id="hoodie3D" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#5f717d" />
-            <stop offset="100%" stopColor="#37474f" />
+          {/* Skin gradient */}
+          <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#e8beac" />
+            <stop offset="100%" stopColor="#d4a088" />
           </linearGradient>
           
-          {/* EYE: Realistic Iris */}
-          <radialGradient id="iris3D" cx="50%" cy="50%" r="50%">
-            <stop offset="40%" stopColor="#4e342e" />
-            <stop offset="90%" stopColor="#281a16" />
-            <stop offset="100%" stopColor="#000000" />
-          </radialGradient>
+          {/* Hair gradient */}
+          <linearGradient id="hairGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1a1a1a" />
+            <stop offset="100%" stopColor="#2d2d2d" />
+          </linearGradient>
+          
+          {/* Shirt gradient */}
+          <linearGradient id="shirtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#4a5568" />
+            <stop offset="100%" stopColor="#2d3748" />
+          </linearGradient>
+          
+          {/* Tie gradient */}
+          <linearGradient id="tieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1e3a8a" />
+            <stop offset="100%" stopColor="#1e40af" />
+          </linearGradient>
         </defs>
 
-        {/* --- BODY --- */}
-        {/* Hoodie Body */}
-        <path d="M30,240 Q30,190 100,190 Q170,190 170,240" fill="url(#hoodie3D)" />
-        {/* Hoodie Hood/Collar */}
-        <path d="M50,200 Q100,230 150,200 Q145,220 100,220 Q55,220 50,200" fill="#455a64" />
         {/* Neck */}
-        <path d="M70,180 Q100,190 130,180 L130,200 Q100,210 70,200 Z" fill="#dba78b" />
+        <ellipse cx="100" cy="190" rx="25" ry="15" fill="url(#skinGradient)" />
 
-        {/* --- HEAD GROUP --- */}
-        <g transform="translate(0, 10)">
-          
-          {/* Face Shape (Jawline optimized) */}
-          <path 
-            d="M45,70 C45,20 155,20 155,70 L155,100 Q155,150 100,165 Q45,150 45,100 Z"
-            fill="url(#skin3D)"
-          />
+        {/* Shirt / Suit */}
+        <path
+          d="M50 200 Q50 230 60 240 L140 240 Q150 230 150 200 Q130 195 100 195 Q70 195 50 200"
+          fill="url(#shirtGradient)"
+        />
+        
+        {/* Shirt collar left */}
+        <path
+          d="M75 195 L85 210 L100 200 Z"
+          fill="#f7fafc"
+        />
+        
+        {/* Shirt collar right */}
+        <path
+          d="M125 195 L115 210 L100 200 Z"
+          fill="#f7fafc"
+        />
+        
+        {/* Tie */}
+        <path
+          d="M95 200 L100 195 L105 200 L108 240 L100 240 L92 240 Z"
+          fill="url(#tieGradient)"
+        />
 
-          {/* EARS */}
-          <ellipse cx="42" cy="105" rx="7" ry="12" fill="#eeb69c" />
-          <ellipse cx="158" cy="105" rx="7" ry="12" fill="#eeb69c" />
+        {/* Face */}
+        <ellipse cx="100" cy="120" rx="55" ry="65" fill="url(#skinGradient)" />
 
-          {/* --- HAIR (Complex Organic Waves) --- */}
-          {/* Back Volume */}
-          <path d="M35,70 Q30,30 100,25 Q170,30 165,70 L165,90 Q155,80 155,70" fill="url(#hair3D)" />
-          {/* Front Quiff - Left */}
-          <path d="M40,80 Q30,50 60,35 Q80,20 100,30" fill="url(#hair3D)" />
-          {/* Front Quiff - Center Wave (Signature Pixar Look) */}
-          <path d="M100,30 Q140,20 150,60 Q160,80 145,90 Q130,60 100,50 Q70,40 40,80" fill="url(#hair3D)" />
-          
-          {/* --- BEARD (Detailed) --- */}
-          <path 
-            d="M45,100 Q45,140 100,155 Q155,140 155,100 L145,100 Q145,135 100,142 Q55,135 55,100 Z"
-            fill="url(#hair3D)"
-          />
-          {/* Mustache - Connected to beard */}
-          <path d="M65,130 Q100,115 135,130 Q100,140 65,130" fill="url(#hair3D)" />
-          {/* Soul Patch */}
-          <path d="M90,148 L110,148 L100,155 Z" fill="url(#hair3D)" />
+        {/* Ears */}
+        <ellipse cx="45" cy="125" rx="10" ry="15" fill="url(#skinGradient)" />
+        <ellipse cx="155" cy="125" rx="10" ry="15" fill="url(#skinGradient)" />
 
-          {/* --- FACE DETAILS --- */}
-          {/* Eyebrows */}
-          <path d="M55,95 Q70,85 85,95" stroke="#1a0f0d" strokeWidth="5" fill="none" strokeLinecap="round" />
-          <path d="M115,95 Q130,85 145,95" stroke="#1a0f0d" strokeWidth="5" fill="none" strokeLinecap="round" />
+        {/* Hair - main volume */}
+        <path
+          d="M45 100 
+             Q45 50 100 45 
+             Q155 50 155 100
+             Q155 85 145 80
+             Q120 75 100 78
+             Q80 75 55 80
+             Q45 85 45 100"
+          fill="url(#hairGradient)"
+        />
+        
+        {/* Hair - side styled part */}
+        <path
+          d="M50 100 Q55 75 75 70 Q90 68 100 72 Q75 75 55 95 Z"
+          fill="url(#hairGradient)"
+        />
 
-          {/* Nose */}
-          <path d="M100,105 Q90,125 85,130 Q100,138 115,130" fill="#cd9175" opacity="0.6" />
+        {/* Eyebrows */}
+        <path
+          d="M65 100 Q75 95 90 100"
+          stroke="#1a1a1a"
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
+        <path
+          d="M110 100 Q125 95 135 100"
+          stroke="#1a1a1a"
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
 
-          {/* Mouth (Confident Smile) */}
-          <path d="M75,140 Q100,155 125,140" stroke="#a65c52" strokeWidth="3" fill="none" strokeLinecap="round" />
-          {/* Teeth */}
-          <path d="M80,142 Q100,150 120,142" fill="#fff" opacity="0.9" />
+        {/* Eyes - white part */}
+        <ellipse cx="77" cy="115" rx="12" ry="10" fill="white" />
+        <ellipse cx="123" cy="115" rx="12" ry="10" fill="white" />
 
-          {/* --- INTERACTIVE EYES --- */}
-          {/* Left Eye */}
-          <g transform="translate(70, 110)">
-            {/* Eye White */}
-            <ellipse rx="12" ry="9" fill="#fff" />
-            <clipPath id="l-clip"><ellipse rx="12" ry="9" /></clipPath>
-            
-            {/* Moving Parts */}
-            <g clipPath="url(#l-clip)">
-               {/* Iris */}
-               <circle 
-                 cx={eyePosition.x} cy={eyePosition.y} 
-                 r="6.5" fill="url(#iris3D)" 
-               />
-               {/* Pupil */}
-               <circle 
-                 cx={eyePosition.x} cy={eyePosition.y} 
-                 r="3" fill="#000" 
-               />
-               {/* Reflection (Crucial for life) */}
-               <circle 
-                 cx={eyePosition.x + 2} cy={eyePosition.y - 2} 
-                 r="2" fill="#fff" opacity="0.8" 
-               />
-            </g>
-            {/* Eyelid Blink */}
-            <rect x="-15" y="-12" width="30" height={isBlinking ? "24" : "0"} fill="#d2987d" className="transition-all duration-100" />
-          </g>
+        {/* Eyes - iris (follows cursor) */}
+        <circle
+          cx={77 + eyePosition.x}
+          cy={115 + eyePosition.y}
+          r="6"
+          fill="#3d2314"
+        />
+        <circle
+          cx={123 + eyePosition.x}
+          cy={115 + eyePosition.y}
+          r="6"
+          fill="#3d2314"
+        />
 
-          {/* Right Eye */}
-          <g transform="translate(130, 110)">
-            <ellipse rx="12" ry="9" fill="#fff" />
-            <clipPath id="r-clip"><ellipse rx="12" ry="9" /></clipPath>
-            
-            <g clipPath="url(#r-clip)">
-               <circle cx={eyePosition.x} cy={eyePosition.y} r="6.5" fill="url(#iris3D)" />
-               <circle cx={eyePosition.x} cy={eyePosition.y} r="3" fill="#000" />
-               <circle cx={eyePosition.x + 2} cy={eyePosition.y - 2} r="2" fill="#fff" opacity="0.8" />
-            </g>
-            <rect x="-15" y="-12" width="30" height={isBlinking ? "24" : "0"} fill="#d2987d" className="transition-all duration-100" />
-          </g>
+        {/* Eyes - pupils (follows cursor) */}
+        <circle
+          cx={77 + eyePosition.x}
+          cy={115 + eyePosition.y}
+          r="3"
+          fill="#1a1a1a"
+        />
+        <circle
+          cx={123 + eyePosition.x}
+          cy={115 + eyePosition.y}
+          r="3"
+          fill="#1a1a1a"
+        />
 
-        </g>
+        {/* Eye highlights */}
+        <circle
+          cx={79 + eyePosition.x * 0.5}
+          cy={113 + eyePosition.y * 0.5}
+          r="2"
+          fill="white"
+          opacity="0.8"
+        />
+        <circle
+          cx={125 + eyePosition.x * 0.5}
+          cy={113 + eyePosition.y * 0.5}
+          r="2"
+          fill="white"
+          opacity="0.8"
+        />
+
+        {/* Nose */}
+        <path
+          d="M100 118 Q105 135 100 145 Q95 148 100 150"
+          stroke="#c9937a"
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+        />
+
+        {/* Smile */}
+        <path
+          d="M80 158 Q100 172 120 158"
+          stroke="#b88b7d"
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
+        
+        {/* Teeth hint */}
+        <path
+          d="M85 160 Q100 168 115 160"
+          fill="white"
+          opacity="0.9"
+        />
+
+        {/* Beard - stubble/light beard effect */}
+        <ellipse cx="100" cy="165" rx="35" ry="20" fill="#2d2d2d" opacity="0.15" />
+        
+        {/* Beard - fuller on chin */}
+        <path
+          d="M65 160 
+             Q65 175 80 180 
+             Q100 185 120 180 
+             Q135 175 135 160
+             Q125 165 100 168
+             Q75 165 65 160"
+          fill="url(#hairGradient)"
+          opacity="0.4"
+        />
+        
+        {/* Mustache */}
+        <path
+          d="M78 152 Q100 158 122 152"
+          stroke="#2d2d2d"
+          strokeWidth="4"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.5"
+        />
+
+        {/* Cheek blush */}
+        <ellipse cx="60" cy="135" rx="8" ry="5" fill="#e8a090" opacity="0.3" />
+        <ellipse cx="140" cy="135" rx="8" ry="5" fill="#e8a090" opacity="0.3" />
       </svg>
     </div>
   );
