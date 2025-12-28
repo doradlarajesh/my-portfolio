@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-// Ensure the image is named 'avatar-mask.png' in your assets folder
-import avatarImg from "@/assets/avatar.png";
+import avatarImg from "@/assets/avatar_mid.png";
 
 const InteractiveAvatar = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
 
-  // 1. TRACK MOUSE POSITION
+  // 1. MOUSE TRACKING
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       // Normalize coordinates (-1 to 1)
@@ -20,76 +19,72 @@ const InteractiveAvatar = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 2. BLINKING ENGINE (Makes it look alive)
+  // 2. BLINKING ENGINE
   useEffect(() => {
     const blinkLoop = () => {
-      // Random blink every 2 to 6 seconds
       const nextBlink = Math.random() * 4000 + 2000;
       setTimeout(() => {
         setIsBlinking(true);
         setTimeout(() => {
           setIsBlinking(false);
           blinkLoop();
-        }, 150); // Blink closes for 150ms
+        }, 150);
       }, nextBlink);
     };
     blinkLoop();
     return () => {};
   }, []);
 
-  // 3. CONFIGURATION (Tuned for the provided image)
+  // 3. CALIBRATION (Specific to 'avatar mid.jpg')
   const config = {
-    headTilt: 15,      // Degrees of 3D tilt
-    eyeSize: '10.5%',  // Size of the whole eye container
-    irisSize: '65%',   // Size of the colored part of the eye
-    pupilSize: '40%',  // Size of the black pupil
-    leftEyePos: { top: '46.5%', left: '33.5%' },
-    rightEyePos: { top: '46.5%', left: '55.5%' },
+    headTilt: 12,
+    // These coordinates place the white "concealer" over the painted eyes
+    leftEyePos: { top: '55%', left: '38%' },
+    rightEyePos: { top: '54%', left: '62%' }, 
   };
 
-  // Helper component for the Eye to ensure symmetry
+  // The "Eye" Component
   const Eye = ({ top, left }: { top: string, left: string }) => (
     <div 
-      className="absolute overflow-hidden rounded-full shadow-inner bg-gray-100"
+      className="absolute overflow-hidden rounded-full bg-white" 
       style={{
         top: top,
         left: left,
-        width: config.eyeSize,
-        height: config.eyeSize,
-        transform: 'translate(-50%, -50%)', // Centers the eye on the coordinate
-        zIndex: 20, // Ensures it sits ON TOP of the static image
-        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)' // Inner shadow for depth
+        width: '13%',  // Large enough to cover the painted eye
+        height: '11%', // Squashed slightly to match the cartoon eye shape
+        transform: 'translate(-50%, -50%)',
+        zIndex: 10,
+        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)' // Inner shadow for depth
       }}
     >
-      {/* THE MOVING IRIS & PUPIL */}
+      {/* A. THE MOVING PUPIL */}
       <div 
         className="absolute rounded-full"
         style={{
-          width: config.irisSize,
-          height: config.irisSize,
-          background: 'radial-gradient(circle at 30% 30%, #5D4037, #3E2723, #000)', // Brown eye gradient
-          top: '50%',
+          width: '55%', 
+          height: '60%',
+          // Brown gradient matching the original image style
+          background: 'radial-gradient(circle at 30% 30%, #5D4037, #3E2723, #1a0f0a)',
+          top: '50%', 
           left: '50%',
-          transform: `translate(-50%, -50%) translate(${mousePos.x * 6}px, ${mousePos.y * 4}px)` // Movement logic
+          // Movement Logic
+          transform: `translate(-50%, -50%) translate(${mousePos.x * 5}px, ${mousePos.y * 3}px)`
         }}
       >
-        {/* The Black Pupil */}
-        <div 
-          className="absolute bg-black rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          style={{ width: config.pupilSize, height: config.pupilSize }}
-        />
+        {/* Black Center */}
+        <div className="absolute top-1/2 left-1/2 w-[40%] h-[40%] bg-black rounded-full transform -translate-x-1/2 -translate-y-1/2" />
         
-        {/* The Reflection (makes it look wet/shiny) */}
-        <div className="absolute top-[20%] right-[20%] w-[15%] h-[15%] bg-white rounded-full opacity-90"></div>
+        {/* Reflection Highlight */}
+        <div className="absolute top-[20%] right-[20%] w-[25%] h-[25%] bg-white rounded-full opacity-80 blur-[0.5px]"></div>
       </div>
 
-      {/* THE EYELID (Blinking) */}
+      {/* B. THE EYELID (Blinking) */}
       <div 
-        className="absolute top-0 left-0 w-full bg-[#E0AC95]" // Matched to skin tone
+        className="absolute top-0 left-0 w-full bg-[#E0AC95]" // Matches skin tone
         style={{
           height: isBlinking ? '100%' : '0%',
           transition: 'height 0.1s ease-in-out',
-          zIndex: 30
+          zIndex: 20
         }}
       />
     </div>
@@ -98,9 +93,9 @@ const InteractiveAvatar = () => {
   return (
     <div className="flex flex-col items-center justify-center py-12" style={{ perspective: '1000px' }}>
       
-      {/* AVATAR CONTAINER */}
+      {/* 3D CONTAINER */}
       <div 
-        className="relative w-64 h-64 rounded-full transition-all duration-100 ease-out shadow-2xl"
+        className="relative w-72 h-72 rounded-full transition-all duration-100 ease-out"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         style={{
@@ -112,20 +107,22 @@ const InteractiveAvatar = () => {
           boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.4)'
         }}
       >
-        {/* 1. THE STATIC IMAGE */}
-        {/* We use the image to provide the face shape, hair, and beard */}
-        <img 
-          src={avatarImg} 
-          alt="Avatar" 
-          className="w-full h-full object-cover rounded-full pointer-events-none select-none"
-        />
+        {/* 1. BASE IMAGE */}
+        <div className="w-full h-full rounded-full overflow-hidden bg-[#2D1B4E]">
+            <img 
+              src={avatarImg} 
+              alt="Avatar" 
+              className="w-full h-full object-cover pointer-events-none select-none"
+            />
+        </div>
 
-        {/* 2. THE INTERACTIVE EYES (Patched over the static eyes) */}
+        {/* 2. THE INTERACTIVE EYES */}
+        {/* These sit ON TOP to cover the painted eyes */}
         <Eye top={config.leftEyePos.top} left={config.leftEyePos.left} />
         <Eye top={config.rightEyePos.top} left={config.rightEyePos.left} />
 
-        {/* 3. GLOSS OVERLAY (Uniform lighting) */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/10 to-transparent pointer-events-none z-40" />
+        {/* 3. GLOSS OVERLAY */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" style={{ zIndex: 30 }} />
       </div>
     </div>
   );
