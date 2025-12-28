@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 
+import avatarImg from "@/assets/avatar.jpg";
+
 const InteractiveAvatar = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
 
+  // 1. MOUSE TRACKING LOGIC
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Calculate mouse position relative to the center of the window
-      // This gives us a value between -1 and 1
+      // Calculate position relative to window center (-1 to 1)
       const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
       const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
       setMousePos({ x, y });
@@ -16,57 +20,125 @@ const InteractiveAvatar = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Configuration for eye movement range
-  const maxMoveX = 15; 
-  const maxMoveY = 10;
+  // 2. BLINKING LOGIC
+  useEffect(() => {
+    const blinkLoop = () => {
+      const nextBlink = Math.random() * 4000 + 2000; // Random blink every 2-6s
+      
+      setTimeout(() => {
+        setIsBlinking(true);
+        setTimeout(() => {
+          setIsBlinking(false);
+          blinkLoop();
+        }, 150); // Blink duration
+      }, nextBlink);
+    };
+
+    blinkLoop();
+    return () => {}; 
+  }, []);
+
+  // CALIBRATION: Tuned for the hoodie avatar
+  const eyeConfig = {
+    maxMoveX: 10,  
+    maxMoveY: 8,   
+    tilt: 15,      
+    leftEyePos: { top: '46%', left: '33%' },
+    rightEyePos: { top: '46%', left: '55%' },
+    eyeSize: { width: '11%', height: '11%' } 
+  };
 
   return (
-    // Avatar Container
-    // You can adjust the w-64 h-64 to change the overall size
-    <div 
-      className="relative w-64 h-64 rounded-full overflow-hidden shadow-2xl border-4 border-white transform transition-transform duration-500 hover:scale-105 mx-auto"
-      style={{
-        boxShadow: '0 20px 50px -12px rgba(0, 0, 0, 0.25)'
-      }}
-    >
-      {/* 1. The High-Quality Image Base */}
-      {/* IMPORTANT: Make sure 'avatar-face.png' is in your public folder */}
-      <img 
-        src="/avatar-face.png" 
-        alt="My Interactive Avatar" 
-        className="w-full h-full object-cover"
-      />
-
-      {/* 2. The Interactive Eye Layer */}
+    <div className="flex flex-col items-center justify-center py-10" style={{ perspective: '1000px' }}>
       
-      {/* Left Eye Container */}
-      <div className="absolute top-[42%] left-[32%] w-[16%] h-[12%] pointer-events-none">
-         {/* Left Pupil */}
-         <div 
-           className="absolute bg-[#1a1a1a] rounded-full w-[35%] h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out"
-           style={{
-             transform: `translate(calc(-50% + ${mousePos.x * maxMoveX}px), calc(-50% + ${mousePos.y * maxMoveY}px))`
-           }}
-         >
-           {/* Tiny Reflection for realism */}
-           <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-60"></div>
-         </div>
-      </div>
+      {/* 3D TILT CONTAINER */}
+      <div 
+        className="relative w-72 h-72 rounded-full transition-all duration-100 ease-out"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        style={{
+          transform: `
+            rotateY(${mousePos.x * eyeConfig.tilt}deg) 
+            rotateX(${-mousePos.y * eyeConfig.tilt}deg)
+            scale(${isHovering ? 1.05 : 1})
+          `,
+          boxShadow: '0 30px 60px -10px rgba(0, 0, 0, 0.4)'
+        }}
+      >
+        {/* AVATAR IMAGE (Imported) */}
+        <img 
+          src={avatarImg} 
+          alt="Interactive Avatar" 
+          className="w-full h-full object-cover rounded-full pointer-events-none select-none"
+        />
 
-      {/* Right Eye Container */}
-      <div className="absolute top-[42%] left-[53%] w-[16%] h-[12%] pointer-events-none">
-         {/* Right Pupil */}
-         <div 
-           className="absolute bg-[#1a1a1a] rounded-full w-[35%] h-[35%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out"
-           style={{
-             transform: `translate(calc(-50% + ${mousePos.x * maxMoveX}px), calc(-50% + ${mousePos.y * maxMoveY}px))`
-           }}
-         >
-            {/* Tiny Reflection */}
-           <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-60"></div>
-         </div>
-      </div>
+        {/* --- LEFT EYE LAYER --- */}
+        <div 
+          className="absolute overflow-hidden rounded-full"
+          style={{
+            top: eyeConfig.leftEyePos.top,
+            left: eyeConfig.leftEyePos.left,
+            width: eyeConfig.eyeSize.width,
+            height: eyeConfig.eyeSize.height,
+            transform: 'rotate(-5deg)'
+          }}
+        >
+          {/* Pupil Movement */}
+          <div 
+            className="w-full h-full bg-[#1a0f0a] rounded-full opacity-90 blur-[0.5px]"
+            style={{
+              transform: `translate(${mousePos.x * eyeConfig.maxMoveX}px, ${mousePos.y * eyeConfig.maxMoveY}px)`
+            }}
+          >
+            <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-70"></div>
+          </div>
+          
+          {/* Eyelid (Blinking) */}
+          <div 
+            className="absolute top-0 left-0 w-full bg-[#dcb8a3]" 
+            style={{
+              height: isBlinking ? '100%' : '0%',
+              transition: 'height 0.1s ease-in-out',
+              zIndex: 10
+            }}
+          />
+        </div>
 
+        {/* --- RIGHT EYE LAYER --- */}
+        <div 
+          className="absolute overflow-hidden rounded-full"
+          style={{
+            top: eyeConfig.rightEyePos.top,
+            left: eyeConfig.rightEyePos.left,
+            width: eyeConfig.eyeSize.width,
+            height: eyeConfig.eyeSize.height,
+            transform: 'rotate(5deg)'
+          }}
+        >
+          {/* Pupil Movement */}
+          <div 
+            className="w-full h-full bg-[#1a0f0a] rounded-full opacity-90 blur-[0.5px]"
+            style={{
+              transform: `translate(${mousePos.x * eyeConfig.maxMoveX}px, ${mousePos.y * eyeConfig.maxMoveY}px)`
+            }}
+          >
+             <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-70"></div>
+          </div>
+
+          {/* Eyelid (Blinking) */}
+          <div 
+            className="absolute top-0 left-0 w-full bg-[#dcb8a3]" 
+            style={{
+              height: isBlinking ? '100%' : '0%',
+              transition: 'height 0.1s ease-in-out',
+              zIndex: 10
+            }}
+          />
+        </div>
+
+        {/* Gloss overlay */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent opacity-50 pointer-events-none" />
+      </div>
     </div>
   );
 };
