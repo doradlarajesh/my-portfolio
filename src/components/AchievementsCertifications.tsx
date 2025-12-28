@@ -9,6 +9,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import cfaCertificate from "@/assets/cfa-certificate.png";
 
 const achievements = [
   {
@@ -44,24 +51,28 @@ const certifications = [
     year: "2025",
     issuer: "Blockchain Council",
     gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+    image: null,
   },
   {
     name: "ISTQB® Certified CTFL",
     year: "2016",
     issuer: "ISTQB",
     gradient: "from-blue-500 via-cyan-500 to-teal-500",
+    image: null,
   },
   {
     name: "Chartered Financial Analyst - CFA (Foundations)",
     year: "2018",
     issuer: "CFA Institute",
     gradient: "from-amber-500 via-orange-500 to-red-500",
+    image: cfaCertificate,
   },
   {
     name: "Postman API Tester",
     year: "2023",
     issuer: "Postman",
     gradient: "from-orange-500 via-rose-500 to-pink-500",
+    image: null,
   },
 ];
 
@@ -170,51 +181,59 @@ const AchievementsCertifications = () => {
               <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
                 <ExternalLink className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-semibold text-white">
-                Certifications <span className="text-sm font-normal text-gray-400">(Click to view certificate)</span>
-              </h3>
+              <h3 className="text-2xl font-semibold text-white">Certifications</h3>
             </div>
 
-            <div className="grid gap-4">
-              {certifications.map((cert, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedCert(cert)}
-                  className="group cursor-pointer"
-                >
-                  <div className="relative overflow-hidden rounded-2xl">
-                    {/* Ticket notch effects */}
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-r-full -ml-2 z-10" />
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-l-full -mr-2 z-10" />
-                    
-                    {/* Card content */}
-                    <div className="relative p-6 bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/25 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-purple-500/20">
-                      {/* Gradient overlay on hover */}
-                      <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                      
-                      {/* Glow effect */}
-                      <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500 -z-10`} />
-                      
-                      <div className="relative flex items-center justify-between">
-                        <div className="flex-1 pr-4">
-                          <h4 className="text-lg font-semibold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 group-hover:bg-clip-text transition-all duration-300 mb-1">
-                            {cert.name}
-                          </h4>
-                          <p className="text-sm text-gray-400">{cert.issuer}</p>
+            <TooltipProvider delayDuration={200}>
+              <div className="grid gap-4">
+                {certifications.map((cert, index) => (
+                  <Tooltip key={index}>
+                    <TooltipTrigger asChild>
+                      <motion.div
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.02, y: -4 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setSelectedCert(cert)}
+                        className="group cursor-pointer"
+                      >
+                        <div className="relative overflow-hidden rounded-2xl">
+                          {/* Ticket notch effects */}
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-r-full -ml-2 z-10" />
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-l-full -mr-2 z-10" />
+                          
+                          {/* Card content */}
+                          <div className="relative p-6 bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/25 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-purple-500/20">
+                            {/* Gradient overlay on hover */}
+                            <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                            
+                            {/* Glow effect */}
+                            <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500 -z-10`} />
+                            
+                            <div className="relative flex items-center justify-between">
+                              <div className="flex-1 pr-4">
+                                <h4 className="text-lg font-semibold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 group-hover:bg-clip-text transition-all duration-300 mb-1">
+                                  {cert.name}
+                                </h4>
+                                <p className="text-sm text-gray-400">{cert.issuer}</p>
+                              </div>
+                              <Badge className={`bg-gradient-to-r ${cert.gradient} text-white border-0 px-3 py-1.5 text-sm font-medium shadow-lg`}>
+                                {cert.year}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
-                        <Badge className={`bg-gradient-to-r ${cert.gradient} text-white border-0 px-3 py-1.5 text-sm font-medium shadow-lg`}>
-                          {cert.year}
-                        </Badge>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                      </motion.div>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="top" 
+                      className="bg-slate-800 border border-slate-600 text-white px-4 py-2 rounded-lg shadow-xl"
+                    >
+                      <p className="text-sm font-medium">Tap to view credential</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
+            </TooltipProvider>
           </motion.div>
         </div>
       </div>
@@ -231,26 +250,37 @@ const AchievementsCertifications = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="mt-4">
-            {/* Certificate placeholder with gradient */}
-            <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-1`}>
-              <div className="w-full h-full rounded-lg bg-slate-800 flex flex-col items-center justify-center p-8">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center mb-6">
-                  <Award className="w-12 h-12 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white text-center mb-2">
-                  {selectedCert?.name}
-                </h3>
-                <p className="text-gray-400 text-center mb-4">
-                  {selectedCert?.issuer}
-                </p>
-                <Badge className={`bg-gradient-to-r ${selectedCert?.gradient || ''} text-white border-0 px-4 py-2 text-lg`}>
-                  {selectedCert?.year}
-                </Badge>
-                <p className="text-sm text-gray-500 mt-6 text-center">
-                  Certificate preview placeholder
-                </p>
+            {selectedCert?.image ? (
+              /* Actual certificate image */
+              <div className={`w-full rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-1`}>
+                <img 
+                  src={selectedCert.image} 
+                  alt={`${selectedCert.name} Certificate`}
+                  className="w-full h-auto rounded-lg"
+                />
               </div>
-            </div>
+            ) : (
+              /* Certificate placeholder with gradient */
+              <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-1`}>
+                <div className="w-full h-full rounded-lg bg-slate-800 flex flex-col items-center justify-center p-8">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center mb-6">
+                    <Award className="w-12 h-12 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">
+                    {selectedCert?.name}
+                  </h3>
+                  <p className="text-gray-400 text-center mb-4">
+                    {selectedCert?.issuer}
+                  </p>
+                  <Badge className={`bg-gradient-to-r ${selectedCert?.gradient || ''} text-white border-0 px-4 py-2 text-lg`}>
+                    {selectedCert?.year}
+                  </Badge>
+                  <p className="text-sm text-gray-500 mt-6 text-center">
+                    Certificate preview placeholder
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

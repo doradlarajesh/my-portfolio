@@ -1437,10 +1437,31 @@ const typeTimer = setInterval(() => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Let's Connect</h2>
-          <p className="text-gray-400 text-lg mb-12">
+      <section id="contact" className="py-20 px-4 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          {/* Animated Avatar with Wave */}
+          <div className="relative inline-block mb-8">
+            <div className="relative">
+              {/* Floating glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-2xl opacity-30 animate-pulse" />
+              
+              {/* Avatar container with pop-out effect */}
+              <div className="relative group">
+                <Avatar className="w-28 h-28 border-4 border-white/20 shadow-2xl shadow-purple-500/30 transition-transform duration-500 group-hover:scale-110">
+                  <AvatarImage src={profilePhoto} alt="Rajesh Doradla" className="object-cover" />
+                  <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-2xl">RD</AvatarFallback>
+                </Avatar>
+                
+                {/* Waving hand animation */}
+                <div className="absolute -right-2 -top-2 text-4xl animate-[wave_2.5s_ease-in-out_infinite] origin-[70%_70%]">
+                  👋
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Let's Connect</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
             Ready to discuss quality assurance strategies, automation frameworks, 
             or leadership opportunities in testing excellence.
           </p>
