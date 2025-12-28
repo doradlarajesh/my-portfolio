@@ -9,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
+import InteractiveAvatar from "@/components/InteractiveAvatar";
 import xcuiTestSync from "@/assets/xcuitestSync.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
@@ -1439,25 +1440,9 @@ const typeTimer = setInterval(() => {
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          {/* Animated Avatar with Wave */}
+          {/* Interactive Avatar that follows cursor */}
           <div className="relative inline-block mb-8">
-            <div className="relative">
-              {/* Floating glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-2xl opacity-30 animate-pulse" />
-              
-              {/* Avatar container with pop-out effect */}
-              <div className="relative group">
-                <Avatar className="w-28 h-28 border-4 border-white/20 shadow-2xl shadow-purple-500/30 transition-transform duration-500 group-hover:scale-110">
-                  <AvatarImage src={profilePhoto} alt="Rajesh Doradla" className="object-cover" />
-                  <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-2xl">RD</AvatarFallback>
-                </Avatar>
-                
-                {/* Waving hand animation */}
-                <div className="absolute -right-2 -top-2 text-4xl animate-[wave_2.5s_ease-in-out_infinite] origin-[70%_70%]">
-                  👋
-                </div>
-              </div>
-            </div>
+            <InteractiveAvatar className="w-64 h-64 md:w-80 md:h-80" />
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Let's Connect</h2>
