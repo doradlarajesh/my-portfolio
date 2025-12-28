@@ -114,7 +114,7 @@ const InteractiveAvatar = () => {
             
             {/* 1. THE BASE IMAGE (from public folder) */}
             <img 
-              src="/avatar.jpg" 
+              src="/avatar_mid.png" 
               alt="Avatar" 
               className="w-full h-full object-cover pointer-events-none select-none relative z-10"
               onError={() => setImgError(true)}
