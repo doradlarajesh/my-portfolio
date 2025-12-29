@@ -13,28 +13,35 @@ const InteractiveAvatar = ({ className = "" }: InteractiveAvatarProps) => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleTimeUpdate = () => {
-      if (!video) return;
+    // 1. Handle the "End" of the first playthrough
+    const handleEnded = () => {
+      setHasPlayedOnce(true);
       const duration = video.duration;
-      
-      if (hasPlayedOnce) {
-        // After first play, loop last 3 seconds
-        const loopStart = Math.max(0, duration - 3);
-        if (video.currentTime >= duration - 0.1) {
-          video.currentTime = loopStart;
-        }
-      } else {
-        // First play completed
-        if (video.currentTime >= duration - 0.1) {
-          setHasPlayedOnce(true);
-          const loopStart = Math.max(0, duration - 3);
-          video.currentTime = loopStart;
-        }
+      // Immediately jump back 3 seconds and ensure it plays
+      video.currentTime = Math.max(0, duration - 3);
+      video.play();
+    };
+
+    // 2. Handle the Loop Logic (Last 3 seconds)
+    const handleTimeUpdate = () => {
+      // Only run this logic AFTER the first full play is done
+      if (!hasPlayedOnce) return;
+
+      const duration = video.duration;
+      // If we are within 0.2 seconds of the end, restart the loop
+      if (video.currentTime >= duration - 0.2) {
+        video.currentTime = Math.max(0, duration - 3);
+        video.play(); // Ensure it doesn't pause
       }
     };
 
+    video.addEventListener("ended", handleEnded);
     video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+    };
   }, [hasPlayedOnce]);
 
   return (
@@ -55,6 +62,7 @@ const InteractiveAvatar = ({ className = "" }: InteractiveAvatarProps) => {
             autoPlay
             muted
             playsInline
+            // IMPORTANT: Do NOT use the 'loop' prop here, or it will override our custom logic
             className="w-full h-full object-cover scale-105"
             style={{ 
               background: 'transparent',
