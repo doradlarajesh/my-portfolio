@@ -1438,67 +1438,114 @@ const typeTimer = setInterval(() => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          {/* Interactive Avatar that follows cursor */}
-          <div className="relative inline-block mb-8">
-            <InteractiveAvatar className="w-64 h-64 md:w-80 md:h-80" />
+      <section id="contact" className="py-24 px-4 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-blue-400 border-blue-500/30 bg-blue-500/10 px-4 py-1">
+              <Phone className="w-3 h-3 mr-2" />
+              Get In Touch
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+              Let's Connect
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Ready to discuss quality assurance strategies, automation frameworks, 
+              or leadership opportunities in testing excellence.
+            </p>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Let's Connect</h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
-            Ready to discuss quality assurance strategies, automation frameworks, 
-            or leadership opportunities in testing excellence.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => {
-                const email = 'doradlarajesh@gmail.com';
-                navigator.clipboard.writeText(email).then(() => {
-                  // Clear existing timeout if any
-                  if (emailToastTimeoutRef.current) {
-                    clearTimeout(emailToastTimeoutRef.current);
-                  }
-                  
-                  // Increment counter
-                  emailCopyCountRef.current += 1;
-                  
-                  // Calculate duration (3 seconds per click)
-                  const duration = emailCopyCountRef.current * 3000;
-                  
-                  // Show toast
-                  toast({
-                    title: "Email copied",
-                    description: `${email} copied to clipboard`,
-                  });
-                  
-                  // Set timeout to reset counter
-                  emailToastTimeoutRef.current = setTimeout(() => {
-                    emailCopyCountRef.current = 0;
-                    emailToastTimeoutRef.current = null;
-                  }, duration);
-                });
-              }}
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              doradlarajesh@gmail.com
-            </Button>
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('https://www.linkedin.com/in/rajesh-doradla/', '_blank')}
-            >
-              <Linkedin className="w-4 h-4 mr-2" />
-              LinkedIn Profile
-            </Button>
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('https://github.com/doradlarajesh', '_blank')}
-            >
-              <Github className="w-4 h-4 mr-2" />
-              GitHub Profile
-            </Button>
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Avatar Video Side */}
+            <div className="flex justify-center lg:justify-end order-1 lg:order-1">
+              <div className="relative">
+                {/* Decorative rings */}
+                <div className="absolute -inset-4 border-2 border-dashed border-purple-500/20 rounded-3xl animate-spin" style={{ animationDuration: '20s' }} />
+                <div className="absolute -inset-8 border border-dashed border-blue-500/10 rounded-3xl animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
+                
+                {/* Avatar */}
+                <InteractiveAvatar className="w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96" />
+              </div>
+            </div>
+
+            {/* Contact Info Side */}
+            <div className="order-2 lg:order-2 space-y-6">
+              {/* Quote Card */}
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700/50 backdrop-blur-xl overflow-hidden group hover:border-purple-500/30 transition-all duration-500">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl">
+                      <Quote className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-gray-300 italic text-lg leading-relaxed">
+                        "I'm always up for a chat about quality engineering, automation strategies, or just to connect!"
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Contact Buttons */}
+              <div className="space-y-4">
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-purple-500/25 border-0 rounded-xl group"
+                  onClick={() => {
+                    const email = 'doradlarajesh@gmail.com';
+                    navigator.clipboard.writeText(email).then(() => {
+                      if (emailToastTimeoutRef.current) {
+                        clearTimeout(emailToastTimeoutRef.current);
+                      }
+                      emailCopyCountRef.current += 1;
+                      const duration = emailCopyCountRef.current * 3000;
+                      toast({
+                        title: "Email copied",
+                        description: `${email} copied to clipboard`,
+                      });
+                      emailToastTimeoutRef.current = setTimeout(() => {
+                        emailCopyCountRef.current = 0;
+                        emailToastTimeoutRef.current = null;
+                      }, duration);
+                    });
+                  }}
+                >
+                  <Mail className="w-5 h-5 mr-3 group-hover:animate-bounce" />
+                  doradlarajesh@gmail.com
+                </Button>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <Button 
+                    variant="outline"
+                    className="bg-slate-800/50 hover:bg-slate-700/80 border-slate-600 hover:border-blue-500/50 text-white px-6 py-6 transform hover:scale-[1.02] transition-all duration-300 rounded-xl group"
+                    onClick={() => window.open('https://www.linkedin.com/in/rajesh-doradla/', '_blank')}
+                  >
+                    <Linkedin className="w-5 h-5 mr-2 text-blue-400 group-hover:scale-110 transition-transform" />
+                    LinkedIn
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="bg-slate-800/50 hover:bg-slate-700/80 border-slate-600 hover:border-purple-500/50 text-white px-6 py-6 transform hover:scale-[1.02] transition-all duration-300 rounded-xl group"
+                    onClick={() => window.open('https://github.com/doradlarajesh', '_blank')}
+                  >
+                    <Github className="w-5 h-5 mr-2 text-purple-400 group-hover:scale-110 transition-transform" />
+                    GitHub
+                  </Button>
+                </div>
+              </div>
+
+              {/* Availability Badge */}
+              <div className="flex items-center justify-center lg:justify-start gap-2 pt-4">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-gray-400 text-sm">Available for new opportunities</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
