@@ -9,10 +9,12 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
+import InteractiveAvatar from "@/components/InteractiveAvatar";
 import xcuiTestSync from "@/assets/xcuitestSync.png";
 import articlePostmanGithubActions from "@/assets/article-postman-github-actions.jpg";
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
+import AchievementsCertifications from "@/components/AchievementsCertifications";
 import { 
   Code2, 
   Bug, 
@@ -731,12 +733,10 @@ const typeTimer = setInterval(() => {
                 <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
               </div>
             </div>
-            <h2 className="text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Professional Journey
-              </span>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+              Professional Journey
             </h2>
-            <p className="text-gray-400 text-xl max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               11+ years of delivering quality excellence across global enterprises
             </p>
           </div>
@@ -905,8 +905,8 @@ const typeTimer = setInterval(() => {
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Technical Expertise</h2>
-            <p className="text-gray-400 text-lg">Mastery across the quality assurance spectrum</p>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Technical Expertise</h2>
+            <p className="text-xl text-gray-300">Mastery across the quality assurance spectrum</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -939,8 +939,8 @@ const typeTimer = setInterval(() => {
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Live Projects & Client Work</h2>
-            <p className="text-gray-400 text-lg">Real-world solutions delivering measurable impact</p>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Live Projects & Client Work</h2>
+            <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1031,67 +1031,8 @@ const typeTimer = setInterval(() => {
         </div>
       </section>
 
-      {/* Achievements Section */}
-      <section id="achievements" className="py-20 px-4 bg-slate-800/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Achievements & Certifications</h2>
-            <p className="text-gray-400 text-lg">Continuous learning and professional growth</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Award className="w-5 h-5 mr-2 text-yellow-400" />
-                  Key Achievements
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Globe className="w-4 h-4 text-green-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Built and scaled offshore QA teams from ground</span>
-                </div>
-                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Zap className="w-4 h-4 text-blue-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Reduced testing cycles by 80% through automation</span>
-                </div>
-                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Users className="w-4 h-4 text-purple-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Mentored 15+ QA engineers across multiple teams</span>
-                </div>
-                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Shield className="w-4 h-4 text-green-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Established QA practices and KPI's adopted company-wide</span>
-                </div>
-                <div className="flex items-start space-x-3 hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                  <Globe className="w-4 h-4 text-pink-400 mt-0.5" />
-                  <span className="text-gray-300 text-sm">Led quality initiatives for global product launches</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Award className="w-5 h-5 mr-2 text-yellow-400" />
-                  Certifications
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {certifications.map((cert, index) => (
-                  <div key={index} className="flex items-center justify-between hover:bg-slate-700/30 p-2 rounded transition-all duration-200">
-                    <span className="text-gray-300 text-sm">{cert.name}</span>
-                    <Badge variant="outline" className="border-blue-500 text-blue-300 text-xs hover:border-blue-400 hover:text-blue-200 transition-colors duration-300">
-                      {cert.year}
-                    </Badge>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      {/* Achievements Section - Using new component */}
+      <AchievementsCertifications />
 
       {/* Published Articles Section */}
       <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
@@ -1497,10 +1438,15 @@ const typeTimer = setInterval(() => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Let's Connect</h2>
-          <p className="text-gray-400 text-lg mb-12">
+      <section id="contact" className="py-20 px-4 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          {/* Interactive Avatar that follows cursor */}
+          <div className="relative inline-block mb-8">
+            <InteractiveAvatar className="w-64 h-64 md:w-80 md:h-80" />
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Let's Connect</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
             Ready to discuss quality assurance strategies, automation frameworks, 
             or leadership opportunities in testing excellence.
           </p>
