@@ -348,14 +348,15 @@ const Index = () => {
       {/* Cyberpunk Hero Section */}
       <CyberpunkHero onContactClick={() => scrollToSection('contact')} />
       
-      {/* Scroll indicator */}
-      <button 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:text-white transition-colors duration-300 cursor-pointer group z-30"
-        onClick={() => scrollToSection('experience')}
-        style={{ top: 'calc(100vh - 60px)' }}
-      >
-        <ChevronDown className="w-8 h-8 text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 10px rgba(0, 212, 255, 0.5))' }} />
-      </button>
+      {/* Scroll indicator - only on home section */}
+      {activeSection === 'home' && (
+        <button 
+          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:text-white transition-all duration-500 cursor-pointer group z-30"
+          onClick={() => scrollToSection('experience')}
+        >
+          <Zap className="w-10 h-10 text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 15px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 30px rgba(139, 92, 246, 0.5))' }} />
+        </button>
+      )}
 
       {/* Experience Section - Enhanced 3D Timeline */}
       <section id="experience" className="py-20 px-4 relative overflow-hidden">
