@@ -150,11 +150,14 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              {/* Holographic overlay behind */}
+              {/* Holographic overlay behind - more visible */}
               <img 
                 src={holographic}
                 alt=""
-                className="absolute inset-0 w-full h-full object-contain opacity-40 mix-blend-screen z-0 scale-110"
+                className="absolute inset-0 w-full h-full object-contain opacity-70 mix-blend-screen z-0 scale-125"
+                style={{
+                  filter: 'brightness(1.3) saturate(1.2)',
+                }}
               />
               
               {/* Main hero image with glitch effect on hover */}
@@ -171,11 +174,6 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
                 />
               </div>
 
-              {/* Animated glow edges */}
-              <div className="absolute inset-0 z-20 pointer-events-none">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-transparent to-cyan-400 opacity-60 animate-pulse" />
-                <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-400 via-transparent to-pink-400 opacity-60 animate-pulse" style={{ animationDelay: '0.5s' }} />
-              </div>
 
               {/* Floating particles around image */}
               <div className="absolute inset-0 z-0 pointer-events-none overflow-visible">
