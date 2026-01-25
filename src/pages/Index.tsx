@@ -15,6 +15,9 @@ import articlePostmanGithubActions from "@/assets/article-postman-github-actions
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
 import AchievementsCertifications from "@/components/AchievementsCertifications";
+import CyberpunkBackground from "@/components/CyberpunkBackground";
+import CyberpunkNavbar from "@/components/CyberpunkNavbar";
+import CyberpunkHero from "@/components/CyberpunkHero";
 import { 
   Code2, 
   Bug, 
@@ -48,12 +51,7 @@ import {
 } from "lucide-react";
 
 const Index = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [typedText, setTypedText] = useState("");
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, vx: number, vy: number}>>([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isArticlesAutoPlaying, setIsArticlesAutoPlaying] = useState(true);
@@ -106,111 +104,17 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Initialize particles
-    const initialParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2
-    }));
-    setParticles(initialParticles);
-
-    // Mouse tracking
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-// Continuous typing animation
-
-const fullName = "Rajesh Doradla";
-let currentIndex = 0;
-let isDeleting = false;
-
-const typeTimer = setInterval(() => {
-
-  if (!isDeleting) {
-    if (currentIndex < fullName.length) { // Changed to < length for better logic
-      currentIndex++;
-      setTypedText(fullName.slice(0, currentIndex));
-    } else {
-      // Pause before starting to delete
-      setTimeout(() => {
-        isDeleting = true;
-      }, 2000);
-    }
-
-  } else {
-    // FIX APPLIED HERE: The deletion logic must run, and only AFTER 
-    // the last character is deleted (currentIndex is 0), should the pause begin.
-    
-    if (currentIndex > 0) {
-      currentIndex--;
-    } 
-    
-    setTypedText(fullName.slice(0, currentIndex)); // Moved this out of the 'if'
-
-    if (currentIndex === 0) { // Check for currentIndex 0 AFTER the text has been set to ""
-      // Pause before starting to type again
-      setTimeout(() => {
-        isDeleting = false;
-      }, 1000);
-    }
-  }
-}, isDeleting ? 100 : 150);
-
-    // Particle animation
-    const animateParticles = () => {
-      setParticles(prev => prev.map(particle => {
-        let newX = particle.x + particle.vx;
-        let newY = particle.y + particle.vy;
-        let newVx = particle.vx;
-        let newVy = particle.vy;
-
-        // Bounce off edges
-        if (newX <= 0 || newX >= window.innerWidth) newVx = -newVx;
-        if (newY <= 0 || newY >= window.innerHeight) newVy = -newVy;
-
-        // Attraction to mouse
-        const dx = mousePosition.x - newX;
-        const dy = mousePosition.y - newY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 200) {
-          newVx += dx * 0.0001;
-          newVy += dy * 0.0001;
-        }
-
-        return {
-          ...particle,
-          x: Math.max(0, Math.min(window.innerWidth, newX)),
-          y: Math.max(0, Math.min(window.innerHeight, newY)),
-          vx: Math.max(-3, Math.min(3, newVx)),
-          vy: Math.max(-3, Math.min(3, newVy))
-        };
-      }));
-    };
-
-    const particleInterval = setInterval(animateParticles, 50);
-
     // Handle scroll for active section highlighting and timeline progress
     const handleScroll = () => {
       const sections = ['home', 'experience', 'skills', 'projects', 'achievements', 'articles', 'testimonials', 'contact'];
-      const scrollPosition = window.scrollY + 150; // Increased offset for better detection
+      const scrollPosition = window.scrollY + 150;
 
-      // Check sections in reverse order to handle overlap better
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          // For the last section (contact), use a different detection logic
           if (section === 'contact') {
-            // If we're near the bottom of the page or in the contact section
             if (scrollPosition >= offsetTop - 100 || 
                 (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
               setActiveSection(section);
@@ -240,22 +144,20 @@ const typeTimer = setInterval(() => {
     // Auto-play testimonials
     const testimonialTimer = setInterval(() => {
       if (isAutoPlaying) {
-        setCurrentTestimonial((prev) => (prev + 1) % 2); // 2 testimonials
+        setCurrentTestimonial((prev) => (prev + 1) % 2);
       }
-    }, 5000); // Change every 5 seconds
+    }, 5000);
 
     // Auto-play articles carousel
     const articlesTimer = setInterval(() => {
       if (isArticlesAutoPlaying) {
-        setCurrentArticleIndex((prev) => (prev + 1) % 2); // 2 pages (0-2, 3)
+        setCurrentArticleIndex((prev) => (prev + 1) % 2);
       }
-    }, 4000); // Change every 4 seconds
+    }, 4000);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(typeTimer);
       clearInterval(testimonialTimer);
-      clearInterval(particleInterval);
       clearInterval(articlesTimer);
     };
   }, [isAutoPlaying, isArticlesAutoPlaying]);
@@ -265,7 +167,6 @@ const typeTimer = setInterval(() => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    setIsMenuOpen(false);
   };
 
   const menuItems = [
@@ -434,287 +335,27 @@ const typeTimer = setInterval(() => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Navigation Menu */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-lg shadow-slate-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer transform hover:scale-110 transition-transform duration-300">
-                RD
-              </button>
-            </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Cyberpunk Background */}
+      <CyberpunkBackground />
+      
+      {/* Cyberpunk Navigation */}
+      <CyberpunkNavbar 
+        activeSection={activeSection} 
+        onNavigate={scrollToSection} 
+      />
 
-            {/* Desktop Menu */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-1">
-                {menuItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`group px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:scale-105 ${
-                        activeSection === item.id
-                          ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/50 shadow-md shadow-blue-500/20'
-                          : 'text-gray-300 hover:text-white hover:bg-slate-800/60 border border-transparent hover:border-slate-700/50'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                      <span>{item.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-slate-800 transition-all duration-200"
-              >
-                {isMenuOpen ? (
-                  <X className="block h-6 w-6" />
-                ) : (
-                  <Menu className="block h-6 w-6" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden transition-all duration-300 ease-in-out">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-900/95 backdrop-blur-lg">
-              {menuItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`group w-full flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-all duration-200 ${
-                      activeSection === item.id
-                        ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300'
-                        : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* EPIC Interactive Background System */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Interactive Particle System */}
-        <div className="absolute inset-0">
-          {particles.map((particle) => (
-            <div
-              key={particle.id}
-              className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60"
-              style={{
-                left: particle.x,
-                top: particle.y,
-                boxShadow: `0 0 20px hsl(${220 + Math.sin(Date.now() * 0.001 + particle.id) * 60} 70% 60% / 0.5)`
-              }}
-            />
-          ))}
-          
-          {/* Connection lines between particles */}
-          <svg className="absolute inset-0 w-full h-full opacity-30">
-            {particles.map((particle, i) => 
-              particles.slice(i + 1).map((otherParticle, j) => {
-                const distance = Math.sqrt(
-                  Math.pow(particle.x - otherParticle.x, 2) + 
-                  Math.pow(particle.y - otherParticle.y, 2)
-                );
-                if (distance < 150) {
-                  return (
-                    <line
-                      key={`${i}-${j}`}
-                      x1={particle.x}
-                      y1={particle.y}
-                      x2={otherParticle.x}
-                      y2={otherParticle.y}
-                      stroke="url(#particleGradient)"
-                      strokeWidth="1"
-                      opacity={Math.max(0, 1 - distance / 150)}
-                    />
-                  );
-                }
-                return null;
-              })
-            )}
-            <defs>
-              <linearGradient id="particleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(220 70% 60%)" />
-                <stop offset="100%" stopColor="hsl(280 70% 60%)" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        {/* Mouse Cursor Glow Effect */}
-        <div 
-          className="absolute w-96 h-96 pointer-events-none"
-          style={{
-            left: mousePosition.x - 192,
-            top: mousePosition.y - 192,
-            background: `radial-gradient(circle, hsl(220 70% 60% / 0.1) 0%, transparent 70%)`,
-            filter: 'blur(20px)'
-          }}
-        />
-
-        {/* Animated Matrix-style Code Rain */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="animate-matrix-rain text-green-400 font-mono text-xs leading-4">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-fall opacity-70"
-                style={{
-                  left: `${i * 5}%`,
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${15 + Math.random() * 10}s`
-                }}
-              >
-                {['describe("QA Test"', 'expect(bug).toBe(null)', 'await page.click()', 'assert.equal()', 'cy.get(".button")', 'test.skip()', 'beforeEach()', 'it("should pass")'][Math.floor(Math.random() * 8)]}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dynamic Geometric Morphing Shapes */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-24 h-24 animate-morph-1 opacity-20">
-            <div className="w-full h-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 animate-spin-slow rounded-full"></div>
-          </div>
-          <div className="absolute top-40 right-32 w-20 h-20 animate-morph-2 opacity-20">
-            <div className="w-full h-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 animate-pulse rounded-lg rotate-45"></div>
-          </div>
-          <div className="absolute bottom-32 left-32 w-28 h-28 animate-morph-3 opacity-20">
-            <div className="w-full h-full bg-gradient-to-br from-cyan-500/30 to-blue-500/30 animate-bounce rounded-full"></div>
-          </div>
-        </div>
-
-        {/* Glitch Effect Overlay */}
-        <div className="absolute inset-0 animate-glitch opacity-5 mix-blend-screen">
-          <div className="w-full h-full bg-gradient-to-r from-red-500 via-transparent to-blue-500"></div>
-        </div>
-
-        {/* Professional QA Icons with Enhanced Animation */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-16 animate-orbit-1">
-            <Bug className="w-14 h-14 text-red-400 animate-pulse" />
-          </div>
-          <div className="absolute top-32 right-24 animate-orbit-2">
-            <Code2 className="w-12 h-12 text-green-400 animate-spin-slow" />
-          </div>
-          <div className="absolute bottom-40 left-24 animate-orbit-3">
-            <Activity className="w-13 h-13 text-yellow-400 animate-bounce" />
-          </div>
-          <div className="absolute top-1/3 right-1/3 animate-orbit-4">
-            <Monitor className="w-11 h-11 text-blue-400 animate-pulse" />
-          </div>
-          <div className="absolute bottom-1/3 right-1/4 animate-orbit-5">
-            <FileCheck className="w-12 h-12 text-purple-400 animate-spin-slow" />
-          </div>
-          <div className="absolute top-2/3 left-1/3 animate-orbit-6">
-            <BarChart3 className="w-14 h-14 text-pink-400 animate-bounce" />
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-16 overflow-hidden">
-        {/* Dynamic mesh gradient background */}
-        <div className="absolute inset-0 bg-gradient-mesh opacity-30"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-10"></div>
-        
-        <div className={`text-center space-y-8 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* Profile Picture */}
-          <div className="flex justify-center mb-8">
-            <div className="relative">
-              <Avatar className="w-40 h-40 border-4 border-gradient-to-r from-blue-400 to-purple-400 shadow-2xl">
-                <AvatarImage 
-                  src={profilePhoto} 
-                  alt="Rajesh Doradla"
-                  className="object-cover"
-                />
-                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-2xl font-bold">
-                  RD
-                </AvatarFallback>
-              </Avatar>
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-20"></div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in min-h-[1.2em] flex items-center justify-center relative">
-              <span className="animate-text-glow">{typedText}</span>
-              <span className="animate-pulse ml-1 text-blue-400">|</span>
-              <div className="absolute inset-0 animate-glitch-text opacity-20 pointer-events-none">
-                {typedText}
-              </div>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 animate-fade-in">
-              Principal QA Engineer
-            </p>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in">
-              11+ years of experience crafting robust quality assurance strategies, 
-              leading automation initiatives, and ensuring exceptional software quality at scale.
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-in">
-            <Badge variant="outline" className="bg-blue-500/10 border-blue-500 text-blue-300 px-4 py-2 hover:bg-blue-500/20 transition-all duration-300 hover:scale-105">
-              <Bug className="w-4 h-4 mr-2" />
-              Quality Assurance
-            </Badge>
-            <Badge variant="outline" className="bg-purple-500/10 border-purple-500 text-purple-300 px-4 py-2 hover:bg-purple-500/20 transition-all duration-300 hover:scale-105">
-              <Code2 className="w-4 h-4 mr-2" />
-              Test Automation
-            </Badge>
-            <Badge variant="outline" className="bg-pink-500/10 border-pink-500 text-pink-300 px-4 py-2 hover:bg-pink-500/20 transition-all duration-300 hover:scale-105">
-              <Users className="w-4 h-4 mr-2" />
-              Team Leadership
-            </Badge>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => scrollToSection('contact')}
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              Get In Touch
-            </Button>
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0"
-              onClick={() => window.open('https://drive.google.com/file/d/1_oe5oUWi9nIDz1xrHgrBqBt0XFXQwQQR/view', '_blank')}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download Resume
-            </Button>
-          </div>
-        </div>
-        
-        <button 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:text-white transition-colors duration-300 cursor-pointer group"
-          onClick={() => scrollToSection('experience')}
-        >
-          <ChevronDown className="w-6 h-6 text-gray-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
-        </button>
-      </section>
+      {/* Cyberpunk Hero Section */}
+      <CyberpunkHero onContactClick={() => scrollToSection('contact')} />
+      
+      {/* Scroll indicator */}
+      <button 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:text-white transition-colors duration-300 cursor-pointer group z-30"
+        onClick={() => scrollToSection('experience')}
+        style={{ top: 'calc(100vh - 60px)' }}
+      >
+        <ChevronDown className="w-8 h-8 text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 10px rgba(0, 212, 255, 0.5))' }} />
+      </button>
 
       {/* Experience Section - Enhanced 3D Timeline */}
       <section id="experience" className="py-20 px-4 relative overflow-hidden">
