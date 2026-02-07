@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Mail, Download, Settings, Code2, Users } from "lucide-react";
 import heroSlightGlitch from "@/assets/hero-slight-glitch.png";
 import heroMoreGlitch from "@/assets/hero-more-glitch.png";
-import holographic from "@/assets/holographic.png";
 
 interface CyberpunkHeroProps {
   onContactClick: () => void;
@@ -150,15 +149,6 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              {/* Holographic overlay behind - more visible */}
-              <img 
-                src={holographic}
-                alt=""
-                className="absolute inset-0 w-full h-full object-contain opacity-70 mix-blend-screen z-0 scale-125"
-                style={{
-                  filter: 'brightness(1.3) saturate(1.2)',
-                }}
-              />
               
               {/* Main hero image with glitch effect on hover */}
               <div className="relative z-10 transition-all duration-500">
