@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import profilePhoto from "@/assets/profile-photo.png";
 import articleBddAi from "@/assets/article-bdd-ai.png";
 import InteractiveAvatar from "@/components/InteractiveAvatar";
@@ -905,38 +906,44 @@ const Index = () => {
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
-                  <CardContent className="pt-12 pb-8 px-8 relative z-10">
-                    <div className="mb-8">
-                      <div className="flex gap-1 mb-6">
-                        {[...Array(5)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="text-yellow-400 text-2xl animate-fade-in"
-                            style={{ animationDelay: `${i * 100}ms` }}
-                          >
-                            ★
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-gray-300 text-lg leading-relaxed italic relative">
-                        <span className="absolute -left-4 -top-2 text-4xl text-blue-400 opacity-50">"</span>
-                        Rajesh is one of the best professional & a gem of a person to work with. I have Managed him over 3+ years during this period he has built the skill in Fintech domain and built Automation Framework for complex and dynamic Algorithmic Trading. His project management & out of box thinking was clearly visible in creating Automation suite using Test complete. He has evolved to be the SME for the team and used his skills in mentoring and guiding the team on complex implementations.
-                        <br /><br />
-                        He is very detailed oriented and does deep analysis, he brings high level of quality to the table with innovative mindset. Moreover, he is calm as cucumber and believes in the principle of 'let the work speak'. There is no doubt in saying that he is great package to have in any organization and I am sure he will climb many more ladders and add a great amount of value wherever he is.
-                        <span className="absolute -right-4 -bottom-2 text-4xl text-blue-400 opacity-50">"</span>
-                      </p>
+                  <CardContent className="pt-12 pb-8 px-8 relative z-10 flex flex-col h-[400px]">
+                    {/* Fixed Stars Section */}
+                    <div className="flex gap-1 mb-4 flex-shrink-0">
+                      {[...Array(5)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="text-yellow-400 text-2xl animate-fade-in"
+                          style={{ animationDelay: `${i * 100}ms` }}
+                        >
+                          ★
+                        </div>
+                      ))}
                     </div>
                     
-                    <div className="flex items-center space-x-4 pt-6 border-t border-slate-700/50">
-                      <Avatar className="h-16 w-16 ring-4 ring-blue-500/30 transition-all duration-300 group-hover:ring-blue-400/50 group-hover:scale-110">
-                        <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white font-bold text-xl">
+                    {/* Scrollable Content Block */}
+                    <div className="flex-1 min-h-0 mb-6 overflow-hidden">
+                      <ScrollArea className="h-full pr-4">
+                        <p className="text-gray-300 text-lg leading-relaxed italic relative pr-2">
+                          <span className="absolute -left-4 -top-2 text-4xl text-blue-400 opacity-50">"</span>
+                          Rajesh is one of the best professional & a gem of a person to work with. I have Managed him over 3+ years during this period he has built the skill in Fintech domain and built Automation Framework for complex and dynamic Algorithmic Trading. His project management & out of box thinking was clearly visible in creating Automation suite using Test complete. He has evolved to be the SME for the team and used his skills in mentoring and guiding the team on complex implementations.
+                          <br /><br />
+                          He is very detailed oriented and does deep analysis, he brings high level of quality to the table with innovative mindset. Moreover, he is calm as cucumber and believes in the principle of 'let the work speak'. There is no doubt in saying that he is great package to have in any organization and I am sure he will climb many more ladders and add a great amount of value wherever he is.
+                          <span className="absolute -right-4 -bottom-2 text-4xl text-blue-400 opacity-50">"</span>
+                        </p>
+                      </ScrollArea>
+                    </div>
+                    
+                    {/* Fixed Reviewer Details Section */}
+                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50 flex-shrink-0 h-[80px]">
+                      <Avatar className="h-14 w-14 ring-4 ring-blue-500/30 transition-all duration-300 group-hover:ring-blue-400/50 group-hover:scale-110 flex-shrink-0">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white font-bold text-lg">
                           SS
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1">
-                        <p className="text-white font-bold text-lg">Shanishetty Srinivas</p>
-                        <p className="text-gray-400">Director at SS&C EZE Software</p>
-                        <Badge variant="outline" className="mt-2 text-xs bg-blue-500/10 border-blue-500/30 text-blue-300 hover:bg-blue-500/20 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-bold text-base truncate">Shanishetty Srinivas</p>
+                        <p className="text-gray-400 text-sm truncate">Director at SS&C EZE Software</p>
+                        <Badge variant="outline" className="mt-1 text-xs bg-blue-500/10 border-blue-500/30 text-blue-300 hover:bg-blue-500/20 transition-colors">
                           <Linkedin className="w-3 h-3 mr-1" />
                           LinkedIn
                         </Badge>
@@ -963,36 +970,42 @@ const Index = () => {
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
-                  <CardContent className="pt-12 pb-8 px-8 relative z-10">
-                    <div className="mb-8">
-                      <div className="flex gap-1 mb-6">
-                        {[...Array(5)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="text-yellow-400 text-2xl animate-fade-in"
-                            style={{ animationDelay: `${i * 100}ms` }}
-                          >
-                            ★
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-gray-300 text-lg leading-relaxed italic relative">
-                        <span className="absolute -left-4 -top-2 text-4xl text-purple-400 opacity-50">"</span>
-                        Rajesh worked on one of my teams working for a luxury retail client. His business acumen, knowledge, commitment on the projects that he worked on were impeccable, and he became an irreplaceable player soon. He became a subject matter expert on the Direct to Consumer business and was a stellar performer. Would love to work with him any day.
-                        <span className="absolute -right-4 -bottom-2 text-4xl text-purple-400 opacity-50">"</span>
-                      </p>
+                  <CardContent className="pt-12 pb-8 px-8 relative z-10 flex flex-col h-[400px]">
+                    {/* Fixed Stars Section */}
+                    <div className="flex gap-1 mb-4 flex-shrink-0">
+                      {[...Array(5)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="text-yellow-400 text-2xl animate-fade-in"
+                          style={{ animationDelay: `${i * 100}ms` }}
+                        >
+                          ★
+                        </div>
+                      ))}
                     </div>
                     
-                    <div className="flex items-center space-x-4 pt-6 border-t border-slate-700/50">
-                      <Avatar className="h-16 w-16 ring-4 ring-purple-500/30 transition-all duration-300 group-hover:ring-purple-400/50 group-hover:scale-110">
-                        <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold text-xl">
+                    {/* Scrollable Content Block */}
+                    <div className="flex-1 min-h-0 mb-6 overflow-hidden">
+                      <ScrollArea className="h-full pr-4">
+                        <p className="text-gray-300 text-lg leading-relaxed italic relative pr-2">
+                          <span className="absolute -left-4 -top-2 text-4xl text-purple-400 opacity-50">"</span>
+                          Rajesh worked on one of my teams working for a luxury retail client. His business acumen, knowledge, commitment on the projects that he worked on were impeccable, and he became an irreplaceable player soon. He became a subject matter expert on the Direct to Consumer business and was a stellar performer. Would love to work with him any day.
+                          <span className="absolute -right-4 -bottom-2 text-4xl text-purple-400 opacity-50">"</span>
+                        </p>
+                      </ScrollArea>
+                    </div>
+                    
+                    {/* Fixed Reviewer Details Section */}
+                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-700/50 flex-shrink-0 h-[80px]">
+                      <Avatar className="h-14 w-14 ring-4 ring-purple-500/30 transition-all duration-300 group-hover:ring-purple-400/50 group-hover:scale-110 flex-shrink-0">
+                        <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold text-lg">
                           PI
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1">
-                        <p className="text-white font-bold text-lg">Prashant Ivaturi</p>
-                        <p className="text-gray-400">AI Product Leader at Oracle</p>
-                        <Badge variant="outline" className="mt-2 text-xs bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-bold text-base truncate">Prashant Ivaturi</p>
+                        <p className="text-gray-400 text-sm truncate">AI Product Leader at Oracle</p>
+                        <Badge variant="outline" className="mt-1 text-xs bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-colors">
                           <Linkedin className="w-3 h-3 mr-1" />
                           LinkedIn
                         </Badge>
