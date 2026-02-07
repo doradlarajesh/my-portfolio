@@ -582,7 +582,9 @@ const Index = () => {
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Live Projects & Client Work</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ background: 'linear-gradient(to right, #60a5fa, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              Live Projects & Client Work
+            </h2>
             <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
           </div>
           
@@ -681,7 +683,7 @@ const Index = () => {
       <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ background: 'linear-gradient(to right, #60a5fa, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
               Published Articles
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
