@@ -46,6 +46,12 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
     return () => clearInterval(typeTimer);
   }, []);
 
+  useEffect(() => {
+    // Preload hover-state image so the first hover switches instantly
+    const img = new Image();
+    img.src = heroMoreGlitch;
+  }, []);
+
   const skillPills = [
     { icon: Settings, label: "Quality Assurance", color: "cyan" },
     { icon: Code2, label: "Test Automation", color: "purple" },
