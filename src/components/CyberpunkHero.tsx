@@ -134,7 +134,7 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
               </Button>
               
               <Button 
-                onClick={() => window.open('https://drive.google.com/file/d/1_oe5oUWi9nIDz1xrHgrBqBt0XFXQwQQR/view', '_blank')}
+                onClick={() => window.open('https://drive.google.com/file/d/1c5StUCH5fBRxT2Tr0uy5dGGTFIHtA7KS/view', '_blank')}
                 className="relative group px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-500 hover:via-purple-500 hover:to-blue-500 text-white border-0 overflow-hidden transition-all duration-300 transform hover:scale-105"
                 style={{
                   boxShadow: '0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(139, 92, 246, 0.2)',
