@@ -589,8 +589,8 @@ const Index = () => {
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="section-title">
-              <span className="section-title-gradient">Live Projects & Client Work</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#93c5fd' }}>
+              Live Projects & Client Work
             </h2>
             <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
           </div>
@@ -690,8 +690,8 @@ const Index = () => {
       <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="section-title">
-              <span className="section-title-gradient">Published Articles</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#93c5fd' }}>
+              Published Articles
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Sharing knowledge and insights from my journey in Quality Engineering and Test Automation
