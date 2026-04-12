@@ -59,7 +59,7 @@ const Index = () => {
   const [isArticlesAutoPlaying, setIsArticlesAutoPlaying] = useState(true);
   const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
   const [timelineProgress, setTimelineProgress] = useState(0);
-  const emailToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const emailToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const emailCopyCountRef = useRef(0);
 
   useEffect(() => {

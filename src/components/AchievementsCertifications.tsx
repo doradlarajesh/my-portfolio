@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Globe, Zap, Users, Shield, Rocket, Award, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Globe, Zap, Users, Shield, Rocket, Award, ExternalLink, Filter, ChevronRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -9,236 +9,253 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import cfaCertificate from "@/assets/cfa-certificate.png";
 
+// ─── Data ────────────────────────────────────────────────────────────
+
 const achievements = [
-  {
-    icon: Globe,
-    title: "Built and scaled offshore QA teams from ground",
-    color: "from-blue-400 to-cyan-400",
-  },
-  {
-    icon: Zap,
-    title: "Reduced testing cycles by 80% through automation",
-    color: "from-yellow-400 to-orange-400",
-  },
-  {
-    icon: Users,
-    title: "Mentored 15+ QA engineers across multiple teams",
-    color: "from-green-400 to-emerald-400",
-  },
-  {
-    icon: Shield,
-    title: "Established QA practices and KPIs adopted company-wide",
-    color: "from-purple-400 to-pink-400",
-  },
-  {
-    icon: Rocket,
-    title: "Led quality initiatives for global product launches",
-    color: "from-red-400 to-rose-400",
-  },
+  { icon: Globe, title: "Built and scaled offshore QA teams from ground", color: "from-blue-400 to-cyan-400" },
+  { icon: Zap, title: "Reduced testing cycles by 80% through automation", color: "from-yellow-400 to-orange-400" },
+  { icon: Users, title: "Mentored 15+ QA engineers across multiple teams", color: "from-green-400 to-emerald-400" },
+  { icon: Shield, title: "Established QA practices and KPIs adopted company-wide", color: "from-purple-400 to-pink-400" },
+  { icon: Rocket, title: "Led quality initiatives for global product launches", color: "from-red-400 to-rose-400" },
 ];
 
-const certifications = [
+type CertCategory = "All" | "Tech" | "AI" | "Finance";
+
+interface Certification {
+  name: string;
+  year: string;
+  issuer: string;
+  category: CertCategory;
+  gradient: string;
+  image: string | null;
+  icon: string;
+}
+
+const certifications: Certification[] = [
   {
     name: "Prompt Engineering Professional Certification",
     year: "2025",
     issuer: "Blockchain Council",
+    category: "AI",
     gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
     image: null,
+    icon: "🤖",
   },
   {
     name: "ISTQB® Certified CTFL",
     year: "2016",
     issuer: "ISTQB",
+    category: "Tech",
     gradient: "from-blue-500 via-cyan-500 to-teal-500",
     image: null,
+    icon: "🛡️",
   },
   {
     name: "Chartered Financial Analyst - CFA (Foundations)",
     year: "2018",
     issuer: "CFA Institute",
+    category: "Finance",
     gradient: "from-amber-500 via-orange-500 to-red-500",
     image: cfaCertificate,
+    icon: "📊",
   },
   {
     name: "Postman API Tester",
     year: "2023",
     issuer: "Postman",
+    category: "Tech",
     gradient: "from-orange-500 via-rose-500 to-pink-500",
     image: null,
+    icon: "🔗",
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
+const categories: CertCategory[] = ["All", "Tech", "AI", "Finance"];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
-  },
-};
+// ─── Sub-components ──────────────────────────────────────────────────
+
+const AchievementCard = ({ achievement, index }: { achievement: typeof achievements[0]; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -30 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    className="group relative flex items-start gap-4 p-4 rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/15 transition-all duration-500"
+  >
+    <div className={`shrink-0 p-2.5 rounded-xl bg-gradient-to-br ${achievement.color} shadow-lg`}>
+      <achievement.icon className="w-4 h-4 text-white" />
+    </div>
+    <p className="text-gray-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 pt-0.5">
+      {achievement.title}
+    </p>
+  </motion.div>
+);
+
+const CertificationCard = ({ cert, index, onClick }: { cert: Certification; index: number; onClick: () => void }) => (
+  <motion.div
+    layout
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 0.9 }}
+    transition={{ duration: 0.4, delay: index * 0.08 }}
+    whileHover={{ y: -6, scale: 1.02 }}
+    whileTap={{ scale: 0.97 }}
+    onClick={onClick}
+    className="group cursor-pointer relative"
+  >
+    {/* Glow effect behind card */}
+    <div className={`absolute -inset-1 bg-gradient-to-r ${cert.gradient} rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-700`} />
+    
+    <div className="relative h-full overflow-hidden rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-white/[0.08] group-hover:border-white/20 transition-all duration-500 shadow-2xl">
+      {/* Top gradient bar */}
+      <div className={`h-1.5 w-full bg-gradient-to-r ${cert.gradient}`} />
+      
+      {/* Decorative corner accent */}
+      <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl ${cert.gradient} opacity-[0.07] group-hover:opacity-[0.15] transition-opacity duration-500`} />
+      
+      <div className="p-5 flex flex-col h-full">
+        {/* Emoji icon */}
+        <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
+          {cert.icon}
+        </div>
+        
+        {/* Year badge */}
+        <Badge className={`w-fit mb-3 bg-gradient-to-r ${cert.gradient} text-white border-0 text-[11px] px-2.5 py-0.5 shadow-lg`}>
+          {cert.year}
+        </Badge>
+        
+        {/* Title */}
+        <h4 className="text-white font-semibold text-sm leading-snug mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 group-hover:bg-clip-text transition-all duration-300 flex-1">
+          {cert.name}
+        </h4>
+        
+        {/* Issuer + action */}
+        <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/[0.06]">
+          <span className="text-xs text-gray-500 font-medium">{cert.issuer}</span>
+          <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
+
+const FilterButton = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 border ${
+      active
+        ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white border-transparent shadow-lg shadow-purple-500/25"
+        : "bg-white/[0.03] text-gray-400 border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20"
+    }`}
+  >
+    {label}
+  </button>
+);
+
+// ─── Main Component ──────────────────────────────────────────────────
 
 const AchievementsCertifications = () => {
-  const [selectedCert, setSelectedCert] = useState<typeof certifications[0] | null>(null);
+  const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
+  const [activeFilter, setActiveFilter] = useState<CertCategory>("All");
+
+  const filteredCerts = activeFilter === "All"
+    ? certifications
+    : certifications.filter((c) => c.category === activeFilter);
 
   return (
-    <section id="achievements" className="py-24 px-4 relative overflow-hidden">
-      {/* Gradient Mesh Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[150px]" />
+    <section id="achievements" className="py-28 px-4 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-[#0c0a1a] to-slate-900">
+        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[160px]" />
+        <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[140px]" />
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Header */}
+
+        {/* ──── ACHIEVEMENTS ──── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-24"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
-            Achievements & Certifications
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Continuous learning and professional growth
-          </p>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20">
+              <Award className="w-5 h-5 text-purple-400" />
+            </div>
+            <h3 className="text-2xl font-bold text-white">Key Achievements</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {achievements.map((a, i) => (
+              <AchievementCard key={i} achievement={a} index={i} />
+            ))}
+          </div>
         </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Achievements Section */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30">
-                <Award className="w-6 h-6 text-purple-400" />
+        {/* ──── CERTIFICATIONS ──── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Header with filters */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/20">
+                <ExternalLink className="w-5 h-5 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-semibold text-white">Key Achievements</h3>
+              <div>
+                <h3 className="text-2xl font-bold text-white">Certifications</h3>
+                <p className="text-xs text-gray-500 mt-0.5">{certifications.length} credentials earned</p>
+              </div>
             </div>
 
-            {achievements.map((achievement, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl -z-10"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))`,
-                  }}
+            <div className="flex items-center gap-2">
+              <Filter className="w-3.5 h-3.5 text-gray-500 mr-1" />
+              {categories.map((cat) => (
+                <FilterButton
+                  key={cat}
+                  label={cat}
+                  active={activeFilter === cat}
+                  onClick={() => setActiveFilter(cat)}
                 />
-                <div className="relative p-5 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/10">
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${achievement.color} bg-opacity-20 shrink-0`}>
-                      <achievement.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <p className="text-gray-200 text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
-                      {achievement.title}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Certifications Section */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
-                <ExternalLink className="w-6 h-6 text-blue-400" />
-              </div>
-              <h3 className="text-2xl font-semibold text-white">Certifications</h3>
+              ))}
             </div>
+          </div>
 
-            <TooltipProvider delayDuration={200}>
-              <div className="grid gap-4">
-                {certifications.map((cert, index) => (
-                  <Tooltip key={index}>
-                    <TooltipTrigger asChild>
-                      <motion.div
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setSelectedCert(cert)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="relative overflow-hidden rounded-2xl">
-                          {/* Ticket notch effects */}
-                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-r-full -ml-2 z-10" />
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-8 bg-slate-900 rounded-l-full -mr-2 z-10" />
-                          
-                          {/* Card content */}
-                          <div className="relative p-6 bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/25 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-purple-500/20">
-                            {/* Gradient overlay on hover */}
-                            <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                            
-                            {/* Glow effect */}
-                            <div className={`absolute inset-0 bg-gradient-to-r ${cert.gradient} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500 -z-10`} />
-                            
-                            <div className="relative flex items-center justify-between">
-                              <div className="flex-1 pr-4">
-                                <h4 className="text-lg font-semibold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 group-hover:bg-clip-text transition-all duration-300 mb-1">
-                                  {cert.name}
-                                </h4>
-                                <p className="text-sm text-gray-400">{cert.issuer}</p>
-                              </div>
-                              <Badge className={`bg-gradient-to-r ${cert.gradient} text-white border-0 px-3 py-1.5 text-sm font-medium shadow-lg`}>
-                                {cert.year}
-                              </Badge>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </TooltipTrigger>
-                    <TooltipContent 
-                      side="top" 
-                      className="bg-slate-800 border border-slate-600 text-white px-4 py-2 rounded-lg shadow-xl"
-                    >
-                      <p className="text-sm font-medium">Tap to view credential</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
-              </div>
-            </TooltipProvider>
-          </motion.div>
-        </div>
+          {/* Cards grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <AnimatePresence mode="popLayout">
+              {filteredCerts.map((cert, i) => (
+                <CertificationCard
+                  key={cert.name}
+                  cert={cert}
+                  index={i}
+                  onClick={() => setSelectedCert(cert)}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {filteredCerts.length === 0 && (
+            <div className="text-center py-16 text-gray-500 text-sm">
+              No certifications in this category yet.
+            </div>
+          )}
+        </motion.div>
       </div>
 
-      {/* Certificate Modal */}
+      {/* ──── Certificate Modal ──── */}
       <Dialog open={!!selectedCert} onOpenChange={() => setSelectedCert(null)}>
         <DialogContent className="sm:max-w-2xl bg-slate-900/95 backdrop-blur-xl border-white/10">
           <DialogHeader>
@@ -251,21 +268,17 @@ const AchievementsCertifications = () => {
           </DialogHeader>
           <div className="mt-4">
             {selectedCert?.image ? (
-              /* Actual certificate image */
-              <div className={`w-full rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-1`}>
-                <img 
-                  src={selectedCert.image} 
+              <div className={`w-full rounded-xl bg-gradient-to-br ${selectedCert.gradient} p-1`}>
+                <img
+                  src={selectedCert.image}
                   alt={`${selectedCert.name} Certificate`}
                   className="w-full h-auto rounded-lg"
                 />
               </div>
             ) : (
-              /* Certificate placeholder with gradient */
-              <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-1`}>
-                <div className="w-full h-full rounded-lg bg-slate-800 flex flex-col items-center justify-center p-8">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center mb-6">
-                    <Award className="w-12 h-12 text-white" />
-                  </div>
+              <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-[2px]`}>
+                <div className="w-full h-full rounded-[10px] bg-slate-800 flex flex-col items-center justify-center p-8">
+                  <div className="text-6xl mb-6">{selectedCert?.icon}</div>
                   <h3 className="text-xl font-bold text-white text-center mb-2">
                     {selectedCert?.name}
                   </h3>
