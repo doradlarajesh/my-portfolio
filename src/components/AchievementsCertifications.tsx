@@ -30,9 +30,11 @@ interface Certification {
   category: CertCategory;
   gradient: string;
   image: string | null;
-  icon: string;
 }
 
+// ─── REORDER CERTIFICATIONS HERE ─────────────────────────────────
+// Change the order of items below to control display order.
+// Move items up/down in this array to rearrange them on the page.
 const certifications: Certification[] = [
   {
     name: "Prompt Engineering Professional Certification",
@@ -41,7 +43,6 @@ const certifications: Certification[] = [
     category: "AI",
     gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
     image: null,
-    icon: "🤖",
   },
   {
     name: "ISTQB® Certified CTFL",
@@ -50,7 +51,6 @@ const certifications: Certification[] = [
     category: "Tech",
     gradient: "from-blue-500 via-cyan-500 to-teal-500",
     image: null,
-    icon: "🛡️",
   },
   {
     name: "Chartered Financial Analyst - CFA (Foundations)",
@@ -59,7 +59,6 @@ const certifications: Certification[] = [
     category: "Finance",
     gradient: "from-amber-500 via-orange-500 to-red-500",
     image: cfaCertificate,
-    icon: "📊",
   },
   {
     name: "Postman API Tester",
@@ -68,7 +67,6 @@ const certifications: Certification[] = [
     category: "Tech",
     gradient: "from-orange-500 via-rose-500 to-pink-500",
     image: null,
-    icon: "🔗",
   },
 ];
 
