@@ -30,9 +30,11 @@ interface Certification {
   category: CertCategory;
   gradient: string;
   image: string | null;
-  icon: string;
 }
 
+// ─── REORDER CERTIFICATIONS HERE ─────────────────────────────────
+// Change the order of items below to control display order.
+// Move items up/down in this array to rearrange them on the page.
 const certifications: Certification[] = [
   {
     name: "Prompt Engineering Professional Certification",
@@ -41,7 +43,6 @@ const certifications: Certification[] = [
     category: "AI",
     gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
     image: null,
-    icon: "🤖",
   },
   {
     name: "ISTQB® Certified CTFL",
@@ -50,7 +51,6 @@ const certifications: Certification[] = [
     category: "Tech",
     gradient: "from-blue-500 via-cyan-500 to-teal-500",
     image: null,
-    icon: "🛡️",
   },
   {
     name: "Chartered Financial Analyst - CFA (Foundations)",
@@ -59,7 +59,6 @@ const certifications: Certification[] = [
     category: "Finance",
     gradient: "from-amber-500 via-orange-500 to-red-500",
     image: cfaCertificate,
-    icon: "📊",
   },
   {
     name: "Postman API Tester",
@@ -68,7 +67,6 @@ const certifications: Certification[] = [
     category: "Tech",
     gradient: "from-orange-500 via-rose-500 to-pink-500",
     image: null,
-    icon: "🔗",
   },
 ];
 
@@ -116,14 +114,14 @@ const CertificationCard = ({ cert, index, onClick }: { cert: Certification; inde
       <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl ${cert.gradient} opacity-[0.07] group-hover:opacity-[0.15] transition-opacity duration-500`} />
       
       <div className="p-5 flex flex-col h-full">
-        {/* Emoji icon */}
-        <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
-          {cert.icon}
+        {/* Badge icon */}
+        <div className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${cert.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+          <Award className="w-5 h-5 text-white" />
         </div>
         
-        {/* Year badge */}
+        {/* Issuer badge (highlighted) */}
         <Badge className={`w-fit mb-3 bg-gradient-to-r ${cert.gradient} text-white border-0 text-[11px] px-2.5 py-0.5 shadow-lg`}>
-          {cert.year}
+          {cert.issuer}
         </Badge>
         
         {/* Title */}
@@ -131,9 +129,9 @@ const CertificationCard = ({ cert, index, onClick }: { cert: Certification; inde
           {cert.name}
         </h4>
         
-        {/* Issuer + action */}
+        {/* Year + action */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/[0.06]">
-          <span className="text-xs text-gray-500 font-medium">{cert.issuer}</span>
+          <span className="text-xs text-gray-500 font-medium">{cert.year}</span>
           <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
         </div>
       </div>
@@ -278,7 +276,9 @@ const AchievementsCertifications = () => {
             ) : (
               <div className={`w-full aspect-[4/3] rounded-xl bg-gradient-to-br ${selectedCert?.gradient || 'from-purple-600 to-blue-600'} p-[2px]`}>
                 <div className="w-full h-full rounded-[10px] bg-slate-800 flex flex-col items-center justify-center p-8">
-                  <div className="text-6xl mb-6">{selectedCert?.icon}</div>
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedCert?.gradient || ''} flex items-center justify-center mb-6 shadow-lg`}>
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
                   <h3 className="text-xl font-bold text-white text-center mb-2">
                     {selectedCert?.name}
                   </h3>
