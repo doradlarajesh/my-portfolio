@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Zap, Users, Shield, Rocket, Award, ExternalLink, Filter, ChevronRight } from "lucide-react";
+import { Globe, Zap, Users, Shield, Rocket, Award, BadgeCheck, Filter, ChevronRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -210,7 +210,7 @@ const AchievementsCertifications = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/20">
-                <ExternalLink className="w-5 h-5 text-blue-400" />
+                <BadgeCheck className="w-5 h-5 text-blue-400" />
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-white">Certifications</h3>

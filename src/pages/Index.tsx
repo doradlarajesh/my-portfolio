@@ -17,6 +17,7 @@ import articlePostmanGithubActions from "@/assets/article-postman-github-actions
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
 import AchievementsCertifications from "@/components/AchievementsCertifications";
+import ToolLogo from "@/components/ToolLogo";
 import CyberpunkBackground from "@/components/CyberpunkBackground";
 import CyberpunkNavbar from "@/components/CyberpunkNavbar";
 import CyberpunkHero from "@/components/CyberpunkHero";
@@ -187,6 +188,8 @@ const Index = () => {
     { id: 'testimonials', label: 'Testimonials', icon: Quote },
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
+
+  const visibleSectionTitleStyle = { color: "hsl(var(--section-title-from))" };
 
   // Tool logos and skills data
   const skillCategories = [
@@ -383,7 +386,7 @@ const Index = () => {
                 <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
               </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
               Professional Journey
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
@@ -555,7 +558,7 @@ const Index = () => {
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Technical Expertise</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>Technical Expertise</h2>
             <p className="text-xl text-gray-300">Mastery across the quality assurance spectrum</p>
           </div>
           
@@ -569,8 +572,8 @@ const Index = () => {
                   <div className="grid grid-cols-2 gap-4">
                     {category.tools.map((tool, toolIndex) => (
                       <div key={toolIndex} className="flex flex-col items-center p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 transition-all duration-300 group/tool hover:scale-105">
-                        <div className="text-2xl mb-2 group-hover/tool:scale-110 transition-transform duration-300">
-                          {tool.logo}
+                        <div className="mb-2 group-hover/tool:scale-110 transition-transform duration-300">
+                          <ToolLogo name={tool.name} fallback={tool.logo} />
                         </div>
                         <span className="text-gray-300 text-xs text-center group-hover/tool:text-white transition-colors duration-300">
                           {tool.name}
@@ -589,7 +592,7 @@ const Index = () => {
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#93c5fd' }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
               Live Projects & Client Work
             </h2>
             <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
@@ -690,7 +693,7 @@ const Index = () => {
       <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#93c5fd' }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
               Published Articles
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -883,7 +886,7 @@ const Index = () => {
 
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={visibleSectionTitleStyle}>
               Testimonials
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in">
@@ -1116,7 +1119,7 @@ const Index = () => {
               <Phone className="w-3 h-3 mr-2" />
               Get In Touch
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={visibleSectionTitleStyle}>
               Let's Connect
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
