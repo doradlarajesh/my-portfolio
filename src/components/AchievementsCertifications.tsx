@@ -37,9 +37,41 @@ interface Certification {
 // Move items up/down in this array to rearrange them on the page.
 const certifications: Certification[] = [
   {
+    name: "Claude Code 101",
+    year: "2025",
+    issuer: "Anthropic",
+    category: "AI",
+    gradient: "from-amber-500 via-orange-500 to-red-500",
+    image: null,
+  },
+  {
+    name: "Backbase QA Certified",
+    year: "2024",
+    issuer: "Backbase",
+    category: "Tech",
+    gradient: "from-amber-500 via-orange-500 to-red-500",
+    image: null,
+  },
+  {
+    name: "Claude 101",
+    year: "2025",
+    issuer: "Anthropic",
+    category: "AI",
+    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+    image: null,
+  },
+  {
+    name: "AI Evaluations",
+    year: "2025",
+    issuer: "Arize AI",
+    category: "AI",
+    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+    image: null,
+  },
+  {
     name: "Prompt Engineering Professional Certification",
     year: "2025",
-    issuer: "Blockchain Council",
+    issuer: "Certiprof",
     category: "AI",
     gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
     image: null,
