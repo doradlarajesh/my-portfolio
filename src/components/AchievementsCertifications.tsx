@@ -41,7 +41,7 @@ const certifications: Certification[] = [
     year: "2025",
     issuer: "Anthropic",
     category: "AI",
-    gradient: "from-amber-500 via-orange-500 to-red-500",
+    gradient: "from-orange-500 via-amber-500 to-yellow-500",
     image: null,
   },
   {
@@ -49,7 +49,7 @@ const certifications: Certification[] = [
     year: "2024",
     issuer: "Backbase",
     category: "Tech",
-    gradient: "from-amber-500 via-orange-500 to-red-500",
+    gradient: "from-sky-500 via-blue-500 to-indigo-500",
     image: null,
   },
   {
@@ -65,7 +65,7 @@ const certifications: Certification[] = [
     year: "2025",
     issuer: "Arize AI",
     category: "AI",
-    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+    gradient: "from-emerald-500 via-green-500 to-teal-500",
     image: null,
   },
   {
@@ -73,7 +73,7 @@ const certifications: Certification[] = [
     year: "2025",
     issuer: "Certiprof",
     category: "AI",
-    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+    gradient: "from-rose-500 via-pink-500 to-fuchsia-500",
     image: null,
   },
   {
