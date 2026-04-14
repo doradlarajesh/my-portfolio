@@ -107,12 +107,9 @@ const categories: CertCategory[] = ["All", "Tech", "AI", "Finance"];
 // ─── Sub-components ──────────────────────────────────────────────────
 
 const AchievementCard = ({ achievement, index }: { achievement: typeof achievements[0]; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, x: -30 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="group relative flex items-start gap-4 p-4 rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/15 transition-all duration-500"
+  <div
+    className="group relative flex items-start gap-4 p-4 rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/15 transition-all duration-500 animate-fade-in"
+    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'backwards' }}
   >
     <div className={`shrink-0 p-2.5 rounded-xl bg-gradient-to-br ${achievement.color} shadow-lg`}>
       <achievement.icon className="w-4 h-4 text-white" />
@@ -120,7 +117,7 @@ const AchievementCard = ({ achievement, index }: { achievement: typeof achieveme
     <p className="text-gray-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 pt-0.5">
       {achievement.title}
     </p>
-  </motion.div>
+  </div>
 );
 
 const CertificationCard = ({ cert, index, onClick }: { cert: Certification; index: number; onClick: () => void }) => (
