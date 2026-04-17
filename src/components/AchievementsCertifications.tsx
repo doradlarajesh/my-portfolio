@@ -104,6 +104,8 @@ const certifications: Certification[] = [
 
 const categories: CertCategory[] = ["All", "Tech", "AI", "Finance"];
 
+const sectionTitleStyle = { color: "hsl(var(--section-title-from))" };
+
 // ─── Sub-components ──────────────────────────────────────────────────
 
 const AchievementCard = ({ achievement, index }: { achievement: typeof achievements[0]; index: number }) => (
@@ -205,6 +207,14 @@ const AchievementsCertifications = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6" style={sectionTitleStyle}>
+            Achievements & Certifications
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Impact highlights, verified credentials, and continuous learning across QA, AI, and delivery excellence.
+          </p>
+        </div>
 
         {/* ──── ACHIEVEMENTS ──── */}
         <motion.div
