@@ -6,6 +6,7 @@ interface SectionHeaderProps {
 }
 
 const sectionTitleStyle = { color: "hsl(var(--section-title-from))" };
+const sectionDescriptionStyle = { color: "hsl(var(--section-title-fallback) / 0.78)" };
 
 const SectionHeader = ({
   title,
@@ -20,7 +21,10 @@ const SectionHeader = ({
       </h2>
 
       {description ? (
-        <p className={`text-xl text-muted-foreground max-w-3xl mx-auto ${descriptionClassName}`.trim()}>
+        <p
+          className={`text-xl max-w-3xl mx-auto ${descriptionClassName}`.trim()}
+          style={sectionDescriptionStyle}
+        >
           {description}
         </p>
       ) : null}

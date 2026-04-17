@@ -385,12 +385,12 @@ const Index = () => {
                 <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
               </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
-              Professional Journey
-            </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              11+ years of delivering quality excellence across global enterprises
-            </p>
+            <SectionHeader
+              title="Professional Journey"
+              description="11+ years of delivering quality excellence across global enterprises"
+              className="mb-0"
+              descriptionClassName="max-w-2xl"
+            />
           </div>
           
           <div className="relative">
@@ -556,10 +556,10 @@ const Index = () => {
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>Technical Expertise</h2>
-            <p className="text-xl text-gray-300">Mastery across the quality assurance spectrum</p>
-          </div>
+          <SectionHeader
+            title="Technical Expertise"
+            description="Mastery across the quality assurance spectrum"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skillCategories.map((category, index) => (
@@ -878,14 +878,12 @@ const Index = () => {
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={visibleSectionTitleStyle}>
-              Testimonials
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in">
-              What colleagues and leaders say about working with me
-            </p>
-          </div>
+          <SectionHeader
+            title="Testimonials"
+            description="What colleagues and leaders say about working with me"
+            className="animate-fade-in"
+            descriptionClassName="animate-fade-in"
+          />
 
           <div 
             className="relative"
@@ -1112,13 +1110,12 @@ const Index = () => {
               <Phone className="w-3 h-3 mr-2" />
               Get In Touch
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={visibleSectionTitleStyle}>
-              Let's Connect
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Ready to discuss quality assurance strategies, automation frameworks, 
-              or leadership opportunities in testing excellence.
-            </p>
+            <SectionHeader
+              title="Let's Connect"
+              description="Ready to discuss quality assurance strategies, automation frameworks, or leadership opportunities in testing excellence."
+              className="mb-0"
+              descriptionClassName="text-lg max-w-2xl"
+            />
           </div>
 
           {/* Main Content Grid */}
