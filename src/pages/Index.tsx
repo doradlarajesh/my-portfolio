@@ -17,6 +17,7 @@ import articlePostmanGithubActions from "@/assets/article-postman-github-actions
 import articleSlackWebhook from "@/assets/article-slack-webhook.jpg";
 import articlePostmanBackup from "@/assets/article-postman-backup.jpg";
 import AchievementsCertifications from "@/components/AchievementsCertifications";
+import SectionHeader from "@/components/SectionHeader";
 import ToolLogo from "@/components/ToolLogo";
 import CyberpunkBackground from "@/components/CyberpunkBackground";
 import CyberpunkNavbar from "@/components/CyberpunkNavbar";
@@ -188,8 +189,6 @@ const Index = () => {
     { id: 'testimonials', label: 'Testimonials', icon: Quote },
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
-
-  const visibleSectionTitleStyle = { color: "hsl(var(--section-title-from))" };
 
   // Tool logos and skills data
   const skillCategories = [
@@ -386,12 +385,12 @@ const Index = () => {
                 <span className="text-blue-300 font-medium text-sm tracking-wider uppercase">Career Timeline</span>
               </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
-              Professional Journey
-            </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              11+ years of delivering quality excellence across global enterprises
-            </p>
+            <SectionHeader
+              title="Professional Journey"
+              description="11+ years of delivering quality excellence across global enterprises"
+              className="mb-0"
+              descriptionClassName="max-w-2xl"
+            />
           </div>
           
           <div className="relative">
@@ -557,10 +556,10 @@ const Index = () => {
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>Technical Expertise</h2>
-            <p className="text-xl text-gray-300">Mastery across the quality assurance spectrum</p>
-          </div>
+          <SectionHeader
+            title="Technical Expertise"
+            description="Mastery across the quality assurance spectrum"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skillCategories.map((category, index) => (
@@ -591,12 +590,10 @@ const Index = () => {
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
-              Live Projects & Client Work
-            </h2>
-            <p className="text-xl text-gray-300">Real-world solutions delivering measurable impact</p>
-          </div>
+          <SectionHeader
+            title="Live Projects & Client Work"
+            description="Real-world solutions delivering measurable impact"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
@@ -692,14 +689,10 @@ const Index = () => {
       {/* Published Articles Section */}
       <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={visibleSectionTitleStyle}>
-              Published Articles
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Sharing knowledge and insights from my journey in Quality Engineering and Test Automation
-            </p>
-          </div>
+          <SectionHeader
+            title="Published Articles"
+            description="Sharing knowledge and insights from my journey in Quality Engineering and Test Automation"
+          />
 
           <div 
             className="relative"
@@ -885,14 +878,12 @@ const Index = () => {
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={visibleSectionTitleStyle}>
-              Testimonials
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in">
-              What colleagues and leaders say about working with me
-            </p>
-          </div>
+          <SectionHeader
+            title="Testimonials"
+            description="What colleagues and leaders say about working with me"
+            className="animate-fade-in"
+            descriptionClassName="animate-fade-in"
+          />
 
           <div 
             className="relative"
@@ -1119,13 +1110,12 @@ const Index = () => {
               <Phone className="w-3 h-3 mr-2" />
               Get In Touch
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={visibleSectionTitleStyle}>
-              Let's Connect
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Ready to discuss quality assurance strategies, automation frameworks, 
-              or leadership opportunities in testing excellence.
-            </p>
+            <SectionHeader
+              title="Let's Connect"
+              description="Ready to discuss quality assurance strategies, automation frameworks, or leadership opportunities in testing excellence."
+              className="mb-0"
+              descriptionClassName="text-lg max-w-2xl"
+            />
           </div>
 
           {/* Main Content Grid */}
