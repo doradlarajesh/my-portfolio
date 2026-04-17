@@ -190,8 +190,6 @@ const Index = () => {
     { id: 'contact', label: 'Contact', icon: Phone }
   ];
 
-  const visibleSectionTitleStyle = { color: "hsl(var(--section-title-from))" };
-
   // Tool logos and skills data
   const skillCategories = [
     {
