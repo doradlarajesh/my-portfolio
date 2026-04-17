@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import SectionHeader from "@/components/SectionHeader";
 import cfaCertificate from "@/assets/cfa-certificate.png";
 
 // ─── Data ────────────────────────────────────────────────────────────
@@ -103,8 +104,6 @@ const certifications: Certification[] = [
 ];
 
 const categories: CertCategory[] = ["All", "Tech", "AI", "Finance"];
-
-const sectionTitleStyle = { color: "hsl(var(--section-title-from))" };
 
 // ─── Sub-components ──────────────────────────────────────────────────
 
@@ -207,14 +206,10 @@ const AchievementsCertifications = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6" style={sectionTitleStyle}>
-            Achievements & Certifications
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Impact highlights, verified credentials, and continuous learning across QA, AI, and delivery excellence.
-          </p>
-        </div>
+        <SectionHeader
+          title="Achievements & Certifications"
+          description="Impact highlights, verified credentials, and continuous learning across QA, AI, and delivery excellence."
+        />
 
         {/* ──── ACHIEVEMENTS ──── */}
         <motion.div
