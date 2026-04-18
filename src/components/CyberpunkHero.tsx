@@ -15,7 +15,7 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
 
   useEffect(() => {
     setIsVisible(true);
-    
+
     const fullName = "Rajesh Doradla";
     let currentIndex = 0;
     let isDeleting = false;
@@ -62,13 +62,13 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
     <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
       <div className="max-w-7xl mx-auto w-full">
         <div className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          
+
           {/* Left Column - Content */}
           <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
             {/* Main Name with Glowing Effect */}
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold min-h-[1.2em] relative">
-                <span 
+                <span
                   className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
                   style={{
                     textShadow: '0 0 40px rgba(0, 212, 255, 0.5), 0 0 80px rgba(139, 92, 246, 0.3)',
@@ -79,11 +79,11 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
                 </span>
                 <span className="text-cyan-400 animate-pulse">|</span>
               </h1>
-              
+
               <p className="text-xl sm:text-2xl text-gray-300 font-medium">
                 Principal QA Engineer
               </p>
-              
+
               {/* Availability Status */}
               <div className="flex items-center justify-center lg:justify-start gap-2 mt-3">
                 <span className="relative flex h-3 w-3">
@@ -94,9 +94,9 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
                   Available for opportunities
                 </span>
               </div>
-              
+
               <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                11+ years of experience crafting robust quality assurance strategies, 
+                11+ years of experience crafting robust quality assurance strategies,
                 leading automation initiatives, and ensuring exceptional software quality at scale.
               </p>
             </div>
@@ -115,7 +115,7 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
                     key={index}
                     className={`flex items-center space-x-2 px-4 py-2.5 rounded-full border-2 bg-black/30 backdrop-blur-sm transition-all duration-300 cursor-default ${colorClasses[skill.color as keyof typeof colorClasses]}`}
                     style={{
-                      boxShadow: skill.color === 'cyan' 
+                      boxShadow: skill.color === 'cyan'
                         ? '0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.05)'
                         : skill.color === 'purple'
                         ? '0 0 20px rgba(139, 92, 246, 0.2), inset 0 0 20px rgba(139, 92, 246, 0.05)'
@@ -131,7 +131,7 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
-              <Button 
+              <Button
                 onClick={onContactClick}
                 className="relative group px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-500 hover:via-purple-500 hover:to-blue-500 text-white border-0 overflow-hidden transition-all duration-300 transform hover:scale-105"
                 style={{
@@ -143,8 +143,8 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
                 <Mail className="w-5 h-5 mr-2" />
                 Get In Touch
               </Button>
-              
-              <Button 
+
+              <Button
                 onClick={() => window.open('https://drive.google.com/file/d/1c5StUCH5fBRxT2Tr0uy5dGGTFIHtA7KS/view', '_blank')}
                 className="relative group px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-500 hover:via-purple-500 hover:to-blue-500 text-white border-0 overflow-hidden transition-all duration-300 transform hover:scale-105"
                 style={{
@@ -161,20 +161,20 @@ const CyberpunkHero = ({ onContactClick }: CyberpunkHeroProps) => {
 
           {/* Right Column - Hero Image */}
           <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div 
+            <div
               className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              
+
               {/* Main hero image with glitch effect on hover */}
               <div className="relative z-10 transition-all duration-500">
-                <img 
+                <img
                   src={isHovered ? heroMoreGlitch : heroSlightGlitch}
                   alt="Rajesh Doradla"
                   className="w-full h-auto object-contain drop-shadow-2xl transition-all duration-300"
                   style={{
-                    filter: isHovered 
+                    filter: isHovered
                       ? 'drop-shadow(0 0 40px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 80px rgba(236, 72, 153, 0.4))'
                       : 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.4)) drop-shadow(0 0 60px rgba(139, 92, 246, 0.3))',
                   }}

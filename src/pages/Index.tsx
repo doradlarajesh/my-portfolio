@@ -22,6 +22,8 @@ import ToolLogo from "@/components/ToolLogo";
 import CyberpunkBackground from "@/components/CyberpunkBackground";
 import CyberpunkNavbar from "@/components/CyberpunkNavbar";
 import CyberpunkHero from "@/components/CyberpunkHero";
+import { useTilt } from "@/hooks/useTilt";
+import SkillsMarquee from "@/components/SkillsMarquee";
 import { 
   Code2, 
   Bug, 
@@ -53,6 +55,16 @@ import {
   Quote,
   Building2
 } from "lucide-react";
+
+const TiltCard = ({ children }: { children: React.ReactNode }) => {
+  const { ref, style, glareStyle, onMouseMove, onMouseLeave } = useTilt();
+  return (
+    <div ref={ref} style={{ ...style, position: "relative" }} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+      <div style={glareStyle} />
+      {children}
+    </div>
+  );
+};
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -561,29 +573,7 @@ const Index = () => {
             description="Mastery across the quality assurance spectrum"
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skillCategories.map((category, index) => (
-              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group hover:shadow-lg hover:shadow-blue-500/10 transform hover:-translate-y-1">
-                <CardHeader>
-                  <CardTitle className="text-white text-lg group-hover:text-blue-400 transition-colors duration-300">{category.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    {category.tools.map((tool, toolIndex) => (
-                      <div key={toolIndex} className="flex flex-col items-center p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 transition-all duration-300 group/tool hover:scale-105">
-                        <div className="mb-2 group-hover/tool:scale-110 transition-transform duration-300">
-                          <ToolLogo name={tool.name} fallback={tool.logo} />
-                        </div>
-                        <span className="text-gray-300 text-xs text-center group-hover/tool:text-white transition-colors duration-300">
-                          {tool.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <SkillsMarquee categories={skillCategories} />
         </div>
       </section>
 
@@ -597,7 +587,8 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <Card key={index} className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
+              <TiltCard key={index}>
+              <Card className="bg-slate-800/50 border-gray-700 hover:bg-slate-800/70 transition-all duration-300 group cursor-pointer hover:shadow-2xl hover:shadow-purple-500/20">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -678,6 +669,7 @@ const Index = () => {
                   </div>
                 </CardContent>
               </Card>
+              </TiltCard>
             ))}
           </div>
         </div>
