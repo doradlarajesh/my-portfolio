@@ -2,16 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import ToolLogo from "@/components/ToolLogo";
 
 const MARQUEE_CSS = `
-@keyframes marquee-ltr {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0%);  }
-}
 @keyframes marquee-rtl {
-  from { transform: translateX(0%);  }
+  from { transform: translateX(0);    }
   to   { transform: translateX(-50%); }
 }
-.marquee-pause:hover .marquee-track {
-  animation-play-state: paused;
+@keyframes marquee-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0);    }
 }
 `;
 
@@ -26,6 +23,96 @@ const PALETTE = [
 interface Category {
   name: string;
   tools: { name: string; logo: string }[];
+}
+
+interface RowProps {
+  cat: Category;
+  rowIndex: number;
+  spotlight: number | null;
+  visible: boolean;
+  onLabelClick: (i: number) => void;
+}
+
+function MarqueeRow({ cat, rowIndex, spotlight, visible, onLabelClick }: RowProps) {
+  const pal       = PALETTE[rowIndex];
+  const isRTL     = rowIndex % 2 === 0;
+  const isSpotlit = spotlight === rowIndex;
+  const isDimmed  = spotlight !== null && !isSpotlit;
+  const fromLeft  = isRTL;
+  const [hovered, setHovered] = useState(false);
+
+  // 4 copies so the strip is always wider than the viewport on any screen size
+  const items = [...cat.tools, ...cat.tools, ...cat.tools, ...cat.tools];
+
+  return (
+    <div
+      style={{
+        opacity:    isDimmed ? 0.12 : 1,
+        filter:     isDimmed ? "blur(2px)" : "none",
+        transform:  visible
+          ? (isSpotlit ? "scale(1.015)" : "scale(1)")
+          : `translateX(${fromLeft ? "-60px" : "60px"})`,
+        transition: "opacity 0.4s ease, filter 0.4s ease, transform 0.6s ease",
+      }}
+    >
+      <button
+        onClick={() => onLabelClick(rowIndex)}
+        className="text-xs font-semibold uppercase tracking-widest mb-2 ml-1 bg-transparent border-0 p-0 cursor-pointer"
+        style={{
+          color:      pal.text,
+          textShadow: isSpotlit
+            ? `0 0 8px ${pal.text}, 0 0 20px ${pal.text}, 0 0 40px ${pal.text}`
+            : "none",
+          transition: "text-shadow 0.3s ease",
+        }}
+      >
+        {pal.label}
+      </button>
+
+      <div
+        className="relative overflow-hidden rounded-xl"
+        style={{
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+          maskImage:        "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+          boxShadow: isSpotlit ? `0 0 20px ${pal.glow}, 0 0 40px ${pal.glow}` : "none",
+          transition: "box-shadow 0.35s ease",
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* neon bottom edge */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-px z-10"
+          style={{ background: `linear-gradient(to right, transparent, ${pal.border}, transparent)` }}
+        />
+
+        <div
+          className="flex gap-3 w-max py-2 px-1"
+          style={{
+            animation: `${isRTL ? "marquee-rtl" : "marquee-ltr"} ${pal.speed}s linear infinite`,
+            animationPlayState: hovered ? "paused" : "running",
+            willChange: "transform",
+          }}
+        >
+          {items.map((tool, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl border shrink-0"
+              style={{
+                color:       pal.text,
+                borderColor: pal.border,
+                background:  pal.bg,
+                boxShadow:   `0 0 14px ${pal.glow}, inset 0 0 10px ${pal.glow}`,
+              }}
+            >
+              <ToolLogo name={tool.name} fallback={tool.logo} className="h-7 w-7 shrink-0" />
+              <span className="text-sm font-semibold whitespace-nowrap">{tool.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function SkillsMarquee({ categories }: { categories: Category[] }) {
@@ -46,7 +133,6 @@ export default function SkillsMarquee({ categories }: { categories: Category[] }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // stagger each row
           categories.forEach((_, i) => {
             setTimeout(() => {
               setRowVisible(prev => {
@@ -66,85 +152,29 @@ export default function SkillsMarquee({ categories }: { categories: Category[] }
     return () => observer.disconnect();
   }, [categories.length]);
 
-  const handleLabelClick = (i: number) => {
+  const handleLabelClick = (i: number) =>
     setSpotlight(prev => (prev === i ? null : i));
-  };
 
   return (
-    <div ref={wrapperRef} className="space-y-4">
+    <div ref={wrapperRef} className="space-y-5">
       <style>{MARQUEE_CSS}</style>
 
-      {categories.map((cat, rowIndex) => {
-        const pal = PALETTE[rowIndex];
-        const dir = rowIndex % 2 === 0 ? "marquee-rtl" : "marquee-ltr";
-        const items = [...cat.tools, ...cat.tools, ...cat.tools, ...cat.tools];
+      {categories.map((cat, rowIndex) => (
+        <MarqueeRow
+          key={cat.name}
+          cat={cat}
+          rowIndex={rowIndex}
+          spotlight={spotlight}
+          visible={rowVisible[rowIndex]}
+          onLabelClick={handleLabelClick}
+        />
+      ))}
 
-        const isSpotlit  = spotlight === rowIndex;
-        const isDimmed   = spotlight !== null && !isSpotlit;
-        const visible    = rowVisible[rowIndex];
-        const fromLeft   = rowIndex % 2 === 0;
-
-        return (
-          <div
-            key={cat.name}
-            className="group"
-            style={{
-              opacity:    isDimmed ? 0.25 : 1,
-              transform:  visible ? "translateX(0)" : `translateX(${fromLeft ? "-60px" : "60px"})`,
-              transition: "opacity 0.4s ease, transform 0.6s ease",
-              transitionDelay: visible ? "0ms" : `${rowIndex * 120}ms`,
-            }}
-          >
-            {/* row label — clickable for spotlight */}
-            <button
-              onClick={() => handleLabelClick(rowIndex)}
-              className="text-xs font-semibold uppercase tracking-widest mb-2 ml-1 cursor-pointer bg-transparent border-0 p-0 transition-all duration-300"
-              style={{
-                color: pal.text,
-                textShadow: isSpotlit ? `0 0 12px ${pal.text}, 0 0 24px ${pal.text}` : "none",
-              }}
-            >
-              {pal.label}
-            </button>
-
-            {/* marquee strip */}
-            <div
-              className="marquee-pause relative overflow-hidden rounded-xl"
-              style={{
-                WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-                maskImage:        "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              }}
-            >
-              {/* neon bottom border */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-px"
-                style={{ background: `linear-gradient(to right, transparent, ${pal.border}, transparent)` }}
-              />
-
-              <div
-                className="marquee-track flex gap-3 w-max py-2 px-1"
-                style={{ animation: `${dir} ${pal.speed}s linear infinite` }}
-              >
-                {items.map((tool, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl border shrink-0 transition-transform duration-200 hover:scale-105"
-                    style={{
-                      color:       pal.text,
-                      borderColor: pal.border,
-                      background:  pal.bg,
-                      boxShadow:   `0 0 14px ${pal.glow}, inset 0 0 10px ${pal.glow}`,
-                    }}
-                  >
-                    <ToolLogo name={tool.name} fallback={tool.logo} className="h-7 w-7 shrink-0" />
-                    <span className="text-sm font-semibold whitespace-nowrap">{tool.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {spotlight !== null && (
+        <p className="text-center text-xs text-gray-500 mt-2 tracking-wide">
+          Click the label again to restore all rows
+        </p>
+      )}
     </div>
   );
 }
