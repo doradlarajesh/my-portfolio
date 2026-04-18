@@ -588,7 +588,7 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4">
+      <section id="projects" className="py-20 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             title="Live Projects & Client Work"
@@ -687,7 +687,7 @@ const Index = () => {
       <AchievementsCertifications />
 
       {/* Published Articles Section */}
-      <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800">
+      <section id="articles" className="py-20 bg-gradient-to-br from-slate-800 via-purple-900/20 to-slate-800 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             title="Published Articles"
