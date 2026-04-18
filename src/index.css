@@ -99,6 +99,8 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Prevent white flash when scrolling — the portfolio is always dark-themed */
+    background-color: #0a0a1a;
   }
 }
 
