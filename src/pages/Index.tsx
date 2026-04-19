@@ -941,16 +941,16 @@ const Index = () => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Avatar Video Side */}
-            <div className="flex justify-center lg:justify-end order-1 lg:order-1">
+            <div className="flex justify-center md:justify-end order-1">
               <div className="relative">
                 {/* Decorative rings */}
                 <div className="absolute -inset-4 border-2 border-dashed border-purple-500/20 rounded-3xl animate-spin" style={{ animationDuration: '20s' }} />
                 <div className="absolute -inset-8 border border-dashed border-blue-500/10 rounded-3xl animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
-                
+
                 {/* Avatar */}
-                <InteractiveAvatar className="w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96" />
+                <InteractiveAvatar className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-96 lg:h-96" />
               </div>
             </div>
 

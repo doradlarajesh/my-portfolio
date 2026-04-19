@@ -43,8 +43,8 @@ const InteractiveAvatar = ({ className = "" }: InteractiveAvatarProps) => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-12 bg-gradient-to-t from-slate-900 via-slate-800/90 to-transparent z-20 rounded-t-[100%]" />
 
       {/* Video container */}
-      <div className="relative overflow-hidden rounded-2xl">
-        <div className="overflow-hidden" style={{ marginBottom: "-40px" }}>
+      <div className="relative overflow-hidden rounded-2xl w-full h-full">
+        <div className="overflow-hidden w-full h-full" style={{ marginBottom: "-40px" }}>
           {/* Poster — visible instantly, fades out when video is ready */}
           <img
             src={avatarPoster}
