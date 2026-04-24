@@ -86,23 +86,30 @@ function ExperienceCard({ exp, index, isActive }: CardRowProps) {
   const isLeft  = index % 2 === 0;
   const meta    = COMPANY_META[exp.company] ?? FALLBACK_META;
 
+  const offscreenTransform = useRef("");
+
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) { setVisible(true); return; }
+
+    // On mobile all cards are in a single left-aligned column — slide up, not sideways
+    const isMobile = window.innerWidth < 768;
+    offscreenTransform.current = isMobile
+      ? "translateY(20px)"
+      : `translateX(${isLeft ? "-48px" : "48px"})`;
 
     const el = rowRef.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Animate in when entering, reset when fully out so it re-animates on next scroll
         setVisible(entry.isIntersecting);
       },
       { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [isLeft]);
 
   return (
     <div
@@ -110,7 +117,7 @@ function ExperienceCard({ exp, index, isActive }: CardRowProps) {
       className={`relative group ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
     >
       {/* ── Timeline Node ── */}
-      <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 z-20">
+      <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-20">
         <div className="relative">
           {/* Pulsing rings when active */}
           {isActive && (
@@ -151,10 +158,10 @@ function ExperienceCard({ exp, index, isActive }: CardRowProps) {
 
       {/* ── Content Card ── */}
       <div
-        className={`w-full ${isLeft ? "md:w-[calc(50%-4rem)] md:mr-auto" : "md:w-[calc(50%-4rem)] md:ml-auto"} ml-16 md:ml-0`}
+        className={`w-full ${isLeft ? "md:w-[calc(50%-4rem)] md:mr-auto" : "md:w-[calc(50%-4rem)] md:ml-auto"} ml-9 md:ml-0`}
         style={{
           opacity:    visible ? 1 : 0,
-          transform:  visible ? "translateX(0)" : `translateX(${isLeft ? "-48px" : "48px"})`,
+          transform:  visible ? "translate(0)" : offscreenTransform.current,
           transition: "opacity 0.6s ease, transform 0.6s ease",
         }}
       >
@@ -170,26 +177,22 @@ function ExperienceCard({ exp, index, isActive }: CardRowProps) {
             style={{ height: hovered ? "2px" : "1px", opacity: hovered ? 1 : 0.6 }}
           />
 
-          <CardHeader className="relative z-10">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-start gap-3 flex-1">
-                <CompanyLogo meta={meta} color={exp.color} />
-
-                <div className="flex-1 min-w-0">
-                  <CardTitle className="text-xl font-bold text-white mb-1 group-hover/card:text-blue-400 transition-colors duration-300">
-                    {exp.title}
-                  </CardTitle>
-                  <CardDescription className="text-base font-medium text-blue-300">
-                    {exp.company}
-                  </CardDescription>
+          <CardHeader className="relative z-10 pb-2">
+            <div className="flex items-start gap-3">
+              <CompanyLogo meta={meta} color={exp.color} />
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-base md:text-xl font-bold text-white mb-0.5 group-hover/card:text-blue-400 transition-colors duration-300 leading-snug">
+                  {exp.title}
+                </CardTitle>
+                <CardDescription className="text-sm md:text-base font-medium text-blue-300 leading-snug">
+                  {exp.company}
+                </CardDescription>
+                {/* Period badge — sits below company name on mobile, hidden on desktop (shown in date badge) */}
+                <div className="md:hidden mt-2">
+                  <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10 text-xs font-medium">
+                    {exp.period}
+                  </Badge>
                 </div>
-              </div>
-
-              {/* Mobile period badge */}
-              <div className="md:hidden flex-shrink-0">
-                <Badge variant="outline" className="border-blue-500/50 text-blue-300 bg-blue-500/10 text-xs">
-                  {exp.period}
-                </Badge>
               </div>
             </div>
           </CardHeader>
@@ -239,7 +242,7 @@ export default function ExperienceTimeline({ experiences, timelineProgress }: Ex
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section heading */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 md:mb-20">
           <div className="inline-block mb-4">
             <div className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm px-6 py-2 rounded-full border border-blue-500/30">
               <Briefcase className="w-5 h-5 text-blue-400 animate-pulse" />
@@ -256,7 +259,7 @@ export default function ExperienceTimeline({ experiences, timelineProgress }: Ex
 
         <div className="relative">
           {/* Timeline spine */}
-          <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
+          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 overflow-hidden rounded-full">
             <div className="absolute inset-0 bg-gradient-to-b from-blue-500/40 via-purple-500/40 to-pink-500/20" />
             <div
               className="absolute top-0 left-0 right-0 bg-gradient-to-b from-blue-400 via-purple-400 to-transparent transition-all duration-700 ease-out"
@@ -272,7 +275,7 @@ export default function ExperienceTimeline({ experiences, timelineProgress }: Ex
           </div>
 
           {/* Cards */}
-          <div className="space-y-16">
+          <div className="space-y-10 md:space-y-16">
             {experiences.map((exp, index) => {
               const nodeProgress = (index + 1) / experiences.length;
               const isActive = timelineProgress >= nodeProgress - 0.1;
